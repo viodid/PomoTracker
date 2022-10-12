@@ -1,0 +1,191 @@
+:root {
+    --primary-color: #202020ff;
+    --secondary-color: #2c2c2cff;
+    --tertiary-color: #313131ff;
+    --softest-color: #434343ff;
+    --text-color: #efefef;
+    --border-color: #999;
+    --yellow-logo: #f1c232;
+    --box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+body {
+    background-color: var(--tertiary-color);
+    font-family: 'Barlow', sans-serif;
+    color: var(--text-color);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: var(--yellow-logo);
+}
+
+li {
+    list-style-type: none;
+}
+
+/* Navbar styles */
+.navbar-brand {
+    margin: auto 40px;
+}
+
+.navbar-brand img {
+    width: 250px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary-color);
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+}
+
+/* Style the links inside the navigation bar */
+.navbar li {
+    font-size:22px;
+    margin: 25px 40px;
+}
+
+/* Hide the link that should open and close the navbar on small screens */
+.navbar .icon {
+  display: none;
+}
+
+/* Dark mode toggle styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--text-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--secondary-color);
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+input:checked + .slider {
+  background-color: var(--yellow-logo);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--yellow-logo);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+  border: var(--border-color);
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Overlay clock */
+#overlay {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-color); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+/* Footer styles */
+footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    font-size: 14px;
+}
+
+footer .block {
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+}
+
+footer .top {
+    display: flex;
+}
+
+footer .left {
+    margin-right: 30px;
+}
+
+footer .bottom {
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+footer img {
+    width: auto;
+    height: 45px;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 920px) {
+  .navbar li:not(:last-child) {
+      display: none;
+  }
+
+  .navbar .icon {
+      display: block;
+  }
+}

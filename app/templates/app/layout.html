@@ -1,10 +1,63 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %}PomoTracker</title>
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    <div id="overlay"></div>
+    <nav class="navbar" id="navbar">
+        <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
+        <div>
+            <ul id="topnav" class="topnav">
+                <li>
+                    <label class="switch" id="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                    </label>
+                </li>
+                <li><a href="">Leaderboards</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="">{{ user.username | capfirst}}</a></li>
+                    <li><a href="">Sign Out</a></li>
+                {% else %}
+                    <li><a href="">Sign In</a></li>
+                {% endif %}
+                <li class="icon">
+                    <img src="{% static 'app/images/menu.svg' %}" alt="">
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
+    <footer>
+        <div class="block 1">
+            <div class="top">
+                <div class="left">
+                    <p><u>Please consider support the project</u></p>
+                    <p><a href="">API Reference</a></p>
+                    <p><a href="">Statistics</a></p>
+                </div>
+                <a href="">
+                <img src="{% static 'app/images/coffee.jpg' %}" alt="Buy me a coffee">
+                </a>
+            </div>
+            <div class="bottom">
+                <p>This application is not affiliated, associated or endorsed by the Pomodoro Technique® or Francesco Cirillo.</p>
+                <p>The Pomodoro Technique® and Pomodoro™ are registered trademarks by Francesco Cirillo.</p>
+            </div>
+        </div>
+        <div class="block 2">
+            <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - version 0.1.0</p>
+            <p><a href="mailto:contact@pomotracker.app">contact@pomotracker.app</a></p>
+        </div>
+    </footer>
 </body>
 </html>

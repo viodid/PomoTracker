@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-hey there
-</body>
-</html>
+{% extends 'app/layout.html' %}
+
+{% block body %}
+<main>
+    <div class="first">
+        <input type="button" value="Start" id="start-button">
+        <p>or press space bar</p>
+    </div>
+    <div class="second">
+        <div class="block todays-pomodoros">
+            <div class="title">
+                <p>Today's pomodoros</p>
+            </div>
+            <div class="pomodoros">
+                {% for pomodoro in pomodoros %}
+                {% empty %}
+                    No pomodoros to show
+                {% endfor %}
+            </div>
+        </div>
+        <div class="block count-pomodoros">
+            <div class="today">
+                <span class="left">Today</span>
+                <span class="right">0</span>
+            </div>
+            <div class="week">
+                <span class="left">This week</span>
+                <span class="right">0</span>
+            </div>
+            <div class="month">
+                <span class="left">This month</span>
+                <span class="right">0</span>
+            </div>
+            <div class="year">
+                <span class="left">This year</span>
+                <span class="right">0</span>
+            </div>
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        <div class="third"></div>
+    {% else %}
+        <div class="third">
+            <div class="login-container">
+                <a href="">Sign in with Google</a>
+                <a href="">Sign in with Twitter</a>
+            </div>
+            <p>Sign in to collect aggregate statistics, charts, and more.</p>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}
