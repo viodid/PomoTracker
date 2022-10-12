@@ -10,6 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'app/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'app/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'app/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'app/favicon/safari-pinned-tab.svg' %}" color="#f1c232">
+    <meta name="apple-mobile-web-app-title" content="PomoTracker">
+    <meta name="application-name" content="PomoTracker">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#fdfdfd">
 </head>
 <body>
     <div id="overlay"></div>
@@ -26,7 +35,7 @@
                 <li><a href="">Leaderboards</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="">{{ user.username | capfirst}}</a></li>
-                    <li><a href="">Sign Out</a></li>
+                    <li><a href="{% url 'logout' %}">Sign Out</a></li>
                 {% else %}
                     <li><a href="">Sign In</a></li>
                 {% endif %}
@@ -55,8 +64,10 @@
             </div>
         </div>
         <div class="block 2">
-            <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - version 0.1.0</p>
+            <p><a href="{% url 'privacy' %}">Privacy policy</a></p>
+            <p><a href="{% url 'terms' %}">Terms and conditions</a></p>
             <p><a href="mailto:contact@pomotracker.app">contact@pomotracker.app</a></p>
+            <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - version 0.1.0</p>
         </div>
     </footer>
 </body>

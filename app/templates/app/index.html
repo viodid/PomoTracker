@@ -1,5 +1,8 @@
 {% extends 'app/layout.html' %}
 
+{% load socialaccount %}
+{% load static %}
+
 {% block body %}
 <main>
     <div class="first">
@@ -46,6 +49,9 @@
                 <a href="">Sign in with Twitter</a>
             </div>
             <p>Sign in to collect aggregate statistics, charts, and more.</p>
+        </div>
+        <div class=" signin text-center">
+            <a href="{% provider_login_url 'google' %}" class="text-dark"><img src="{% static 'app/images/btn_google.png' %}" style="width:14rem; height:auto"></a>
         </div>
     {% endif %}
 </main>

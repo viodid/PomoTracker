@@ -143,3 +143,5 @@ docker*
 postgres_docker/
 
 settings.py
+
+*.txt
