@@ -16,6 +16,13 @@ body {
     color: var(--text-color);
 }
 
+main {
+    display: flex;
+    min-height: 70vh;
+    flex-direction: column;
+    margin: auto 155px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -153,6 +160,7 @@ footer {
     justify-content: space-between;
     background-color: var(--primary-color);
     font-size: 14px;
+    margin-top: auto;
 }
 
 footer .block {
@@ -178,6 +186,42 @@ footer img {
     width: auto;
     height: 45px;
     border-radius: 10px;
+}
+
+/* Main page styles */
+#start-button {
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 75px;
+    padding: 27px 35px;
+}
+
+#start-button:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+}
+
+#start-button:active {
+    background-color: var(--softest-color);
+}
+
+main .first {
+    display: flex;
+    flex-direction: column;
+    margin: 65px auto;
+}
+
+.first p {
+    text-align: center;
+    margin-top: 7px;
+}
+
+/* Accounts styles */
+
+.account-form {
+
 }
 
 @media screen and (max-width: 920px) {

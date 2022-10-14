@@ -37,7 +37,7 @@
                     <li><a href="">{{ user.username | capfirst}}</a></li>
                     <li><a href="{% url 'logout' %}">Sign Out</a></li>
                 {% else %}
-                    <li><a href="">Sign In</a></li>
+                    <li><a href="/accounts/login">Sign In</a></li>
                 {% endif %}
                 <li class="icon">
                     <img src="{% static 'app/images/menu.svg' %}" alt="">

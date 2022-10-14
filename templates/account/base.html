@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+  </head>
+  <body>
+    {% block body %}
+        <nav class="navbar" id="navbar">
+            <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
+            <div>
+                <ul id="topnav" class="topnav">
+                    <li>
+                        <label class="switch" id="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </li>
+                    <li><a href="">Leaderboards</a></li>
+                    <li class="icon">
+                        <img src="{% static 'app/images/menu.svg' %}" alt="">
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    {% if messages %}
+    <div>
+      <strong>Messages:</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div>
+      <strong>Menu:</strong>
+      <ul>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}">Sign In</a></li>
+        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <main class="account-form">
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+    </main>
+    <footer>
+        <div class="block 1">
+            <div class="top">
+                <div class="left">
+                    <p><u>Please consider support the project</u></p>
+                    <p><a href="">API Reference</a></p>
+                    <p><a href="">Statistics</a></p>
+                </div>
+                <a href="">
+                    <img src="{% static 'app/images/coffee.jpg' %}" alt="Buy me a coffee">
+                </a>
+            </div>
+            <div class="bottom">
+                <p>This application is not affiliated, associated or endorsed by the Pomodoro Technique® or Francesco Cirillo.</p>
+                <p>The Pomodoro Technique® and Pomodoro™ are registered trademarks by Francesco Cirillo.</p>
+            </div>
+        </div>
+        <div class="block 2">
+            <p><a href="{% url 'privacy' %}">Privacy policy</a></p>
+            <p><a href="{% url 'terms' %}">Terms and conditions</a></p>
+            <p><a href="mailto:contact@pomotracker.app">contact@pomotracker.app</a></p>
+            <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - version 0.1.0</p>
+        </div>
+    </footer>
+  </body>
+</html>
