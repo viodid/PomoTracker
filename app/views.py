@@ -9,6 +9,11 @@ from .models import *
 
 
 def index(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        return render(request, 'app/index.html', {
+            'pomodoros': user.pomodoros.all()
+        })
     return render(request, 'app/index.html')
 
 
