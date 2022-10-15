@@ -19,9 +19,21 @@
     <meta name="application-name" content="PomoTracker">
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#fdfdfd">
+    <script src="{% static 'app/index.js' %}"></script>
 </head>
 <body>
-    <div id="overlay"></div>
+    <div id="overlay">
+        <svg viewBox="0 0 100 100">
+            <circle class="bg" cx="50" cy="50" r="40" />
+            <circle class="meter" cx="50" cy="50" r="40" />
+        </svg>
+        <div class="fill-data">
+            <p class="timer">25:00</p>
+            <p class="focus">Focus</p>
+            <span class="button" id="cancel">Cancel</span>
+            <p class="last-text">or press ESC</p>
+        </div>
+    </div>
     <nav class="navbar" id="navbar">
         <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
         <div>

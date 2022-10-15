@@ -140,22 +140,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* Overlay clock */
-#overlay {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.2s linear;
-    position: fixed; /* Sit on top of the page content */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--primary-color); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-}
-
 /* Footer styles */
 footer {
     display: flex;
@@ -191,22 +175,25 @@ footer img {
 }
 
 /* Main page styles */
-#start-button {
+.button {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     background-color: transparent;
     color: var(--text-color);
+}
+
+#start {
     font-size: 75px;
     padding: 27px 35px;
 }
 
-#start-button:hover {
-    background-color: var(--secondary-color);
+.button:hover {
+    background-color: var(--secondary-color)!important;
     cursor: pointer;
 }
 
-#start-button:active {
-    background-color: var(--softest-color);
+.button:active {
+    background-color: var(--softest-color)!important;
 }
 
 main .first {
@@ -312,7 +299,7 @@ main .first {
 
 .text-center span {
     padding: 10px 15px 10px 10px;
-    border-left: 1px solid;
+    border-left: 1px solid #0000001c;
 }
 
 .third p {
@@ -320,8 +307,98 @@ main .first {
     margin-bottom: 40px
 }
 
-/* Accounts styles */
+/* Circle overlay */
+#overlay {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-color); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+#overlay svg {
+    width: 700px;
+    height: 700px;
+    transform: rotate(-90deg);
+}
+
+svg circle {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+}
+
+svg circle.bg {
+    stroke: var(--secondary-color);
+}
+
+svg circle.meter {
+    filter: drop-shadow(0 0 3px var(--yellow-logo));
+    stroke: var(--yellow-logo);
+    stroke-dashoffset: 48px;
+    stroke-dasharray: 300px;
+    animation: prog 300s linear forwards, glow 1s 300s ease-in-out forwards;
+}
+
+@keyframes prog {
+    0% { stroke-dashoffset: 48px; }
+    100% { stroke-dashoffset: 300px; }
+}
+
+@keyframes glow {
+    100% {
+        stroke: greenyellow;
+        filter: drop-shadow(0 0 3px greenyellow);
+        stroke-dashoffset: 49px;
+    }
+}
+
+.fill-data {
+    color: var(--text-color);
+    width: 600px;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 40px;
+    flex-direction: column;
+    position: absolute;
+}
+
+.fill-data .timer {
+    font-size: 150px;
+    margin-top: 90px;
+}
+
+.fill-data .focus {
+    margin-bottom: 10px;
+}
+
+#cancel {
+    padding: 7px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 14px auto 10px auto;
+    background-color: var(--tertiary-color);
+    border: none;
+}
+
+#overlay .last-text {
+    font-size: 14px;
+}
+
+/* Accounts styles */
 .account-form {
 
 }
