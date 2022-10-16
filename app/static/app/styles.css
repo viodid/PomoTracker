@@ -43,6 +43,11 @@ li {
     list-style-type: none;
 }
 
+.disabled {
+    pointer-events: none;
+    color: var(--border-color);
+}
+
 /* Navbar styles */
 .navbar-brand {
     margin: auto 40px;
@@ -345,13 +350,13 @@ svg circle.bg {
 svg circle.meter {
     filter: drop-shadow(0 0 3px var(--yellow-logo));
     stroke: var(--yellow-logo);
-    stroke-dashoffset: 48px;
+    stroke-dashoffset: 47px;
     stroke-dasharray: 300px;
-    animation: prog 300s linear forwards, glow 1s 300s ease-in-out forwards;
+    animation: prog 61s linear forwards, glow 1s 61s ease-in-out forwards;
 }
 
 @keyframes prog {
-    0% { stroke-dashoffset: 48px; }
+    0% { stroke-dashoffset: 47px; }
     100% { stroke-dashoffset: 300px; }
 }
 
@@ -374,6 +379,8 @@ svg circle.meter {
     font-size: 40px;
     flex-direction: column;
     position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 }
 
 .fill-data .timer {
@@ -383,6 +390,10 @@ svg circle.meter {
 
 .fill-data .focus {
     margin-bottom: 10px;
+}
+
+#timer {
+    font-weight: 100;
 }
 
 #cancel {
