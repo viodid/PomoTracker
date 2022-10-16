@@ -9,6 +9,7 @@
         <span id="start" class="button">Start</span>
         <p>or press space bar</p>
     </div>
+    {% if user.is_authenticated %}
     <div class="second">
         <div class="block todays-pomodoros">
             <div class="title cell">
@@ -35,7 +36,7 @@
         <div class="block count-pomodoros">
             <div class="today cell">
                 <span class="left">Today</span>
-                <span class="right">0</span>
+                <span class="right" id="today">0</span>
             </div>
             <div class="week cell">
                 <span class="left">This week</span>
@@ -51,6 +52,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% if not user.is_authenticated %}
         <div class="third">
             <div class="text-center">

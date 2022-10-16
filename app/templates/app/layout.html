@@ -32,6 +32,8 @@
             <p class="last-text">or press ESC</p>
         </div>
     </div>
+    <audio src="{% static 'app/sounds/ding-idea-40142.mp3' %}" id="ding"></audio>
+    <audio src="{% static 'app/sounds/whoosh-6316.mp3' %}"></audio>
     <nav class="navbar" id="navbar">
         <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
         <div>
@@ -45,9 +47,9 @@
                 <li><a href="">Leaderboards</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="">{{ user.username | capfirst}}</a></li>
-                    <li><a href="{% url 'logout' %}">Sign Out</a></li>
+                    <li><a id="user-logged" href="{% url 'logout' %}">Sign Out</a></li>
                 {% else %}
-                    <li><a href="/accounts/login">Sign In</a></li>
+                    <li><a id="user-logged" href="/accounts/login">Sign In</a></li>
                 {% endif %}
                 <li class="icon">
                     <img src="{% static 'app/images/menu.svg' %}" alt="">
@@ -60,7 +62,7 @@
         <div class="block 1">
             <div class="top">
                 <div class="left">
-                    <p><u>Please consider support the project</u></p>
+                    <p><u>This app will always be free, please consider supporting the project:</u></p>
                     <p><a href="" class="disabled">API Reference</a></p>
                     <p><a href="" class="disabled">Statistics</a></p>
                 </div>
