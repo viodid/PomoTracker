@@ -16,7 +16,7 @@ def getAll(request, token):
 
     except UserToken.DoesNotExist:
         return JsonResponse({
-            "error": f'Invalid token'
+            "error": "Invalid token"
         }, status=401)
 
     user = token.user
@@ -37,24 +37,67 @@ def create(request, token):
 
     except UserToken.DoesNotExist:
         return JsonResponse({
-            "error": f'Invalid token'
+            "error": "Invalid token"
         }, status=401)
 
     data = json.loads(request.body)
 
     try:
         tag = data['tag']
+        tag = tag.upper()
     except KeyError:
         return JsonResponse({"error": "POST request error."}, status=400)
 
     user = token.user
-    Tag(tag=tag).save()
+    # Create new Tag only if doesn't exist already
+    if not Tag.objects.filter(tag=tag):
+        Tag(tag=tag).save()
+
     Pomodoro(user=user, tag=Tag.objects.get(tag=tag)).save()
 
     if Pomodoro.objects.last().checkLastCreated():
         return JsonResponse({'message': 'Pomodoro created successfully'}, status=201)
 
+    Pomodoro.objects.filter(id=Pomodoro.objects.last().id).delete()
     return JsonResponse({'error':'Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.'}, status=422)
 
 
+@csrf_exempt
+def updateDelete(request, token, pomodoro_id):
+
+    if request.method != 'PUT' and request.method != 'DELETE':
+        return JsonResponse({"error":"PUT or DELETE method required."})
+
+    try:
+        token = UserToken.objects.get(token=token)
+
+    except UserToken.DoesNotExist:
+        return JsonResponse({
+            "error": "Invalid token"
+        }, status=401)
+
+    data = json.loads(request.body)
+
+    if request.method == 'PUT':
+        try:
+            tag = data['tag']
+            tag = tag.upper()
+        except KeyError:
+            return JsonResponse({"error": "PUT request error."}, status=400)
+
+        # Create new Tag only if doesn't exist already
+        if not Tag.objects.filter(tag=tag):
+            Tag(tag=tag).save()
+
+        tag = Tag.objects.get(tag=tag)
+
+        # Save updated pomodoro only if pomodoro_id is valid
+        if Pomodoro.objects.filter(id=pomodoro_id):
+            pomodoro = Pomodoro.objects.get(id=pomodoro_id)
+            pomodoro.tag = tag
+            pomodoro.save()
+
+            return JsonResponse({"message":"Pomodoro updated successfully"}, status=201)
+
+        return JsonResponse({"error":"Invalid pomodoro id"})
 

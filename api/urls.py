@@ -3,8 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('<str:token>', views.getAll, name='all'),
-    path('<str:token>', views.create, name='create')
-    #path('<str:token>/<int:pomodoro>', views.updateDelete, name='update-delete'),
-    #path('<str:token>/leaderboard/<str:period>', views.updateDelete, name='leaderboard')
+    path('<str:token>/get', views.getAll, name='all'),
+    path('<str:token>/create', views.create, name='create'),
+    path('<str:token>/<int:pomodoro_id>', views.updateDelete, name='update-delete')
+    #path('<str:token>/<str:period>', views.getLeaderboard, name='leaderboard')
 ]

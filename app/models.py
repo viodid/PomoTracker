@@ -18,23 +18,25 @@ class Pomodoro(models.Model):
 
     def checkLastCreated(self):
 
+        # Check whether there is more than one Pomodoro
         if Pomodoro.objects.last() == Pomodoro.objects.first():
             return True
         date1 = self.datetime
-        date2 = Pomodoro.objects.get(id=(self.id - 1)).datetime
+        # Compare the last and before last pomodoros time stamps
+        date2 = Pomodoro.objects.all().order_by('-id')[1].datetime
         diff = date1 - date2
-        print(date2, date1, diff)
+
         if (diff.total_seconds() / 60) < 24.9:
             return False
 
         return True
 
     def __str__(self):
-        return f'{self.user}, {self.datetime}, {self.tag}'
+        return f'{self.id}, {self.user}, {self.datetime}, {self.tag}'
 
 
 class Tag(models.Model):
-    tag = models.CharField(max_length=24, null=False)
+    tag = models.CharField(max_length=24, null=False, unique=True)
 
     def __str__(self):
         return f'{self.tag}'
