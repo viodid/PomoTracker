@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 psycopg2-binary = "*"
 django-allauth = "*"
+pytz = "*"
 
 [dev-packages]
 
