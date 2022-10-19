@@ -41,7 +41,7 @@ def generateToken(request):
 
         token = secrets.token_urlsafe(20)
         user = User.objects.get(username=request.user.username)
-        UserToken(user=user, token=token).save()
+        Token(user=user, token=token).save()
 
         return render(request, 'app/token.html', {
             'message': token

@@ -352,7 +352,7 @@ svg circle.meter {
     stroke: var(--yellow-logo);
     stroke-dashoffset: 47px;
     stroke-dasharray: 300px;
-    animation: prog 61s linear forwards, glow 1s 61s ease-in-out forwards;
+    /* animation: prog 61s linear forwards, glow 1s 61s ease-in-out forwards; */
 }
 
 @keyframes prog {
