@@ -1,0 +1,447 @@
+{% extends 'app/layout.html' %}
+
+{% block title %}
+    API Reference |
+{% endblock %}
+
+{% block body %}
+    <main>
+
+<h2>PomoTracker</h2>
+
+        <p><a href="{% url 'token' %}">Click here to get your token.(Do not share with anyone)</a></p>
+
+<h3>GET /api/tomatoes</h3>
+
+<p>Returns a list of current user's tomatoes.</p>
+
+<p>The list of tomatoes is ordered by descending creation date and it's paginated.
+Each page contains 25 records, by default the first page is retuned, use the
+<code>page</code> parameter to get any other page in the range [1, <code>total_pages</code>].</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Request parameters</h4>
+
+<ul>
+<li><code>page</code> a positive integer value to select a page in the range
+[1, <code>total_pages</code>]</li>
+<li><code>from</code> a ISO 8601 date time, selects tomatoes where <code>created_at</code> is greater
+than or equals to the parameter value</li>
+<li><code>to</code> a ISO 8601 date time, selects tomatoes where <code>created_at</code> is less than
+the parameter value</li>
+</ul>
+
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+</ul>
+
+
+<h4>Response content</h4>
+
+<pre><code class="json">{
+  "tomatoes": [
+    {
+      "id": "57f9c9377c8402dd306d1c8b",
+      "created_at": "2016-10-09T04:36:07.787Z",
+      "updated_at": "2016-10-09T04:36:07.787Z",
+      "tags": ["one", "two"]
+    },
+    {
+      "id": "57f9c9187c8402dd306d1c88",
+      "created_at": "2016-10-09T04:35:36.952Z",
+      "updated_at": "2016-10-09T04:35:36.952Z",
+      "tags": []
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 1,
+    "total_count": 2
+  }
+}
+</code></pre>
+
+<h3>GET /api/tomatoes/:id</h3>
+
+<p>Returns one of current user's tomatoes.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>404 Not Found</code></li>
+</ul>
+
+
+<h4>Response content</h4>
+
+<pre><code class="json">{
+  "id": "57f9c9187c8402dd306d1c88",
+  "created_at": "2016-10-09T04:35:36.952Z",
+  "updated_at": "2016-10-09T04:35:36.952Z",
+  "tags": ["one", "two"]
+}
+</code></pre>
+
+<h3>POST /api/tomatoes</h3>
+
+<p>Creates a new tomato.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Request content</h4>
+
+<pre><code class="json">{
+  "tomato": {
+    "tag_list": "one, two"
+  }
+}
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>201 Created</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>422 Unprocessable Entity</code>, validation error</li>
+</ul>
+
+
+<h4>Successful response content</h4>
+
+<pre><code class="json">{
+  "id": "57f9c9187c8402dd306d1c88",
+  "created_at": "2016-10-09T04:35:36.952Z",
+  "updated_at": "2016-10-09T04:35:36.952Z",
+  "tags": ["one", "two"]
+}
+</code></pre>
+
+<h4>Failure response content</h4>
+
+<pre><code class="json">{
+  "base": ["Must not overlap saved tomaotes, please wait 24 minutes, 59 seconds"]
+}
+</code></pre>
+
+<h3>PUT/PATCH /api/tomatoes/:id</h3>
+
+<p>Updates one of current user's tomatoes.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Request content</h4>
+
+<pre><code class="json">{
+  "tomato": {
+    "tag_list": "one, two"
+  }
+}
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>422 Unprocessable Entity</code>, validation error</li>
+</ul>
+
+
+<h4>Successful response content</h4>
+
+<pre><code class="json">{
+  "id": "57f9c9187c8402dd306d1c88",
+  "created_at": "2016-10-09T04:35:36.952Z",
+  "updated_at": "2016-10-09T04:35:36.952Z",
+  "tags": ["one", "two"]
+}
+</code></pre>
+
+<h3>DELETE /api/tomatoes/:id</h3>
+
+<p>Deletes one of current user's tomatoes.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>204 No Content</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>404 Not Found</code></li>
+</ul>
+
+
+<hr />
+
+<h2>Projects</h2>
+
+<h3>GET /api/projects</h3>
+
+<p>Returns a list of current user's projects.</p>
+
+<p>The list of projects is ordered by descending creation date and it's paginated.
+Each page contains 25 records, by default the first page is retuned, use the
+<code>page</code> parameter to get any other page in the range [1, <code>total_pages</code>].</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Request parameters</h4>
+
+<ul>
+<li><code>page</code> a positive integer value to select a page in the range
+[1, <code>total_pages</code>]</li>
+<li><code>tag_list</code> a list of tags separated by commas</li>
+</ul>
+
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+</ul>
+
+
+<h4>Response content</h4>
+
+<pre><code class="json">{
+  "projects": [
+    {
+      "id": "57f9c9377c8402dd306d1c8b",
+      "name": "Web app",
+      "created_at": "2016-10-09T04:36:07.787Z",
+      "updated_at": "2016-10-09T04:36:07.787Z",
+      "tags": ["one", "two"],
+      "money_budget": 1200,
+      "time_budget": 120
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 1,
+    "total_count": 1
+  }
+}
+</code></pre>
+
+<h3>GET /api/projects/:id</h3>
+
+<p>Returns one of current user's projects.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>404 Not Found</code></li>
+</ul>
+
+
+<h4>Response content</h4>
+
+<pre><code class="json">{
+  "id": "57f9c9377c8402dd306d1c8b",
+  "name": "Web app",
+  "created_at": "2016-10-09T04:36:07.787Z",
+  "updated_at": "2016-10-09T04:36:07.787Z",
+  "tags": ["ruby", "acme"],
+  "money_budget": 1200,
+  "time_budget": 120
+}
+</code></pre>
+
+<h3>POST /api/projects</h3>
+
+<p>Creates a new project.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Request content</h4>
+
+<pre><code class="json">{
+  "project": {
+    "name": "Web app",
+    "tag_list": "ruby, acme",
+    "money_budget": 1200,
+    "time_budget": 120
+  }
+}
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>201 Created</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>422 Unprocessable Entity</code>, validation error</li>
+</ul>
+
+
+<h4>Successful response content</h4>
+
+<pre><code class="json">{
+  "id": "57f9c9377c8402dd306d1c8b",
+  "name": "Web app",
+  "created_at": "2016-10-09T04:36:07.787Z",
+  "updated_at": "2016-10-09T04:36:07.787Z",
+  "tags": ["ruby", "acme"],
+  "money_budget": 1200,
+  "time_budget": 120
+}
+</code></pre>
+
+<h4>Failure response content</h4>
+
+<pre><code class="json">{
+  "name": ["can't be blank"]
+}
+</code></pre>
+
+<h3>PUT/PATCH /api/projects/:id</h3>
+
+<p>Updates one of current user's projects.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Request content</h4>
+
+<pre><code class="json">{
+  "project": {
+    "name": "Web app",
+    "tag_list": "ruby, acme",
+    "money_budget": 1200,
+    "time_budget": 120
+  }
+}
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>422 Unprocessable Entity</code>, validation error</li>
+</ul>
+
+
+<h4>Successful response content</h4>
+
+<pre><code class="json">{
+  "id": "57f9c9377c8402dd306d1c8b",
+  "name": "Web app",
+  "created_at": "2016-10-09T04:36:07.787Z",
+  "updated_at": "2016-10-09T04:36:07.787Z",
+  "tags": ["ruby", "acme"],
+  "money_budget": 1200,
+  "time_budget": 120
+}
+</code></pre>
+
+<h3>DELETE /api/projects/:id</h3>
+
+<p>Deletes one of current user's projects.</p>
+
+<h4>Auth header example</h4>
+
+<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+</code></pre>
+
+<h4>Response</h4>
+
+<ul>
+<li><code>204 No Content</code></li>
+<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>404 Not Found</code></li>
+</ul>
+
+
+<hr />
+
+<h2>Leaderboards</h2>
+
+<h3>GET /api/leaderboard/:period</h3>
+
+<p>Returns the users leaderboard for the selected period.</p>
+
+<p>The <code>period</code> segment could be <code>daily</code>, <code>weekly</code>, <code>monthly</code>, and <code>overall</code>.</p>
+
+<p>The list of leaderboard items is ordered by descending score and it's paginated.
+Each page contains 25 records, by default the first page is retuned, use the
+<code>page</code> parameter to get any other page in the range [1, <code>total_pages</code>].</p>
+
+<h4>Request parameters</h4>
+
+<ul>
+<li><code>page</code> a positive integer value to select a page in the range
+[1, <code>total_pages</code>]</li>
+</ul>
+
+
+<h4>Response</h4>
+
+<ul>
+<li><code>200 Ok</code></li>
+</ul>
+
+
+<h4>Response content</h4>
+
+<pre><code class="json">{
+  "scores": [
+    {
+      "user": {
+        "id": "586c2be37c8402b5d1db406c",
+        "name": "Giovanni Cappellotto",
+        "image": "http://tomato.es/images/users/586c2be37c8402b5d1db406c.png"
+      },
+      "score": 2
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 1,
+    "total_count": 1
+  }
+}
+</code></pre>
+</main>
+{% endblock %}
