@@ -12,9 +12,9 @@ def getAll(request, token):
         return JsonResponse({"error": "GET request required."}, status=400)
 
     try:
-        token = UserToken.objects.get(token=token)
+        token = Token.objects.get(token=token)
 
-    except UserToken.DoesNotExist:
+    except Token.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -25,6 +25,10 @@ def getAll(request, token):
     return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros], safe=False, status=200)
 
 
+def getLeaderboard(request, token, period):
+    pass
+
+
 # POST request
 @csrf_exempt
 def create(request, token):
@@ -33,9 +37,9 @@ def create(request, token):
         return JsonResponse({"error": "POST request required."}, status=400)
 
     try:
-        token = UserToken.objects.get(token=token)
+        token = Token.objects.get(token=token)
 
-    except UserToken.DoesNotExist:
+    except Token.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -65,18 +69,17 @@ def create(request, token):
 @csrf_exempt
 def updateDelete(request, token, pomodoro_id):
 
-    if request.method != 'PUT' and request.method != 'DELETE':
-        return JsonResponse({"error":"PUT or DELETE method required."})
-
     try:
-        token = UserToken.objects.get(token=token)
+        token = Token.objects.get(token=token)
 
-    except UserToken.DoesNotExist:
+    except Token.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
 
     data = json.loads(request.body)
+    # Get user from token
+    user = token.user
 
     if request.method == 'PUT':
         try:
@@ -99,5 +102,17 @@ def updateDelete(request, token, pomodoro_id):
 
             return JsonResponse({"message":"Pomodoro updated successfully"}, status=201)
 
-        return JsonResponse({"error":"Invalid pomodoro id"})
+        return JsonResponse({"error":"Invalid pomodoro id"}, status=401)
 
+    elif request.method == 'DELETE':
+
+        # Check pomodo_id is correct and correspond to the token's user
+        if Pomodoro.objects.filter(id=pomodoro_id) and user.pomodoros.filter(id=pomodoro_id):
+
+            Pomodoro.objects.filter(id=pomodoro_id).delete()
+
+            return JsonResponse({"message":"Pomodoro removed successfully"}, status=201)
+
+        return JsonResponse({"error":"Invalid pomodoro id"}, status=401)
+
+    return JsonResponse({"error":"PUT or DELETE method required."}, status=400)

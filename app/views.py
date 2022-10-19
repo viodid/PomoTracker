@@ -1,5 +1,4 @@
-from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
+from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -12,8 +11,9 @@ from .models import *
 def index(request):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
+        pomodoros = SlicePomodoros(user.pomodoros)
         return render(request, 'app/index.html', {
-            'pomodoros': user.pomodoros.all()
+            'pomodoros': pomodoros
         })
     return render(request, 'app/index.html')
 
@@ -36,13 +36,17 @@ def apiReference(request):
 
 
 def generateToken(request):
+
     if request.user.is_authenticated:
+
         token = secrets.token_urlsafe(20)
         user = User.objects.get(username=request.user.username)
         UserToken(user=user, token=token).save()
+
         return render(request, 'app/token.html', {
             'message': token
         })
+
     return render(request, 'app/token.html', {
         'message': 'You need to be logged in.'
     })

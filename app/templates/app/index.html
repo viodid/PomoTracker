@@ -15,7 +15,7 @@
             <div class="title cell">
                 <p class="left">Today's pomodoros</p>
             </div>
-            {% for pomodoro in pomodoros %}
+            {% for pomodoro in pomodoros.day %}
                 {% if forloop.last %}
                     <div class="cell last">
                         <span class="left">{{ pomodoro.datetime | date:"h:i A" }}</span>
@@ -36,19 +36,19 @@
         <div class="block count-pomodoros">
             <div class="today cell">
                 <span class="left">Today</span>
-                <span class="right" id="today">0</span>
+                <span class="right" id="today">{{ pomodoros.day.count }}</span>
             </div>
             <div class="week cell">
                 <span class="left">This week</span>
-                <span class="right">0</span>
+                <span class="right">{{ pomodoros.week.count }}</span>
             </div>
             <div class="month cell">
                 <span class="left">This month</span>
-                <span class="right">0</span>
+                <span class="right">{{ pomodoros.month.count }}</span>
             </div>
             <div class="year cell last">
                 <span class="left">This year</span>
-                <span class="right">{{ pomodoros.all.count }}</span>
+                <span class="right">{{ pomodoros.year.count }}</span>
             </div>
         </div>
     </div>
