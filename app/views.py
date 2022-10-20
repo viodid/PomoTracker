@@ -12,8 +12,10 @@ def index(request):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros)
+        token = generateToken(request)
         return render(request, 'app/index.html', {
-            'pomodoros': pomodoros
+            'pomodoros': pomodoros,
+            'token': token
         })
     return render(request, 'app/index.html')
 
@@ -35,14 +37,10 @@ def apiReference(request):
     return render(request, 'app/api.html')
 
 
-def generateToken(request):
+def token(request):
 
     if request.user.is_authenticated:
-
-        token = secrets.token_urlsafe(20)
-        user = User.objects.get(username=request.user.username)
-        Token(user=user, token=token).save()
-
+        token = generateToken(request)
         return render(request, 'app/token.html', {
             'message': token
         })
@@ -50,3 +48,15 @@ def generateToken(request):
     return render(request, 'app/token.html', {
         'message': 'You need to be logged in.'
     })
+
+
+def generateToken(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        token = secrets.token_urlsafe(20)
+        if not Token.objects.filter(user=user):
+            print('here')
+            Token(user=user, token=token).save()
+        return user.token.all()[0].token
+    return None
+

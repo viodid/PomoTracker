@@ -20,6 +20,7 @@
     <script src="{% static 'app/index.js' %}"></script>
 </head>
 <body>
+<input type="text" id="token" style="display: none;" value="{{ token }}">
     <div id="overlay">
         <svg viewBox="0 0 100 100">
             <circle class="bg" cx="50" cy="50" r="40"></circle>
@@ -28,7 +29,9 @@
         <div class="fill-data">
             <p class="timer" id="timer"><span id="minute">01</span>:<span id="second">01</span></p>
             <p class="focus">Focus</p>
+            <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none">
             <span class="button" id="cancel">Cancel</span>
+            <span class="button" id="save" style="display: none">Save</span>
             <p class="last-text">or press ESC</p>
         </div>
     </div>

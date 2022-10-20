@@ -348,27 +348,29 @@ svg circle.bg {
 }
 
 svg circle.meter {
-    filter: drop-shadow(0 0 3px var(--yellow-logo));
-    stroke: var(--yellow-logo);
-    stroke-dashoffset: 47px;
+    /* filter: drop-shadow(0 0 3px var(--yellow-logo));
+    stroke: var(--yellow-logo); */
+    stroke-dashoffset: 49px;
     stroke-dasharray: 300px;
-    /* animation: prog 61s linear forwards, glow 1s 61s ease-in-out forwards; */
+    /* animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards; */
 }
 
 @keyframes prog {
-    0% { stroke-dashoffset: 47px; }
+    0% { stroke-dashoffset: 49px; }
     100% { stroke-dashoffset: 300px; }
 }
 
 @keyframes glow {
+    0% { stroke-dashoffset: 300px}
     100% {
         stroke: greenyellow;
-        filter: drop-shadow(0 0 3px greenyellow);
+        /* filter: drop-shadow(0 0 3px greenyellow); */
+        filter: drop-shadow(0 0 0 transparent);
         stroke-dashoffset: 49px;
     }
 }
 
-.fill-data {
+.fill-data, #save-pomodoro {
     color: var(--text-color);
     width: 600px;
     height: 600px;
@@ -396,8 +398,10 @@ svg circle.meter {
     font-weight: 100;
 }
 
-#cancel {
-    padding: 7px 10px;
+#cancel, #save {
+    padding: 7px 0;
+    width: 65px;
+    text-align: center;
     font-size: 14px;
     border-radius: 5px;
     margin: 14px auto 10px auto;
@@ -408,6 +412,18 @@ svg circle.meter {
 #overlay .last-text {
     font-size: 14px;
 }
+
+.fill-data .text-input {
+    width: 400px;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 40px;
+    text-align: center;
+    caret-color: var(--text-color);
+    margin-bottom: 11px;
+}
+
 
 /* Accounts styles */
 .account-form {

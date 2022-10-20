@@ -49,11 +49,12 @@ def create(request, token):
     try:
         tag = data['tag']
         tag = tag.upper()
+        tag = tag.replace(' ', '_')
     except KeyError:
         return JsonResponse({"error": "POST request error."}, status=400)
 
     user = token.user
-    # Create new Tag only if doesn't exist already
+    # Create new Tag only if it doesn't exist already
     if not Tag.objects.filter(tag=tag):
         Tag(tag=tag).save()
 
@@ -88,7 +89,7 @@ def updateDelete(request, token, pomodoro_id):
         except KeyError:
             return JsonResponse({"error": "PUT request error."}, status=400)
 
-        # Create new Tag only if doesn't exist already
+        # Create new Tag only if it doesn't exist already
         if not Tag.objects.filter(tag=tag):
             Tag(tag=tag).save()
 

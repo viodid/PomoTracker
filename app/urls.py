@@ -8,5 +8,5 @@ urlpatterns = [
     path('privacy', views.privacy, name='privacy'),
     path('terms', views.terms, name='terms'),
     path('api_reference', views.apiReference, name='api'),
-    path('token', views.generateToken, name='token')
+    path('token', views.token, name='token')
 ]
