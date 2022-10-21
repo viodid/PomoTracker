@@ -39,6 +39,7 @@ class Pomodoro(models.Model):
 class SlicePomodoros:
 
     def __init__(self, pomodoros):
+        self.user = pomodoros.first().user.username
         self.day = pomodoros.filter(datetime__day=datetime.now().day).order_by('datetime')
         self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week)
         self.month = pomodoros.filter(datetime__month=datetime.now().month)

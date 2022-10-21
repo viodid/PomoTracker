@@ -79,3 +79,42 @@ def generateToken(request):
         return user.token.all()[0].token
     return None
 
+
+def leaderboard(request, period):
+    slice_pomodoro_users = []
+    for user in User.objects.all():
+        pomodoros = SlicePomodoros(user.pomodoros)
+        slice_pomodoro_users.append(pomodoros)
+
+    if period == 'day':
+        day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.day for pomo in day]
+        })
+    elif period == 'week':
+        week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.week for pomo in week]
+        })
+    elif period == 'month':
+        month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
+        print(month)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.month for pomo in month]
+        })
+    elif period == 'year':
+        year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.year for pomo in year]
+        })
+    elif period == 'all':
+        all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.all for pomo in all]
+        })
+    else:
+        return render(request, 'app/leaderboard.html', {
+            'message': 'Invalid period url'
+        })
+
+

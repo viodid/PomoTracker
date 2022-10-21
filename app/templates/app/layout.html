@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{% static 'app/styles.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/favicon/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'app/favicon/site.webmanifest' %}">
     <link rel="mask-icon" href="{% static 'app/favicon/safari-pinned-tab.svg' %}" color="#f1c232">
@@ -56,7 +56,7 @@
                     <span class="slider round" id="slider"></span>
                     </label>
                 </li>
-                <li><a href="">Leaderboards</a></li>
+                <li><a href="{% url 'leaderboar' period='month' %}">Leaderboards</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="">{{ user.username | capfirst}}</a></li>
                     <li><a id="user-logged" href="{% url 'logout' %}">Sign Out</a></li>

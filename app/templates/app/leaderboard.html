@@ -1,0 +1,33 @@
+{% extends 'app/layout.html' %}
+
+{% block title %}
+    Leaderboards |
+{% endblock %}
+
+{% block body %}
+    <ul>
+        <li>
+            <a href="{% url 'leaderboar' period='day' %}">Day</a>
+        </li>
+        <li>
+            <a href="{% url 'leaderboar' period='week' %}">Week</a>
+        </li>
+        <li>
+            <a href="{% url 'leaderboar' period='month' %}">Month</a>
+        </li>
+        <li>
+            <a href="{% url 'leaderboar' period='year' %}">Year</a>
+        </li>
+        <li>
+            <a href="{% url 'leaderboar' period='all' %}">Total</a>
+        </li>
+    </ul>
+    <div class="leaderboard-container">
+    {% for pomodoros in pomos %}
+        <div class="user-leaderboard">
+            <p><b>{{ pomodoros.first.user }}</b></p>
+            <p>{{ pomodoros.count }}</p>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
