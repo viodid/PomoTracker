@@ -36,6 +36,16 @@ class Pomodoro(models.Model):
         return f'{self.id}, {self.user}, {self.datetime}, {self.tag}'
 
 
+class SlicePomodoros:
+
+    def __init__(self, pomodoros):
+        self.day = pomodoros.filter(datetime__day=datetime.now().day).order_by('datetime')
+        self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week)
+        self.month = pomodoros.filter(datetime__month=datetime.now().month)
+        self.year = pomodoros.filter(datetime__year=datetime.now().year)
+        self.all = pomodoros.all()
+
+
 class Tag(models.Model):
     tag = models.CharField(max_length=24, null=False, unique=True)
 
@@ -51,12 +61,9 @@ class Token(models.Model):
         return f'{self.token} from {self.user.username}'
 
 
-class SlicePomodoros:
+class UserSettings(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='settings')
+    white_theme = models.BooleanField(default=False)
 
-    def __init__(self, pomodoros):
-        self.day = pomodoros.filter(datetime__day=datetime.now().day).order_by('datetime')
-        self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week)
-        self.month = pomodoros.filter(datetime__month=datetime.now().month)
-        self.year = pomodoros.filter(datetime__year=datetime.now().year)
-        self.all = pomodoros.all()
-
+    def __str__(self):
+        return f'{self.user.username}, {self.white_theme}'

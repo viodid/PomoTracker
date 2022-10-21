@@ -117,3 +117,32 @@ def updateDelete(request, token, pomodoro_id):
         return JsonResponse({"error":"Invalid pomodoro id"}, status=401)
 
     return JsonResponse({"error":"PUT or DELETE method required."}, status=400)
+
+
+@csrf_exempt
+def userSettings(request, token):
+
+    try:
+        token = Token.objects.get(token=token)
+
+    except Token.DoesNotExist:
+        return JsonResponse({
+            "error": "Invalid token"
+        }, status=401)
+
+    data = json.loads(request.body)
+    # Get user from token
+    user = token.user
+
+    if request.method == 'PUT':
+        try:
+            theme = data['white_theme']
+        except KeyError:
+            return JsonResponse({"error": "PUT request error."}, status=400)
+
+        settings = UserSettings.objects.get(user=user)
+        settings.white_theme = theme
+        settings.save()
+        return JsonResponse({"message":"Settings updated successfully"}, status=201)
+
+    return JsonResponse({"error":"PUT method required."}, status=400)

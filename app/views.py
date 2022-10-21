@@ -12,18 +12,32 @@ def index(request):
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros)
         token = generateToken(request)
+        user_settings = UserSettings.objects.get(user=user)
         return render(request, 'app/index.html', {
             'pomodoros': pomodoros,
-            'token': token
+            'token': token,
+            'settings': user_settings
         })
     return render(request, 'app/index.html')
 
 
 def privacy(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        user_settings = UserSettings.objects.get(user=user)
+        return render(request, 'app/privacy.html', {
+            'settings': user_settings
+        })
     return render(request, 'app/privacy.html')
 
 
 def terms(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        user_settings = UserSettings.objects.get(user=user)
+        return render(request, 'app/terms.html', {
+            'settings': user_settings
+        })
     return render(request, 'app/terms.html')
 
 
@@ -33,6 +47,12 @@ def logout_view(request):
 
 
 def apiReference(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        user_settings = UserSettings.objects.get(user=user)
+        return render(request, 'app/api.html', {
+            'settings': user_settings
+        })
     return render(request, 'app/api.html')
 
 

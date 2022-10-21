@@ -19,7 +19,11 @@
     <meta name="theme-color" content="#fdfdfd">
     <script src="{% static 'app/index.js' %}"></script>
 </head>
+{% if settings.white_theme %}
+<body class="white-theme">
+{% else %}
 <body>
+{% endif %}
 <input type="text" id="token" style="display: none;" value="{{ token }}">
     <div id="overlay">
         <svg viewBox="0 0 100 100">
@@ -29,7 +33,7 @@
         <div class="fill-data">
             <p class="timer" id="timer"><span id="minute">01</span>:<span id="second">01</span></p>
             <p class="focus">Focus</p>
-            <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none">
+            <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none" autocomplete="on">
             <span class="button" id="cancel">Cancel</span>
             <span class="button" id="save" style="display: none">Save</span>
             <p class="last-text">or press ESC</p>
@@ -41,10 +45,15 @@
         <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
         <div>
             <ul id="topnav" class="topnav">
+                <li id="lightbulb">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
+                        <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
+                    </svg>
+                </li>
                 <li>
-                    <label class="switch" id="switch">
+                    <label class="switch">
                     <input type="checkbox">
-                    <span class="slider round"></span>
+                    <span class="slider round" id="slider"></span>
                     </label>
                 </li>
                 <li><a href="">Leaderboards</a></li>

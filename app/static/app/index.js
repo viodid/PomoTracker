@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
             play_sound(document.querySelector('#whoosh'));
         }
     })
+
+    document.querySelector('#slider').addEventListener('click', () => {
+        switch_dark_mode();
+    })
 })
 
 function display_overlay(overlay, timer, hide=false) {
@@ -31,13 +35,13 @@ function display_overlay(overlay, timer, hide=false) {
         //overlay.style.visibility = 'hidden';
         //overlay.style.opacity = 0;
         //stop_animation();
-        //reset_timer(timer)
+        reset_timer(timer)
         //document.querySelector('.focus').innerHTML = 'Focus';
         //timer.phase = 'focus';
         location.reload();
     }
     else if (overlay.style.visibility === 'hidden') {
-        render_timer(1, '#f1c232');
+        render_timer(25, '#f1c232');
         overlay.style.visibility = 'visible';
         overlay.style.opacity = 0.97;
         start_timer(timer);
@@ -48,7 +52,7 @@ function display_overlay(overlay, timer, hide=false) {
             //overlay.style.visibility = 'hidden';
             //overlay.style.opacity = 0;
             //stop_animation();
-            //reset_timer(timer);
+            reset_timer(timer);
             //document.querySelector('.focus').innerHTML = 'Focus';
             //timer.phase = 'focus';
             location.reload();
@@ -70,7 +74,7 @@ function render_timer(time, color) {
     sheet.insertRule('svg circle.meter {' +
         `filter: drop-shadow(0 0 3px ${color});` +
         `stroke: ${color};` +
-        `animation: prog ${time_to_seconds}s linear forwards, glow 1s ${time_to_seconds}s ease-in-out forwards;` +
+        `animation: prog ${time_to_seconds}s linear forwards` +
         '}', sheet.cssRules.length);
 }
 
@@ -84,7 +88,6 @@ function start_timer(timer) {
 
     // Change clock when finished
     if (minutes.innerHTML === '00' && seconds.innerHTML === '00') {
-        console.log(timer.phase)
         clearTimeout(timer.timeout)
         play_sound(document.querySelector('#ding'));
         timer.phase === 'focus' ? timer.phase = 'break' : timer.phase = 'focus'
@@ -141,21 +144,22 @@ function post_pomodoro(token, timer) {
         })
     })
         .then(response => {
-            // Hide tag input form
-            change_labels(false);
-            // Render timer and set time
-            let cycle = document.querySelector('#today').innerHTML;
-            cycle = parseInt(cycle) + 1;
-            document.querySelector('.focus').innerHTML = 'Break';
-
-            if (parseInt(cycle) % 4 === 0) {
-                render_timer(15, 'greenyellow');
-            } else render_timer(5, 'greenyellow')
-            start_timer(timer);
-
             // append pomodoro to the index: count and today's
             if (response.status === 201) {
+                // Hide tag input form
+                change_labels(false);
+                // Render timer and set time
+                let cycle = document.querySelector('#today').innerHTML;
+                cycle = parseInt(cycle) + 1;
+                document.querySelector('.focus').innerHTML = 'Break';
+
+                if (parseInt(cycle) % 4 === 0) {
+                    render_timer(15, 'greenyellow');
+                } else render_timer(5, 'greenyellow')
+                start_timer(timer);
                 append_pomodoro(tag);
+            } else if (response.status === 422) {
+                alert('Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.')
             }
         })
 }
@@ -230,6 +234,8 @@ function play_sound(sound) {
 }
 
 function format_time(minutes, seconds) {
+
+
     minutes = parseInt(minutes);
     seconds = parseInt(seconds);
 
@@ -241,6 +247,11 @@ function format_time(minutes, seconds) {
     seconds -= 1
     minutes = check_format(minutes);
     seconds = check_format(seconds);
+
+    // Change title dynamically
+    const title = document.title;
+    document.title = `${minutes}:${seconds} | ` + title.slice(title.length - 11, title.length);
+
     return [minutes, seconds]
 }
 
@@ -262,6 +273,20 @@ function stop_animation() {
 
 function reset_timer(timer) {
     clearTimeout(timer.timeout)
+}
+
+
+function switch_dark_mode() {
+    document.body.classList.toggle('white-theme');
+    const token = document.querySelector('#token').value
+    let white = document.querySelector('body').classList
+    white.value === 'white-theme' ? white = true : white = false;
+    fetch(`/api/${token}/settings`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            'white_theme': white
+        })
+    })
 }
 
 
