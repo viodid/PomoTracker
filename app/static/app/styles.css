@@ -364,8 +364,7 @@ svg circle.meter {
     0% { stroke-dashoffset: 300px}
     100% {
         stroke: greenyellow;
-        /* filter: drop-shadow(0 0 3px greenyellow); */
-        filter: drop-shadow(0 0 0 transparent);
+        filter: drop-shadow(0 0 3px greenyellow);
         stroke-dashoffset: 49px;
     }
 }
