@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<main>
     <ul>
         <li>
             <a href="{% url 'leaderboar' period='day' %}">Day</a>
@@ -23,11 +24,13 @@
         </li>
     </ul>
     <div class="leaderboard-container">
-    {% for pomodoros in pomos %}
-        <div class="user-leaderboard">
-            <p><b>{{ pomodoros.first.user }}</b></p>
-            <p>{{ pomodoros.count }}</p>
-        </div>
-    {% endfor %}
+        {% for pomodoros in pomos %}
+            <div class="user-leaderboard">
+                <p><b>{{ pomodoros.first.user }}</b></p>
+                <p>{{ pomodoros.count }}</p>
+            </div>
+        {% endfor %}
     </div>
+
+</main>
 {% endblock %}
