@@ -25,10 +25,6 @@ def getAll(request, token):
     return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros], safe=False, status=200)
 
 
-def getLeaderboard(request, token, period):
-    pass
-
-
 # POST request
 @csrf_exempt
 def create(request, token):

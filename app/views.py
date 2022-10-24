@@ -1,5 +1,5 @@
 from django.contrib.auth import logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
 import secrets
@@ -10,13 +10,22 @@ from .models import *
 def index(request):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
-        pomodoros = SlicePomodoros(user.pomodoros, user.username)
+        pomodoros = SlicePomodoros(user.pomodoros, user)
         generateToken(request)
         generateUserSettings(request)
         return render(request, 'app/index.html', {
             'pomodoros': pomodoros
         })
     return render(request, 'app/index.html')
+
+
+def profile(request, username):
+    if User.objects.filter(username=username):
+        user = User.objects.get(username=username)
+        return render(request, 'app/profile.html', {
+            'user': user
+        })
+    return HttpResponseNotFound(request)
 
 
 def privacy(request):
@@ -70,7 +79,7 @@ def leaderboard(request, period):
 
     slice_pomodoro_users = []
     for user in User.objects.all():
-        pomodoros = SlicePomodoros(user.pomodoros, user.username)
+        pomodoros = SlicePomodoros(user.pomodoros, user)
         slice_pomodoro_users.append(pomodoros)
 
     if request.user.is_authenticated:

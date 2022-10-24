@@ -1,11 +1,24 @@
 {% extends 'app/layout.html' %}
 
 {% block title %}
-    {{ user.username }} |
+    {{ user.username }} -
 {% endblock %}
 
 {% block body %}
 <main>
-
+    <div class="user-profile">
+        <div class="header-profile">
+            <img src="{{ user.settings.image.url }}" alt="Profile image" class="user-profile-img">
+            <div class="name-rank">
+                <p class="title">{{ user.username }}</p>
+                <p>#{{ user.settings.white_theme }}</p>
+            </div>
+        </div>
+        <div class="body-profile">
+            <label for="profile-pic">Choose file to upload</label>
+            <input type="file" id="profile-pic" accept="image/*">
+            <input type="submit" value="Save">
+        </div>
+    </div>
 </main>
 {% endblock %}

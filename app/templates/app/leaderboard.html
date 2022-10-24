@@ -1,11 +1,12 @@
 {% extends 'app/layout.html' %}
 
 {% block title %}
-    Leaderboards |
+    Leaderboards -
 {% endblock %}
 
 {% block body %}
 <main>
+<div class="leaderboard-main-container">
     <div class="leaderboard-container">
         <ul class="header">
             <li>
@@ -28,14 +29,26 @@
             {% for pomodoros in pomos %}
                 {% if pomodoros.count > 0 %}
                     <li class="user-leaderboard">
-                        <p>{{ pomodoros.first.user }}</p>
-                        <p>{{ pomodoros.count }}</p>
+                        <div class="left">
+                            <img src="{{ pomodoros.first.user.settings.image.url }}" alt="profile picture" class="user-profile-img">
+                            <p><a href="{% url 'profile' username=pomodoros.first.user.username  %}">{{ pomodoros.first.user.username }}</a></p>
+                        </div>
+                        <p class="right">{{ pomodoros.count }}</p>
                     </li>
                 {% endif %}
 
             {% endfor %}
         </ol>
     </div>
+    <div class="leaderboard-container explanation">
+        <p class="title">Leaderboard rewards</p>
+        <br>
+        <p>The leaderboard rewards consist of little trophies displayed next to the username.</p>
+        <p>Whether you finish first🥇, second🥈, or third🥉, at the end of each <b>month</b>.</p>
+        <br>
+        <p>The rewards are visible for everyone.</p>
+    </div>
+</div>
 
 </main>
 {% endblock %}

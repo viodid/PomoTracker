@@ -445,7 +445,16 @@ svg circle.meter {
 }
 
 /* Leaderboard */
+.leaderboard-main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 20px;
+}
+
 .leaderboard-container {
+    width: 47%;
     margin: 40px 0;
     padding: 10px;
     background-color: var(--primary-color);
@@ -453,8 +462,18 @@ svg circle.meter {
     border-radius: var(--border-radius);
 }
 
+.explanation {
+    padding: 30px;
+}
+
+.leaderboard-container .title {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
 .leaderboard-container .header {
     display: flex;
+    justify-content: space-between;
     border-bottom: 2px solid var(--border-color);
 }
 
@@ -472,6 +491,45 @@ svg circle.meter {
     margin-bottom: 0;
 }
 
+.user-leaderboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-leaderboard .left {
+    display: flex;
+    align-items: center;
+}
+
+.user-leaderboard .left img {
+    margin-right: 20px;
+}
+
+/* Profile */
+.user-profile {
+    margin: 20px 0;
+}
+
+.user-profile .header-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-profile .name-rank {
+    margin: auto 20px;
+}
+
+.user-profile .title {
+    font-size: 40px;
+}
 
 /* Accounts styles */
 .account-form {

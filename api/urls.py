@@ -6,6 +6,5 @@ urlpatterns = [
     path('<str:token>/get', views.getAll, name='all'),
     path('<str:token>/create', views.create, name='create'),
     path('<str:token>/<int:pomodoro_id>', views.updateDelete, name='update-delete'),
-    path('<str:token>/settings', views.userSettings, name='user-settings'),
-    path('<str:token>/<str:period>', views.getLeaderboard, name='leaderboard')
+    path('<str:token>/settings', views.userSettings, name='user-settings')
 ]

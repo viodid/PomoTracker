@@ -38,8 +38,8 @@ class Pomodoro(models.Model):
 
 class SlicePomodoros:
 
-    def __init__(self, pomodoros, username):
-        self.user = username
+    def __init__(self, pomodoros, user):
+        self.user = user
         self.day = pomodoros.filter(datetime__day=datetime.now().day).order_by('datetime')
         self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week)
         self.month = pomodoros.filter(datetime__month=datetime.now().month)
@@ -65,7 +65,18 @@ class Token(models.Model):
 class UserSettings(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
     white_theme = models.BooleanField(default=False)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='default.png', upload_to='profile_pics')
 
     def __str__(self):
         return f'{self.user.username}, {self.white_theme}, {self.image}'
+
+
+class Rewards(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='rewards')
+    gold = models.PositiveSmallIntegerField(default=0)
+    silver = models.PositiveSmallIntegerField(default=0)
+    bronze = models.PositiveSmallIntegerField(default=0)
+
+    def updateRewards(self):
+        date = datetime.now()
+        return self
