@@ -1,8 +1,8 @@
 body {
-    --primary-color: #202020ff;
-    --secondary-color: #2c2c2cff;
-    --tertiary-color: #313131ff;
-    --softest-color: #434343ff;
+    --primary-color: #202020;
+    --secondary-color: #2c2c2c;
+    --tertiary-color: #313131;
+    --softest-color: #434343;
     --text-color: #efefef;
     --border-color: #999;
     --yellow-logo: #f1c232;
@@ -158,11 +158,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-#lightbulb {
+#lightbulb, #moon {
     margin: 0 -25px 0 0;
 }
 
-#lightbulb svg {
+#lightbulb svg, #moon svg {
     width: 29px;
 }
 
@@ -442,6 +442,34 @@ svg circle.meter {
     text-align: center;
     caret-color: var(--text-color);
     margin-bottom: 11px;
+}
+
+/* Leaderboard */
+.leaderboard-container {
+    margin: 40px 0;
+    padding: 10px;
+    background-color: var(--primary-color);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+}
+
+.leaderboard-container .header {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.leaderboard-container li {
+    margin: 20px 30px;
+    font-size: 20px;
+}
+
+.leaderboard-user-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-user-container li {
+    margin-bottom: 0;
 }
 
 

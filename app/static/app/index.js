@@ -25,6 +25,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector('#slider').addEventListener('click', () => {
         switch_dark_mode();
+        // Change image: lightbulb/moon
+        const lightbulb = document.querySelector('#lightbulb');
+        const moon = document.querySelector('#moon');
+        if (lightbulb.style.display === 'block') {
+            lightbulb.style.display = 'none';
+            moon.style.display = 'block';
+        } else {
+            lightbulb.style.display = 'block';
+            moon.style.display = 'none';
+
+        }
     })
 })
 
@@ -281,6 +292,8 @@ function switch_dark_mode() {
     const token = document.querySelector('#token').value
     let white = document.querySelector('body').classList
     white.value === 'white-theme' ? white = true : white = false;
+
+
     fetch(`/api/${token}/settings`, {
         method: 'PUT',
         body: JSON.stringify({

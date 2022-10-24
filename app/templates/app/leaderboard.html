@@ -6,30 +6,35 @@
 
 {% block body %}
 <main>
-    <ul>
-        <li>
-            <a href="{% url 'leaderboar' period='day' %}">Day</a>
-        </li>
-        <li>
-            <a href="{% url 'leaderboar' period='week' %}">Week</a>
-        </li>
-        <li>
-            <a href="{% url 'leaderboar' period='month' %}">Month</a>
-        </li>
-        <li>
-            <a href="{% url 'leaderboar' period='year' %}">Year</a>
-        </li>
-        <li>
-            <a href="{% url 'leaderboar' period='all' %}">Total</a>
-        </li>
-    </ul>
     <div class="leaderboard-container">
-        {% for pomodoros in pomos %}
-            <div class="user-leaderboard">
-                <p><b>{{ pomodoros.first.user }}</b></p>
-                <p>{{ pomodoros.count }}</p>
-            </div>
-        {% endfor %}
+        <ul class="header">
+            <li>
+                <a href="{% url 'leaderboar' period='day' %}">Day</a>
+            </li>
+            <li>
+                <a href="{% url 'leaderboar' period='week' %}">Week</a>
+            </li>
+            <li>
+                <a href="{% url 'leaderboar' period='month' %}">Month</a>
+            </li>
+            <li>
+                <a href="{% url 'leaderboar' period='year' %}">Year</a>
+            </li>
+            <li>
+                <a href="{% url 'leaderboar' period='all' %}">Total</a>
+            </li>
+        </ul>
+        <ol class="leaderboard-user-container">
+            {% for pomodoros in pomos %}
+                {% if pomodoros.count > 0 %}
+                    <li class="user-leaderboard">
+                        <p>{{ pomodoros.first.user }}</p>
+                        <p>{{ pomodoros.count }}</p>
+                    </li>
+                {% endif %}
+
+            {% endfor %}
+        </ol>
     </div>
 
 </main>

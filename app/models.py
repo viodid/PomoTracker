@@ -38,8 +38,8 @@ class Pomodoro(models.Model):
 
 class SlicePomodoros:
 
-    def __init__(self, pomodoros):
-        self.user = pomodoros.first().user.username
+    def __init__(self, pomodoros, username):
+        self.user = username
         self.day = pomodoros.filter(datetime__day=datetime.now().day).order_by('datetime')
         self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week)
         self.month = pomodoros.filter(datetime__month=datetime.now().month)
@@ -55,7 +55,7 @@ class Tag(models.Model):
 
 
 class Token(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='token')
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='token')
     token = models.CharField(max_length=27, null=True)
 
     def __str__(self):
@@ -63,8 +63,9 @@ class Token(models.Model):
 
 
 class UserSettings(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='settings')
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
     white_theme = models.BooleanField(default=False)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
-        return f'{self.user.username}, {self.white_theme}'
+        return f'{self.user.username}, {self.white_theme}, {self.image}'
