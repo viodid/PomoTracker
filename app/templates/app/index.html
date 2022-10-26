@@ -3,8 +3,8 @@
 {% load socialaccount %}
 {% load static %}
 
-{% block scipt %}
-{% static 'app/index.js' %}
+{% block script %}
+    <script src="{% static 'app/index.js' %}" type="module"></script>
 {% endblock %}
 
 {% block body %}

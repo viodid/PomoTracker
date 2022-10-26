@@ -5,6 +5,7 @@ from django.urls import reverse
 import secrets
 
 from .models import *
+from .forms import *
 
 
 def index(request):
@@ -21,6 +22,33 @@ def index(request):
 
 
 def profile(request, username):
+    if request.user.is_authenticated:
+        token = generateToken(request)
+        user = token.user
+        if request.method == 'POST' and username == request.user.username:
+            form = ProfileForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                cleanData = form.cleaned_data
+                settings = user.settings
+                settings.image = cleanData['image']
+                settings.save()
+                return render(request, 'app/profile.html', {
+                    'form': ProfileForm,
+                    'display':True,
+                    'message': 'Successfully uploaded'
+                })
+            else:
+                return render(request, 'app/profile.html', {
+                    'message': 'Invalid form'
+                })
+
+        if request.user.username == username:
+            return render(request, 'app/profile.html', {
+                'form': ProfileForm,
+                'display': True
+            })
+
     if User.objects.filter(username=username):
         user = User.objects.get(username=username)
         return render(request, 'app/profile.html', {
@@ -50,7 +78,7 @@ def token(request):
     if request.user.is_authenticated:
         token = generateToken(request)
         return render(request, 'app/token.html', {
-            'message': token
+            'message': token.token
         })
     return render(request, 'app/token.html', {
         'message': 'You need to be logged in.'
@@ -63,7 +91,7 @@ def generateToken(request):
         token = secrets.token_urlsafe(20)
         if not Token.objects.filter(user=user):
             Token(user=user, token=token).save()
-        return user.token.token
+        return user.token
     return None
 
 

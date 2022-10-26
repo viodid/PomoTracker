@@ -1,3 +1,5 @@
+import {switch_dark_mode, change_lightbulb} from "./theme_toggle.js";
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const overlay = document.querySelector('#overlay');
@@ -25,17 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector('#slider').addEventListener('click', () => {
         switch_dark_mode();
-        // Change image: lightbulb/moon
-        const lightbulb = document.querySelector('#lightbulb');
-        const moon = document.querySelector('#moon');
-        if (lightbulb.style.display === 'block') {
-            lightbulb.style.display = 'none';
-            moon.style.display = 'block';
-        } else {
-            lightbulb.style.display = 'block';
-            moon.style.display = 'none';
-
-        }
+        change_lightbulb();
     })
 })
 
@@ -123,7 +115,7 @@ function change_timer(minutes, timer) {
             display_social();
         }
     } else {
-        display_overlay(document.querySelector('#overlay'), timer, hide=true)
+        location.reload();
     }
 }
 
@@ -284,22 +276,6 @@ function stop_animation() {
 
 function reset_timer(timer) {
     clearTimeout(timer.timeout)
-}
-
-
-function switch_dark_mode() {
-    document.body.classList.toggle('white-theme');
-    const token = document.querySelector('#token').value
-    let white = document.querySelector('body').classList
-    white.value === 'white-theme' ? white = true : white = false;
-
-
-    fetch(`/api/${token}/settings`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            'white_theme': white
-        })
-    })
 }
 
 

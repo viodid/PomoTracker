@@ -1,7 +1,12 @@
 {% extends 'app/layout.html' %}
+{% load static %}
 
 {% block title %}
     {{ user.username }} -
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'app/terms_policy.js' %}" type="module"></script>
 {% endblock %}
 
 {% block body %}
@@ -22,13 +27,18 @@
                         <span class="rewards">🥉{{ user.rewards.bronze }}</span>
                     {% endif %}
                 </div>
-                <p>#{{ user.settings.white_theme }}</p>
+                <p>#ALPHA</p>
             </div>
         </div>
         <div class="body-profile">
-            <label for="profile-pic">Choose file to upload</label>
-            <input type="file" id="profile-pic" accept="image/*">
-            <input type="submit" value="Save">
+            {{ message }}
+            {% if display %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Upload</button>
+            </form>
+            {% endif %}
         </div>
     </div>
 </main>
