@@ -13,6 +13,7 @@ def index(request):
         pomodoros = SlicePomodoros(user.pomodoros, user)
         generateToken(request)
         generateUserSettings(request)
+        generateRewards(request)
         return render(request, 'app/index.html', {
             'pomodoros': pomodoros
         })
@@ -120,4 +121,10 @@ def leaderboard(request, period):
         })
 
 
+def generateRewards(request):
+    if request.user.is_authenticated:
+        if Rewards.objects.filter(user=request.user):
+            return Rewards.objects.get(user=request.user)
+        Rewards(user=request.user).save()
+        return Rewards.objects.get(user=request.user)
 

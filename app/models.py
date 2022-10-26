@@ -19,12 +19,14 @@ class Pomodoro(models.Model):
         }
 
     def checkLastCreated(self):
+        # Get user
+        user = self.user
         # Check whether there is more than one Pomodoro
-        if Pomodoro.objects.last() == Pomodoro.objects.first():
+        if user.pomodoros.last() == user.pomodoros.first():
             return True
         date1 = self.datetime
         # Compare the last and before last pomodoros time stamps
-        date2 = Pomodoro.objects.all().order_by('-id')[1].datetime
+        date2 = user.pomodoros.all().order_by('-id')[1].datetime
         diff = date1 - date2
 
         if (diff.total_seconds() / 60) < 24.9:
@@ -77,6 +79,5 @@ class Rewards(models.Model):
     silver = models.PositiveSmallIntegerField(default=0)
     bronze = models.PositiveSmallIntegerField(default=0)
 
-    def updateRewards(self):
-        date = datetime.now()
-        return self
+    def __str__(self):
+        return f'{self.user.username}, {self.gold}, {self.silver}, {self.bronze}'

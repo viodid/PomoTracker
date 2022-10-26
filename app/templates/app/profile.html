@@ -10,7 +10,18 @@
         <div class="header-profile">
             <img src="{{ user.settings.image.url }}" alt="Profile image" class="user-profile-img">
             <div class="name-rank">
-                <p class="title">{{ user.username }}</p>
+                <div class="username-rewards">
+                    <p class="title">{{ user.username }}</p>
+                    {% if user.rewards.gold %}
+                        <span class="rewards">🥇{{ user.rewards.gold }}</span>
+                    {% endif %}
+                    {% if user.rewards.silver %}
+                        <span class="rewards">🥈{{ user.rewards.silver }}</span>
+                    {% endif %}
+                    {% if user.rewards.bronze %}
+                        <span class="rewards">🥉{{ user.rewards.bronze }}</span>
+                    {% endif %}
+                </div>
                 <p>#{{ user.settings.white_theme }}</p>
             </div>
         </div>

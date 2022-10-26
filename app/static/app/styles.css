@@ -478,7 +478,7 @@ svg circle.meter {
 }
 
 .leaderboard-container li {
-    margin: 20px 30px;
+    padding: 20px 30px;
     font-size: 20px;
 }
 
@@ -488,7 +488,8 @@ svg circle.meter {
 }
 
 .leaderboard-user-container li {
-    margin-bottom: 0;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .user-leaderboard {
@@ -504,6 +505,15 @@ svg circle.meter {
 
 .user-leaderboard .left img {
     margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.user-leaderboard .left p {
+    margin-right: 5px;
+}
+
+.rewards {
+    font-size: 13px;
 }
 
 /* Profile */
@@ -516,11 +526,17 @@ svg circle.meter {
     align-items: center;
 }
 
+.user-profile .username-rewards {
+    display: flex;
+    align-items: center;
+}
+
 .user-profile-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
 .user-profile .name-rank {

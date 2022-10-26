@@ -56,10 +56,10 @@ def create(request, token):
 
     Pomodoro(user=user, tag=Tag.objects.get(tag=tag)).save()
 
-    if Pomodoro.objects.last().checkLastCreated():
+    if user.pomodoros.last().checkLastCreated():
         return JsonResponse({'message': 'Pomodoro created successfully'}, status=201)
 
-    Pomodoro.objects.filter(id=Pomodoro.objects.last().id).delete()
+    user.pomodoros.last().delete()
     return JsonResponse({'error':'Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.'}, status=422)
 
 

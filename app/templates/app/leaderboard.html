@@ -1,7 +1,12 @@
 {% extends 'app/layout.html' %}
+{% load static %}
 
 {% block title %}
     Leaderboards -
+{% endblock %}
+
+{% block script %}
+    {% static 'app/leaderboard.js' %}
 {% endblock %}
 
 {% block body %}
@@ -10,19 +15,19 @@
     <div class="leaderboard-container">
         <ul class="header">
             <li>
-                <a href="{% url 'leaderboar' period='day' %}">Day</a>
+                <a href="{% url 'leaderboar' period='day' %}" id="day-leaderboard">Day</a>
             </li>
             <li>
-                <a href="{% url 'leaderboar' period='week' %}">Week</a>
+                <a href="{% url 'leaderboar' period='week' %}" id="week-leaderboard">Week</a>
             </li>
             <li>
-                <a href="{% url 'leaderboar' period='month' %}">Month</a>
+                <a href="{% url 'leaderboar' period='month' %}" id="month-leaderboard">Month🏆</a>
             </li>
             <li>
-                <a href="{% url 'leaderboar' period='year' %}">Year</a>
+                <a href="{% url 'leaderboar' period='year' %}" id="year-leaderboard">Year</a>
             </li>
             <li>
-                <a href="{% url 'leaderboar' period='all' %}">Total</a>
+                <a href="{% url 'leaderboar' period='all' %}" id="all-leaderboard">Total</a>
             </li>
         </ul>
         <ol class="leaderboard-user-container">
@@ -32,6 +37,17 @@
                         <div class="left">
                             <img src="{{ pomodoros.first.user.settings.image.url }}" alt="profile picture" class="user-profile-img">
                             <p><a href="{% url 'profile' username=pomodoros.first.user.username  %}">{{ pomodoros.first.user.username }}</a></p>
+                            <div class="rewards-container">
+                                {% if pomodoros.first.user.rewards.gold %}
+                                    <span class="rewards">🥇{{ pomodoros.first.user.rewards.gold }}</span>
+                                {% endif %}
+                                {% if pomodoros.first.user.rewards.silver %}
+                                    <span class="rewards">🥈{{ pomodoros.first.user.rewards.silver }}</span>
+                                {% endif %}
+                                {% if pomodoros.first.user.rewards.bronze %}
+                                    <span class="rewards">🥉{{ pomodoros.first.user.rewards.bronze }}</span>
+                                {% endif %}
+                            </div>
                         </div>
                         <p class="right">{{ pomodoros.count }}</p>
                     </li>
