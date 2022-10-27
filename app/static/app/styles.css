@@ -548,8 +548,29 @@ svg circle.meter {
 }
 
 /* Accounts styles */
-.account-form {
+.main-account h1 {
+    text-align: center;
+    color: var(--yellow-logo);
+    font-size: 45px;
+    margin-top: 40px;
+}
 
+.main-account>p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--tertiary-color);
+    box-shadow: var(--box-shadow);
+    width: 500px;
+    justify-content: flex-start;
+    margin: 40px auto;
+    border-radius: var(--border-radius);
 }
 
 @media screen and (max-width: 920px) {

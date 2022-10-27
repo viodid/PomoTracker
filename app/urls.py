@@ -11,7 +11,7 @@ urlpatterns = [
     path('terms', views.terms, name='terms'),
     path('api_reference', views.apiReference, name='api'),
     path('token', views.token, name='token'),
-    path('leaderboard/<str:period>', views.leaderboard, name='leaderboar'),
+    path('leaderboard/<str:period>', views.leaderboard, name='leaderboard'),
     path('<str:username>', views.profile, name='profile')
 ]
 

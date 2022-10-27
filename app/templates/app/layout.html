@@ -75,12 +75,13 @@
                     <span class="slider round" id="slider"></span>
                     </label>
                 </li>
-                <li><a href="{% url 'leaderboar' period='month' %}">Leaderboards</a></li>
+                <li><a href="{% url 'leaderboard' period='month' %}">Leaderboards</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a></li>
                     <li><a id="user-logged" href="{% url 'logout' %}">Sign Out</a></li>
                 {% else %}
                     <li><a id="user-logged" href="/accounts/login">Sign In</a></li>
+                    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
                 {% endif %}
                 <li class="icon">
                     <img src="{% static 'app/images/menu.svg' %}" alt="">
