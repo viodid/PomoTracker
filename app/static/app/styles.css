@@ -201,6 +201,18 @@ footer img {
 }
 
 /* Main page styles */
+.intro-dialog {
+    width: 100%;
+    text-align: center;
+    padding: 57px 0;
+    margin-top: 55px;
+    margin-bottom: -20px;
+    background-color: var(--secondary-color);
+    font-size: 22px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
 .button {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -528,7 +540,11 @@ svg circle.meter {
 
 .user-profile .username-rewards {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+}
+
+.username-rewards .rewards {
+    font-size: 25px;
 }
 
 .user-profile-img {
@@ -565,12 +581,53 @@ svg circle.meter {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--tertiary-color);
+    background-color: var(--secondary-color);
     box-shadow: var(--box-shadow);
     width: 500px;
     justify-content: flex-start;
     margin: 40px auto;
     border-radius: var(--border-radius);
+}
+
+.account-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-form input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    margin: 20px;
+    width: 400px;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.account-form input:focus {
+    border-bottom: 2px solid var(--yellow-logo);
+    outline: none;
+}
+
+.account-form label {
+    display: none;
+}
+
+.account-form a {
+    border: none;
+}
+
+.account-form button {
+    padding: 8px 15px;
+    margin: 10px auto;
+    color: var(--primary-color);
+    background-color: var(--text-color);
+    font-size: 16px;
+}
+
+.social-account {
+    align-items: center;
 }
 
 @media screen and (max-width: 920px) {

@@ -9,6 +9,13 @@
 
 {% block body %}
 <main>
+    {% if not user.is_authenticated %}
+        <div class="intro-dialog">
+            <p>PomoTracker is a customizable pomodoro timer app.</p>
+            <p>Stay focused, be productive, track everything.</p>
+
+        </div>
+    {% endif %}
     <div class="first">
         <span id="start" class="button">Start</span>
         <p>or press space bar</p>
