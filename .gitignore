@@ -142,6 +142,4 @@ cython_debug/
 docker*
 postgres_docker/
 
-settings.py
-
 *.txt

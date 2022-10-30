@@ -1,0 +1,19 @@
+{
+    "name": "PomoTracker",
+    "short_name": "PomoTracker",
+    "icons": [
+        {
+            "src": "app/static/app/favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "app/static/app/favicon/android-chrome-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#fdfdfd",
+    "background_color": "#fdfdfd",
+    "display": "standalone"
+}

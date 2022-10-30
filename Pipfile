@@ -9,6 +9,7 @@ psycopg2-binary = "*"
 django-allauth = "*"
 pytz = "*"
 pillow = "*"
+pipfile = "*"
 
 [dev-packages]
 

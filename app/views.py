@@ -111,41 +111,34 @@ def leaderboard(request, period):
         pomodoros = SlicePomodoros(user.pomodoros, user)
         slice_pomodoro_users.append(pomodoros)
 
-    if request.user.is_authenticated:
-        if period == 'day':
-            day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
-            return render(request, 'app/leaderboard.html', {
-                'pomos': [pomo.day for pomo in day]
-            })
-        elif period == 'week':
-            week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
-            return render(request, 'app/leaderboard.html', {
-                'pomos': [pomo.week for pomo in week]
-            })
-        elif period == 'month':
-            month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
-            return render(request, 'app/leaderboard.html', {
-                'pomos': [pomo.month for pomo in month]
-            })
-        elif period == 'year':
-            year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
-            return render(request, 'app/leaderboard.html', {
-                'pomos': [pomo.year for pomo in year]
-            })
-        elif period == 'all':
-            all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
-            return render(request, 'app/leaderboard.html', {
-                'pomos': [pomo.all for pomo in all]
-            })
-        else:
-            return render(request, 'app/leaderboard.html', {
-                'message': 'Invalid period url'
-            })
-
-    else:
+    if period == 'day':
+        day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.day for pomo in day]
+        })
+    elif period == 'week':
+        week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.week for pomo in week]
+        })
+    elif period == 'month':
         month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
             'pomos': [pomo.month for pomo in month]
+        })
+    elif period == 'year':
+        year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.year for pomo in year]
+        })
+    elif period == 'all':
+        all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
+        return render(request, 'app/leaderboard.html', {
+            'pomos': [pomo.all for pomo in all]
+        })
+    else:
+        return render(request, 'app/leaderboard.html', {
+            'message': 'Invalid period url'
         })
 
 
