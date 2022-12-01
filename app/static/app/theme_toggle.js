@@ -1,4 +1,4 @@
-export function switch_dark_mode() {
+export function switchDarkMode() {
     document.body.classList.toggle('white-theme');
     const token = document.querySelector('#token').value
     let white = document.querySelector('body').classList
@@ -14,7 +14,7 @@ export function switch_dark_mode() {
 }
 
 // Change image: lightbulb/moon
-export function change_lightbulb() {
+export function changeLightbulb() {
     const lightbulb = document.querySelector('#lightbulb');
     const moon = document.querySelector('#moon');
     if (lightbulb.style.display === 'block') {

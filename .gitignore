@@ -4,6 +4,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Images and static content
+profile_pics/
+
 # C extensions
 *.so
 
