@@ -1,7 +1,12 @@
 {% extends 'app/layout.html' %}
+{% load static %}
 
 {% block title %}
     API Reference -
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
 {% endblock %}
 
 {% block body %}
@@ -11,106 +16,59 @@
 
         <p><a href="{% url 'token' %}">Click here to get your token.(Do not share with anyone)</a></p>
 
-<h3>GET /api/tomatoes</h3>
+<h3>GET /api/token/get</h3>
 
-<p>Returns a list of current user's tomatoes.</p>
+<p>Returns a list of current user's pomodoros.</p>
 
-<p>The list of tomatoes is ordered by descending creation date and it's paginated.
-Each page contains 25 records, by default the first page is retuned, use the
-<code>page</code> parameter to get any other page in the range [1, <code>total_pages</code>].</p>
+<p>The list of pomodoros is ordered by descending creation date.
 
-<h4>Auth header example</h4>
+<h4>Auth URI example</h4>
 
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/get
 </code></pre>
-
-<h4>Request parameters</h4>
-
-<ul>
-<li><code>page</code> a positive integer value to select a page in the range
-[1, <code>total_pages</code>]</li>
-<li><code>from</code> a ISO 8601 date time, selects tomatoes where <code>created_at</code> is greater
-than or equals to the parameter value</li>
-<li><code>to</code> a ISO 8601 date time, selects tomatoes where <code>created_at</code> is less than
-the parameter value</li>
-</ul>
-
 
 <h4>Response</h4>
 
 <ul>
 <li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
+<li><code>401 Unauthorized</code>, Invalid token</li>
 </ul>
 
 
 <h4>Response content</h4>
 
-<pre><code class="json">{
-  "tomatoes": [
+<pre><code class="json">
+  [
     {
-      "id": "57f9c9377c8402dd306d1c8b",
-      "created_at": "2016-10-09T04:36:07.787Z",
-      "updated_at": "2016-10-09T04:36:07.787Z",
-      "tags": ["one", "two"]
+      "id": "514",
+      "user": "pomotracker_user",
+      "created_at": "2022-10-30T13:38:02.753"
+      "tag": "API_JAVA"
     },
     {
-      "id": "57f9c9187c8402dd306d1c88",
-      "created_at": "2016-10-09T04:35:36.952Z",
-      "updated_at": "2016-10-09T04:35:36.952Z",
-      "tags": []
-    }
-  ],
-  "pagination": {
-    "current_page": 1,
-    "total_pages": 1,
-    "total_count": 2
-  }
-}
+      "id": "516",
+      "user": "pomotracker_user",
+      "created_at": "2022-10-30T14:08:02.753",
+      "tag": "API_JAVA"
+    },
+  ]
 </code></pre>
 
-<h3>GET /api/tomatoes/:id</h3>
 
-<p>Returns one of current user's tomatoes.</p>
+<h3>POST /api/token/create</h3>
 
-<h4>Auth header example</h4>
+<p>Creates a new pomodoro.</p>
 
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
-</code></pre>
+<h4>Auth URI example</h4>
 
-<h4>Response</h4>
-
-<ul>
-<li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>404 Not Found</code></li>
-</ul>
-
-
-<h4>Response content</h4>
-
-<pre><code class="json">{
-  "id": "57f9c9187c8402dd306d1c88",
-  "created_at": "2016-10-09T04:35:36.952Z",
-  "updated_at": "2016-10-09T04:35:36.952Z",
-  "tags": ["one", "two"]
-}
-</code></pre>
-
-<h3>POST /api/tomatoes</h3>
-
-<p>Creates a new tomato.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/create
 </code></pre>
 
 <h4>Request content</h4>
 
 <pre><code class="json">{
-  "tomato": {
-    "tag_list": "one, two"
+  "body": {
+    "tag": "tag"
   }
 }
 </code></pre>
@@ -119,42 +77,25 @@ the parameter value</li>
 
 <ul>
 <li><code>201 Created</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>422 Unprocessable Entity</code>, validation error</li>
+<li><code>401 Unauthorized</code>, Invalid token</li>
+<li><code>422 Unprocessable Entity</code>Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.</li>
 </ul>
 
 
-<h4>Successful response content</h4>
+<h3>PUT /api/token/pomodoro_id</h3>
 
-<pre><code class="json">{
-  "id": "57f9c9187c8402dd306d1c88",
-  "created_at": "2016-10-09T04:35:36.952Z",
-  "updated_at": "2016-10-09T04:35:36.952Z",
-  "tags": ["one", "two"]
-}
-</code></pre>
+<p>Updates one of current user's pomodoros.</p>
 
-<h4>Failure response content</h4>
+<h4>Auth URI example</h4>
 
-<pre><code class="json">{
-  "base": ["Must not overlap saved tomaotes, please wait 24 minutes, 59 seconds"]
-}
-</code></pre>
-
-<h3>PUT/PATCH /api/tomatoes/:id</h3>
-
-<p>Updates one of current user's tomatoes.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/453
 </code></pre>
 
 <h4>Request content</h4>
 
 <pre><code class="json">{
-  "tomato": {
-    "tag_list": "one, two"
+  "body": {
+    "tag": "tag"
   }
 }
 </code></pre>
@@ -162,240 +103,30 @@ the parameter value</li>
 <h4>Response</h4>
 
 <ul>
-<li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>422 Unprocessable Entity</code>, validation error</li>
+<li><code>201 Ok</code></li>
+<li><code>401 Unauthorized</code>Invalid token or invalid pomodoro id</li>
 </ul>
 
 
-<h4>Successful response content</h4>
+<h3>DELETE /api/token/pomodoro_id</h3>
 
-<pre><code class="json">{
-  "id": "57f9c9187c8402dd306d1c88",
-  "created_at": "2016-10-09T04:35:36.952Z",
-  "updated_at": "2016-10-09T04:35:36.952Z",
-  "tags": ["one", "two"]
-}
-</code></pre>
+<p>Deletes one of current user's pomodoros.</p>
 
-<h3>DELETE /api/tomatoes/:id</h3>
+<h4>Auth URI example</h4>
 
-<p>Deletes one of current user's tomatoes.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
+<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/453
 </code></pre>
 
 <h4>Response</h4>
 
 <ul>
-<li><code>204 No Content</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>404 Not Found</code></li>
+<li><code>201 Ok</code></li>
+<li><code>401 Unauthorized</code>Invalid token or invalid pomodoro id</li>
 </ul>
 
 
-<hr />
 
-<h2>Projects</h2>
-
-<h3>GET /api/projects</h3>
-
-<p>Returns a list of current user's projects.</p>
-
-<p>The list of projects is ordered by descending creation date and it's paginated.
-Each page contains 25 records, by default the first page is retuned, use the
-<code>page</code> parameter to get any other page in the range [1, <code>total_pages</code>].</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
-</code></pre>
-
-<h4>Request parameters</h4>
-
-<ul>
-<li><code>page</code> a positive integer value to select a page in the range
-[1, <code>total_pages</code>]</li>
-<li><code>tag_list</code> a list of tags separated by commas</li>
-</ul>
-
-
-<h4>Response</h4>
-
-<ul>
-<li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-</ul>
-
-
-<h4>Response content</h4>
-
-<pre><code class="json">{
-  "projects": [
-    {
-      "id": "57f9c9377c8402dd306d1c8b",
-      "name": "Web app",
-      "created_at": "2016-10-09T04:36:07.787Z",
-      "updated_at": "2016-10-09T04:36:07.787Z",
-      "tags": ["one", "two"],
-      "money_budget": 1200,
-      "time_budget": 120
-    }
-  ],
-  "pagination": {
-    "current_page": 1,
-    "total_pages": 1,
-    "total_count": 1
-  }
-}
-</code></pre>
-
-<h3>GET /api/projects/:id</h3>
-
-<p>Returns one of current user's projects.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>404 Not Found</code></li>
-</ul>
-
-
-<h4>Response content</h4>
-
-<pre><code class="json">{
-  "id": "57f9c9377c8402dd306d1c8b",
-  "name": "Web app",
-  "created_at": "2016-10-09T04:36:07.787Z",
-  "updated_at": "2016-10-09T04:36:07.787Z",
-  "tags": ["ruby", "acme"],
-  "money_budget": 1200,
-  "time_budget": 120
-}
-</code></pre>
-
-<h3>POST /api/projects</h3>
-
-<p>Creates a new project.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
-</code></pre>
-
-<h4>Request content</h4>
-
-<pre><code class="json">{
-  "project": {
-    "name": "Web app",
-    "tag_list": "ruby, acme",
-    "money_budget": 1200,
-    "time_budget": 120
-  }
-}
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>201 Created</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>422 Unprocessable Entity</code>, validation error</li>
-</ul>
-
-
-<h4>Successful response content</h4>
-
-<pre><code class="json">{
-  "id": "57f9c9377c8402dd306d1c8b",
-  "name": "Web app",
-  "created_at": "2016-10-09T04:36:07.787Z",
-  "updated_at": "2016-10-09T04:36:07.787Z",
-  "tags": ["ruby", "acme"],
-  "money_budget": 1200,
-  "time_budget": 120
-}
-</code></pre>
-
-<h4>Failure response content</h4>
-
-<pre><code class="json">{
-  "name": ["can't be blank"]
-}
-</code></pre>
-
-<h3>PUT/PATCH /api/projects/:id</h3>
-
-<p>Updates one of current user's projects.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
-</code></pre>
-
-<h4>Request content</h4>
-
-<pre><code class="json">{
-  "project": {
-    "name": "Web app",
-    "tag_list": "ruby, acme",
-    "money_budget": 1200,
-    "time_budget": 120
-  }
-}
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>422 Unprocessable Entity</code>, validation error</li>
-</ul>
-
-
-<h4>Successful response content</h4>
-
-<pre><code class="json">{
-  "id": "57f9c9377c8402dd306d1c8b",
-  "name": "Web app",
-  "created_at": "2016-10-09T04:36:07.787Z",
-  "updated_at": "2016-10-09T04:36:07.787Z",
-  "tags": ["ruby", "acme"],
-  "money_budget": 1200,
-  "time_budget": 120
-}
-</code></pre>
-
-<h3>DELETE /api/projects/:id</h3>
-
-<p>Deletes one of current user's projects.</p>
-
-<h4>Auth header example</h4>
-
-<pre><code>Authorization: d994a295cf68342b99e3036827d3ef8a
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>204 No Content</code></li>
-<li><code>401 Unauthorized</code>, invalid token</li>
-<li><code>404 Not Found</code></li>
-</ul>
-
-
-<hr />
-
+<!--
 <h2>Leaderboards</h2>
 
 <h3>GET /api/leaderboard/:period</h3>
@@ -443,5 +174,6 @@ Each page contains 25 records, by default the first page is retuned, use the
   }
 }
 </code></pre>
+-->
 </main>
 {% endblock %}
