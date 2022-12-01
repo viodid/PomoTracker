@@ -40,13 +40,13 @@ class Pomodoro(models.Model):
 
 class SlicePomodoros:
 
-    def __init__(self, pomodoros, user):
+def __init__(self, pomodoros, user):
         self.user = user
-        self.day = pomodoros.filter(datetime__day=datetime.now().day).order_by('datetime')
-        self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week)
-        self.month = pomodoros.filter(datetime__month=datetime.now().month)
-        self.year = pomodoros.filter(datetime__year=datetime.now().year)
         self.all = pomodoros.all()
+        self.year = pomodoros.filter(datetime__year=datetime.now().year)
+        self.month = pomodoros.filter(datetime__month=datetime.now().month, datetime__year=datetime.now().year)
+        self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week, datetime__month=datetime.now().month, datetime__year=datetime.now().year)
+        self.day = pomodoros.filter(datetime__day=datetime.now().day, datetime__week=datetime.now().isocalendar().week, datetime__month=datetime.now().month, datetime__year=datetime.now().year).order_by('datetime')
 
 
 class Tag(models.Model):
