@@ -80,6 +80,8 @@ class UserSettings(models.Model):
     stopSound = models.CharField(max_length=2, choices=sound_choices_stop, default='WH')
     focusTime = models.PositiveSmallIntegerField(default=25)
     breakTime = models.PositiveSmallIntegerField(default=5)
+    focusColor = models.CharField(default='#f1c232', max_length=7)
+    breakColor = models.CharField(default='#ADFF2F')
 
     def __str__(self):
         return f'{self.user.username}, {self.white_theme}, {self.image}'
