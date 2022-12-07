@@ -13,17 +13,19 @@ const focusTime = 1;
 const focusColor = '#f1c232';
 const breakTime = 5;
 const breakColor = 'greenyellow';
+const startSound = '#ding';
+const stopSound = '#blaublau';
 
 function runTimer() {
   time.showTimer();
   time.renderTimer(focusTime, focusColor);
   const atStart = performance.now();
-  time.startTimer('#ding', atStart, focusTime);
+  time.startTimer(startSound, atStart);
 }
 
 function stopTimer() {
   time.hideTimer();
-  time.stopTimer('#blaublau');
+  time.stopTimer(stopSound);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
