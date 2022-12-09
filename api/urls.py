@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('<str:token>/get', views.getAll, name='all'),
+    path('<str:token>/getSettings', views.getSettings, name='settings'),
     path('<str:token>/create', views.create, name='create'),
     path('<str:token>/<int:pomodoro_id>', views.updateDelete, name='update-delete'),
     path('<str:token>/settings', views.userSettings, name='user-settings')

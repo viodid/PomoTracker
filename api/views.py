@@ -24,6 +24,23 @@ def getAll(request, token):
 
     return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros], safe=False, status=200)
 
+def getSettings(request, token):
+
+    if request.method != 'GET':
+        return JsonResponse({"error": "GET request required."}, status=400)
+
+    try:
+        token = Token.objects.get(token=token)
+
+    except Token.DoesNotExist:
+        return JsonResponse({
+            "error": "Invalid token"
+        }, status=401)
+
+    user = token.user
+    settings = UserSettings.objects.get(user=user)
+
+    return JsonResponse(settings.serialize(), safe=False, status=200)
 
 # POST request
 @csrf_exempt

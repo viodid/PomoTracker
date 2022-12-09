@@ -68,9 +68,35 @@ class UserSettings(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
     white_theme = models.BooleanField(default=False)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
+    sound_choices_start = (
+        ('#ding', 'ding'),
+        ('#nana', 'nanana')
+    )
+    startSound = models.CharField(max_length=16, choices=sound_choices_start, default='#ding')
+    sound_choices_stop = (
+        ('#minion', 'minion'),
+        ('#whoosh', 'whoosh')
+    )
+    stopSound = models.CharField(max_length=16, choices=sound_choices_stop, default='#whoosh')
+    focusTime = models.PositiveSmallIntegerField(default=25)
+    breakTime = models.PositiveSmallIntegerField(default=5)
+    focusColor = models.CharField(default='#f1c232', max_length=7)
+    breakColor = models.CharField(default='#ADFF2F', max_length=7)
 
     def __str__(self):
         return f'{self.user.username}, {self.white_theme}, {self.image}'
+
+    def serialize(self):
+        return {
+            'user': self.user.username,
+            'white_theme': self.white_theme,
+            'startSound': self.startSound,
+            'stopSound': self.stopSound,
+            'focusTime': self.focusTime,
+            'breakTime': self.breakTime,
+            'focusColor': self.focusColor,
+            'breakColor': self.breakColor
+        }
 
 
 class Rewards(models.Model):
