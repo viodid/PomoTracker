@@ -40,7 +40,7 @@ class Pomodoro(models.Model):
 
 class SlicePomodoros:
 
-def __init__(self, pomodoros, user):
+    def __init__(self, pomodoros, user):
         self.user = user
         self.all = pomodoros.all()
         self.year = pomodoros.filter(datetime__year=datetime.now().year)
