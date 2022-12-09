@@ -1,9 +1,9 @@
-import {switch_dark_mode , change_lightbulb} from "./theme_toggle.js";
+/* eslint-disable import/extensions */
+import { switchDarkMode, changeLightbulb } from './theme_toggle.js';
 
-document.addEventListener('DOMContentLoaded', function () {
-
-    document.querySelector('#slider').addEventListener('click', () => {
-        switch_dark_mode();
-        change_lightbulb();
-    })
-})
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#slider').addEventListener('click', () => {
+    switchDarkMode();
+    changeLightbulb();
+  });
+});

@@ -69,19 +69,19 @@ class UserSettings(models.Model):
     white_theme = models.BooleanField(default=False)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
     sound_choices_start = (
-        ('DI', 'ding'),
-        ('NA', 'nanana')
+        ('#ding', 'ding'),
+        ('#nana', 'nanana')
     )
-    startSound = models.CharField(max_length=2, choices=sound_choices_start, default='DI')
+    startSound = models.CharField(max_length=16, choices=sound_choices_start, default='#ding')
     sound_choices_stop = (
-        ('MI', 'minion'),
-        ('WH', 'whoose')
+        ('#minion', 'minion'),
+        ('#whoosh', 'whoosh')
     )
-    stopSound = models.CharField(max_length=2, choices=sound_choices_stop, default='WH')
+    stopSound = models.CharField(max_length=16, choices=sound_choices_stop, default='#whoosh')
     focusTime = models.PositiveSmallIntegerField(default=25)
     breakTime = models.PositiveSmallIntegerField(default=5)
     focusColor = models.CharField(default='#f1c232', max_length=7)
-    breakColor = models.CharField(default='#ADFF2F')
+    breakColor = models.CharField(default='#ADFF2F', max_length=7)
 
     def __str__(self):
         return f'{self.user.username}, {self.white_theme}, {self.image}'
@@ -93,7 +93,9 @@ class UserSettings(models.Model):
             'startSound': self.startSound,
             'stopSound': self.stopSound,
             'focusTime': self.focusTime,
-            'breakTime': self.breakTime
+            'breakTime': self.breakTime,
+            'focusColor': self.focusColor,
+            'breakColor': self.breakColor
         }
 
 
