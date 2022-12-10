@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 from datetime import datetime
+from math import ceil
 
 
 class Pomodoro(models.Model):
@@ -83,9 +85,6 @@ class UserSettings(models.Model):
     focusColor = models.CharField(default='#f1c232', max_length=7)
     breakColor = models.CharField(default='#ADFF2F', max_length=7)
 
-    def __str__(self):
-        return f'{self.user.username}, {self.white_theme}, {self.image}'
-
     def serialize(self):
         return {
             'user': self.user.username,
@@ -98,12 +97,25 @@ class UserSettings(models.Model):
             'breakColor': self.breakColor
         }
 
+    def __str__(self):
+        return f'{self.user.username}, {self.white_theme}, {self.image}, {self.startSound}, {self.stopSound}, {self.focusTime}, {self.breakTime}, {self.focusColor}'
+
 
 class Rewards(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='rewards')
     gold = models.PositiveSmallIntegerField(default=0)
     silver = models.PositiveSmallIntegerField(default=0)
     bronze = models.PositiveSmallIntegerField(default=0)
+    ranks = ArrayField(ArrayField(models.IntegerField()), default=list)
+
+    def getAverageRank(self):
+        if len(self.ranks) <= 1:
+            return 'No rank'
+        average = 0
+        for i, rank in enumerate(self.ranks):
+            if i != 0:
+                average += self.ranks[i]
+        return ceil(average / (len(self.ranks) - 1))
 
     def __str__(self):
-        return f'{self.user.username}, {self.gold}, {self.silver}, {self.bronze}'
+        return f'{self.user.username}, {self.gold}, {self.silver}, {self.bronze}, {self.ranks}'

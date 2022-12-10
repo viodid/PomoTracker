@@ -24,6 +24,12 @@ class Command(BaseCommand):
             third = Rewards.objects.get(user=month[2].user)
             third.bronze += 1
             third.save()
+
+            for i, pomos in enumerate(month):
+                user = Rewards.objects.get(user=month[i].user)
+                user.ranks.append(i + 1)
+                user.save()
+                print(user.user)
             self.stdout.write('Done!')
             return None
 
