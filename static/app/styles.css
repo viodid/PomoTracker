@@ -392,7 +392,7 @@ svg circle.meter {
     0% { stroke-dashoffset: 49px; }
     100% { stroke-dashoffset: 300px; }
 }
-
+/*
 @keyframes glow {
     0% { stroke-dashoffset: 300px}
     100% {
@@ -401,6 +401,7 @@ svg circle.meter {
         stroke-dashoffset: 49px;
     }
 }
+*/
 
 .fill-data, #save-pomodoro {
     color: var(--text-color);
@@ -624,6 +625,8 @@ svg circle.meter {
     color: var(--primary-color);
     background-color: var(--text-color);
     font-size: 16px;
+    border: none;
+    border-radius: 5px;
 }
 
 .social-account {
