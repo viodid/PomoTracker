@@ -7,7 +7,7 @@ import * as settings from './user_settings.js';
 import {
   showTimer,
   renderTimer,
-  startTimer,
+  startFocusTimer,
   stopTimer,
   hideTimer,
 } from './timer.js';
@@ -48,5 +48,5 @@ function runTimer() {
   renderTimer(settings.focusTime, settings.focusColor);
   const atStart = performance.now();
   document.querySelector('.focus').innerHTML = 'Focus';
-  startTimer(atStart, settings.focusTime);
+  startFocusTimer(atStart, settings.focusTime);
 }
