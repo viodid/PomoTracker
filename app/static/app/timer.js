@@ -23,14 +23,25 @@ function hideTimer() {
   overlay.style.visibility = 'hidden';
 }
 
-function stopTimer() {
+function changeStop() {
   document.querySelector(settings.stopSound).play();
   minutes.innerHTML = '--';
   seconds.innerHTML = '--';
+}
+
+function resetStroke() {
   const sheet = window.document.styleSheets[0];
-  sheet.insertRule('svg circle.meter {'
-    + 'animation: none'
-    + '}', sheet.cssRules.length);
+  sheet.deleteRule(sheet.cssRules.length - 1);
+}
+
+function resetTitle() {
+  document.title = 'Pomodoro Timer Online | PomoTracker';
+}
+
+function stopTimer() {
+  resetTitle();
+  changeStop();
+  resetStroke();
 }
 
 function postPomodoro(token) {
@@ -48,15 +59,18 @@ function postPomodoro(token) {
         // Render timer and set time
         let cycle = document.querySelector('#today').innerHTML;
         cycle = parseInt(cycle, 10) + 1;
+        resetStroke();
 
         if (parseInt(cycle, 10) % 4 === 0) {
           renderTimer(15, settings.breakColor);
         } else renderTimer(settings.breakTime, settings.breakColor);
+
         changeLabels(true);
         document.querySelector('.focus').innerHTML = 'Break';
+        appendPomodoro(tag);
+
         const atStart = performance.now();
         startBreakTimer(atStart, settings.breakTime);
-        appendPomodoro(tag);
       } else if (response.status === 422) {
         alert('Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.');
       }
@@ -64,27 +78,10 @@ function postPomodoro(token) {
     });
 }
 
-function savePomodoro() {
-  // Save pomodoro to the API
-  const token = document.querySelector('#token').value;
-
-  document.addEventListener('keydown', (event) => {
-    if (event.code === 'Enter' && document.querySelector('#save').style.display === 'block') {
-      postPomodoro(token);
-    }
-  });
-
-  document.querySelector('#save').addEventListener('click', () => {
-    postPomodoro(token);
-  });
-}
-
 function changeTimer() {
   // Check if user is logged in to save the pomodoro
   const userLogged = document.querySelector('#user-logged');
-  if (userLogged.innerHTML === 'Sign Out') {
-    savePomodoro();
-  } else {
+  if (userLogged.innerHTML !== 'Sign Out') {
     alert('Sign in to collect and save your Pomodoros!');
     // eslint-disable-next-line no-restricted-globals
     location.reload();
@@ -114,15 +111,16 @@ function startFocusTimer(atStart, time) {
 function startBreakTimer(atStart, time) {
   // Timer manual stop
   if (minutes.innerHTML === '--' && seconds.innerHTML === '--') {
-    changeLabels(false);
     hideTimer();
     stopTimer();
+    changeLabels(false);
     return;
   }
   // Change clock when finished
   if (minutes.innerHTML === '00' && seconds.innerHTML === '00') {
     document.querySelector(settings.stopSound).play();
     hideTimer();
+    stopTimer();
     changeLabels(false);
     return;
   }
@@ -137,4 +135,5 @@ export {
   startBreakTimer,
   startFocusTimer,
   stopTimer,
+  postPomodoro,
 };

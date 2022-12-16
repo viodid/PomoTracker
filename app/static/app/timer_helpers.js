@@ -18,12 +18,13 @@ function formatHour() {
   // Format hours to 12 time format
   if (hour > 12) {
     hour -= 12;
-
+    if (minute < 10) minute = `0${minute.toString()}`;
+    output = `${hour.toString()}:${minute.toString()} PM`;
+  } else {
     if (hour < 10) hour = `0${hour.toString()}`;
     if (minute < 10) minute = `0${minute.toString()}`;
-
-    output = `${hour.toString()}:${minute.toString()} PM`;
-  } else output = `${hour.toString()}:${minute.toString()} AM`;
+    output = `${hour.toString()}:${minute.toString()} AM`;
+  }
 
   return output;
 }

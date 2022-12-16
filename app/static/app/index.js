@@ -10,12 +10,24 @@ import {
   startFocusTimer,
   stopTimer,
   hideTimer,
+  postPomodoro,
 } from './timer.js';
 
 const overlay = document.querySelector('#overlay');
+const token = document.querySelector('#token').value;
 
 document.querySelector('#start').addEventListener('click', () => {
   runTimer();
+});
+
+document.querySelector('#save').addEventListener('click', () => {
+  postPomodoro(token);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Enter' && document.querySelector('#save').style.display === 'block') {
+    postPomodoro(token);
+  }
 });
 
 document.querySelector('#cancel').addEventListener('click', () => {
