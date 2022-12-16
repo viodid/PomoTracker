@@ -15,9 +15,9 @@ function getSettings(tokenParam) {
 let bColor = '#ADFF2F';
 let fColor = '#f1c232';
 let bTime = 5;
-let fTime = 1;
+let fTime = 25;
 let staSound = '#ding';
-let stoSound = '#minion';
+let stoSound = '#whoosh';
 let user = null;
 let theme = false;
 

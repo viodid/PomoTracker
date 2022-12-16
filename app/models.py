@@ -21,7 +21,6 @@ class Pomodoro(models.Model):
         }
 
     def checkLastCreated(self):
-        return True
         # Get user
         user = self.user
         # Check whether there is more than one Pomodoro
