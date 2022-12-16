@@ -10,12 +10,18 @@ import {
   startFocusTimer,
   stopTimer,
   hideTimer,
+  postPomodoro,
 } from './timer.js';
 
 const overlay = document.querySelector('#overlay');
+const token = document.querySelector('#token').value;
 
 document.querySelector('#start').addEventListener('click', () => {
   runTimer();
+});
+
+document.querySelector('#save').addEventListener('click', () => {
+  postPomodoro(token);
 });
 
 document.querySelector('#cancel').addEventListener('click', () => {
@@ -27,7 +33,9 @@ document.querySelector('#cancel').addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.code === 'Space' && (overlay.style.visibility === 'hidden' || overlay.style.visibility === '')) {
+  if (event.code === 'Enter' && document.querySelector('#save').style.display === 'block') {
+    postPomodoro(token);
+  } else if (event.code === 'Space' && (overlay.style.visibility === 'hidden' || overlay.style.visibility === '')) {
     runTimer();
   } else if (event.code === 'Escape' && overlay.style.visibility === 'visible') {
     // eslint-disable-next-line no-restricted-globals
