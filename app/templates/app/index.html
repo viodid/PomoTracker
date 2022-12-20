@@ -29,13 +29,13 @@
             {% for pomodoro in pomodoros.day %}
                 {% if forloop.last %}
                     <div class="cell last">
-                        <span class="left">{{ pomodoro.datetime | date:"h:i A" }}</span>
-                        <span class="left">{{ pomodoro.tag }}</span>
+                        <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.datetime | date:"h:i A" }}</a></span>
+                        <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.tag }}</a></span>
                     </div>
                 {% else %}
                     <div class="cell">
-                        <span class="left">{{ pomodoro.datetime | date:"h:i A"}}</span>
-                        <span class="left">{{ pomodoro.tag }}</span>
+                        <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.datetime | date:"h:i A"}}</a></span>
+                        <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.tag }}</a></span>
                     </div>
                 {% endif %}
             {% empty %}

@@ -9,6 +9,7 @@ from .forms import *
 
 
 def index(request):
+    """ Function for index """
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
@@ -55,6 +56,15 @@ def profile(request, username):
             'user': user
         })
     return HttpResponseNotFound(request)
+
+
+def pomodorosList(request):
+    print('??????????????')
+    user = User.objects.get(username=request.user.username)
+    pomodoros = user.pomodoros.all().order_by('-datetime')
+    return render(request, 'app/pomodoros.html', {
+        'pomodoros': pomodoros
+    })
 
 
 def privacy(request):

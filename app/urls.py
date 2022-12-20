@@ -12,7 +12,8 @@ urlpatterns = [
     path('api_reference', views.apiReference, name='api'),
     path('token', views.token, name='token'),
     path('leaderboard/<str:period>', views.leaderboard, name='leaderboard'),
-    path('<str:username>', views.profile, name='profile')
+    path('<str:username>', views.profile, name='profile'),
+    path('pomodoros', views.pomodorosList, name='pomodoros')
 ]
 
 if settings.DEBUG:
