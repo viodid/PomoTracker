@@ -19,6 +19,7 @@ function formatHour() {
   if (hour > 12) {
     hour -= 12;
     if (minute < 10) minute = `0${minute.toString()}`;
+    if (hour < 10) hour = `0${hour.toString()}`;
     output = `${hour.toString()}:${minute.toString()} PM`;
   } else {
     if (hour < 10) hour = `0${hour.toString()}`;

@@ -146,3 +146,7 @@ docker*
 postgres_docker/
 
 *.txt
+.es*
+.vscode/
+node_modules/
+*.json
