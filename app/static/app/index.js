@@ -15,16 +15,15 @@ import {
 
 
 const overlay = document.querySelector('#overlay');
-const token = document.querySelector('#token').value;
 
-console.log(token);
+console.log(settings.token);
 
 document.querySelector('#start').addEventListener('click', () => {
   runTimer();
 });
 
 document.querySelector('#save').addEventListener('click', () => {
-  postPomodoro(token);
+  postPomodoro(settings.token);
 });
 
 document.querySelector('#cancel').addEventListener('click', () => {
@@ -37,7 +36,7 @@ document.querySelector('#cancel').addEventListener('click', () => {
 
 document.addEventListener('keydown', (event) => {
   if (event.code === 'Enter' && document.querySelector('#save').style.display === 'block') {
-    postPomodoro(token);
+    postPomodoro(settings.token);
   } else if (event.code === 'Space' && (overlay.style.visibility === 'hidden' || overlay.style.visibility === '')) {
     runTimer();
   } else if (event.code === 'Escape' && overlay.style.visibility === 'visible') {

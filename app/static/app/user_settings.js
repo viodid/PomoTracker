@@ -1,4 +1,6 @@
 /* eslint-disable no-multi-spaces */
+const htmlToken = document.querySelector('#token').value;
+
 function getSettings(tokenParam) {
   if (!tokenParam) return null;
   const settings = fetch(`/api/${tokenParam}/getSettings`)
@@ -18,8 +20,9 @@ let staSound = '#ding';
 let stoSound = '#whoosh';
 let user = null;
 let theme = false;
+let tkn = htmlToken;
 
-const settings = getSettings(token);
+const settings = getSettings(htmlToken);
 
 if (settings) {
   bColor =    await settings.then((result) => result.breakColor);
@@ -30,6 +33,7 @@ if (settings) {
   stoSound =  await settings.then((result) => result.stopSound);
   user =      await settings.then((result) => result.user);
   theme =     await settings.then((result) => result.white_theme);
+  tkn =     await settings.then((result) => result.token);
 }
 
 const breakColor = bColor;
@@ -40,6 +44,7 @@ const startSound = staSound;
 const stopSound = stoSound;
 const username = user;
 const whiteTheme = theme;
+const token = tkn;
 
 export {
   breakColor,
@@ -50,4 +55,5 @@ export {
   stopSound,
   username,
   whiteTheme,
+  token,
 };

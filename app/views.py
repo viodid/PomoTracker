@@ -5,7 +5,7 @@ from django.urls import reverse
 import secrets
 import PomoTracker
 
-from .models import User, UserSettings, Rewards, SlicePomodoros
+from .models import User, SlicePomodoros
 from .forms import ProfileForm
 
 
@@ -15,9 +15,10 @@ def index(request):
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
         return render(request, 'app/index.html', {
-            'pomodoros': pomodoros,
-            'build': PomoTracker.__build__
-        })
+                          'User': user,
+                          'pomodoros': pomodoros,
+                          'build': PomoTracker.__build__
+                      })
     return render(request, 'app/index.html')
 
 
@@ -33,26 +34,27 @@ def profile(request, username):
                 settings.image = cleanData['image']
                 settings.save()
                 return render(request, 'app/profile.html', {
-                    'form': ProfileForm,
-                    'display': True,
-                    'message': 'Successfully uploaded'
-                })
+                                  'form': ProfileForm,
+                                  'display': True,
+                                  'message': 'Successfully uploaded'
+                              })
             else:
                 return render(request, 'app/profile.html', {
-                    'message': 'Invalid form'
-                })
+                                  'message': 'Invalid form'
+                              })
 
         if request.user.username == username:
             return render(request, 'app/profile.html', {
-                'form': ProfileForm,
-                'display': True
-            })
+                              'form': ProfileForm,
+                              'display': True,
+                              'userProfile': user
+                          })
 
     if User.objects.filter(username=username):
-        user = User.objects.get(username=username)
+        userProfile = User.objects.get(username=username)
         return render(request, 'app/profile.html', {
-            'user': user
-        })
+                          'userProfile': userProfile
+                      })
     return HttpResponseNotFound(request)
 
 
@@ -60,8 +62,8 @@ def pomodorosList(request):
     user = User.objects.get(username=request.user.username)
     pomodoros = user.pomodoros.all().order_by('-datetime')
     return render(request, 'app/pomodoros.html', {
-        'pomodoros': pomodoros
-    })
+                      'pomodoros': pomodoros
+                  })
 
 
 def privacy(request):
@@ -88,11 +90,11 @@ def token(request):
             user.settings.token = secrets.token_urlsafe(16)
             user.settings.save()
         return render(request, 'app/token.html', {
-            'message': user.settings.token
-        })
+                          'message': user.settings.token
+                      })
     return render(request, 'app/token.html', {
-        'message': 'You need to be logged in.'
-    })
+                      'message': 'You need to be logged in.'
+                  })
 
 
 def leaderboard(request, period):
@@ -105,29 +107,29 @@ def leaderboard(request, period):
     if period == 'day':
         day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.day for pomo in day]
-        })
+                          'pomos': [pomo.day for pomo in day]
+                      })
     elif period == 'week':
         week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.week for pomo in week]
-        })
+                          'pomos': [pomo.week for pomo in week]
+                      })
     elif period == 'month':
         month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.month for pomo in month]
-        })
+                          'pomos': [pomo.month for pomo in month]
+                      })
     elif period == 'year':
         year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.year for pomo in year]
-        })
+                          'pomos': [pomo.year for pomo in year]
+                      })
     elif period == 'all':
         all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.all for pomo in all]
-        })
+                          'pomos': [pomo.all for pomo in all]
+                      })
     else:
         return render(request, 'app/leaderboard.html', {
-            'message': 'Invalid period url'
-        })
+                          'message': 'Invalid period url'
+                      })

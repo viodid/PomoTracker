@@ -151,9 +151,10 @@ postgres_docker/
 node_modules/
 *.json
 package*
-app/static/templates/account/
-app/static/templates/openid/
-app/static/templates/tests/
-app/static/templates/socialaccount/
-media/
+app/templates/account/
+app/templates/openid/
+app/templates/tests/
+app/templates/socialaccount/
+/media/
+/static/
 migrations/

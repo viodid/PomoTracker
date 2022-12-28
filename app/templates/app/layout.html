@@ -20,6 +20,7 @@
         <meta name="theme-color" content="#fdfdfd">
         {% block script %}{% endblock %}
     </head>
+    <input type="text" id="token" style="display: none;" value="{{ user.settings.token }}">
     {% if user.settings.white_theme %}
     <body class="white-theme">
         {% else %}
