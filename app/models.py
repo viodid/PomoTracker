@@ -70,7 +70,7 @@ class UserSettings(models.Model):
         ('#whoosh', 'whoosh')
     )
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
-    token = models.CharField(max_length=27, null=True, default=secrets.token_urlsafe(20))
+    token = models.CharField(max_length=27, null=True, default=secrets.token_urlsafe(16))
     white_theme = models.BooleanField(default=False)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
     startSound = models.CharField(max_length=16, choices=sound_choices_start, default='#ding')

@@ -1,0 +1,645 @@
+body {
+    --primary-color: #202020;
+    --secondary-color: #2c2c2c;
+    --tertiary-color: #313131;
+    --softest-color: #434343;
+    --text-color: #efefef;
+    --border-color: #999;
+    --yellow-logo: #f1c232;
+    --box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 10px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    --border-radius: 10px;
+}
+
+body.white-theme {
+    --primary-color: #ebebeb;
+    --secondary-color: #eee;
+    --tertiary-color: #fefefe;
+    --softest-color: #fff;
+    --text-color: #121212;
+    --border-color: #333;
+    --yellow-logo: #f1c232;
+    --box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 7px 1px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    --border-radius: 10px;
+}
+
+body {
+    background-color: var(--tertiary-color);
+    font-family: 'Barlow', sans-serif;
+    color: var(--text-color);
+}
+
+main {
+    display: flex;
+    min-height: 70vh;
+    flex-direction: column;
+    margin: auto 130px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: var(--yellow-logo);
+}
+
+li {
+    list-style-type: none;
+}
+
+.disabled {
+    pointer-events: none;
+    color: var(--border-color);
+}
+
+/* Navbar styles */
+.navbar-brand {
+    margin: auto 40px;
+}
+
+.navbar-brand img {
+    width: 250px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary-color);
+    overflow: hidden;
+    padding: 0 90px;
+    box-shadow: var(--box-shadow);
+}
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+}
+
+/* Style the links inside the navigation bar */
+.navbar li {
+    font-size:22px;
+    margin: 25px 40px;
+}
+
+/* Hide the link that should open and close the navbar on small screens */
+.navbar .icon {
+  display: none;
+}
+
+/* Dark mode toggle styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--text-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--secondary-color);
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+input:checked + .slider {
+  background-color: var(--yellow-logo);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--yellow-logo);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+  border: var(--border-color);
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#lightbulb, #moon {
+    margin: 0 -25px 0 0;
+}
+
+#lightbulb svg, #moon svg {
+    width: 29px;
+}
+
+/* Footer styles */
+footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    font-size: 14px;
+    padding: 0 130px;
+}
+
+footer .block {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0;
+}
+
+footer .top {
+    display: flex;
+}
+
+footer .left {
+    margin-right: 30px;
+}
+
+footer .bottom {
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+footer img {
+    width: auto;
+    height: 45px;
+    border-radius: var(--border-radius);
+}
+
+/* Main page styles */
+.intro-dialog {
+    width: 100%;
+    text-align: center;
+    padding: 57px 0;
+    margin-top: 55px;
+    margin-bottom: -20px;
+    background-color: var(--secondary-color);
+    font-size: 22px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.button {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+#start {
+    font-size: 75px;
+    padding: 27px 35px;
+}
+
+.button:hover {
+    background-color: var(--secondary-color)!important;
+    cursor: pointer;
+}
+
+.button:active {
+    background-color: var(--softest-color)!important;
+}
+
+main .first {
+    display: flex;
+    flex-direction: column;
+    margin: 65px auto 35px auto;
+}
+
+.first p {
+    text-align: center;
+    margin-top: 7px;
+}
+
+.second {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px
+}
+
+.second .block {
+    display: flex;
+    flex-direction: column;
+    min-width: 46%;
+    background-color: var(--softest-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.second .cell {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 16px;
+}
+
+.second .title {
+    background-color: var(--secondary-color);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.second .left {
+    margin: 12px 35px;
+}
+
+.second .right {
+    margin: 9px 25px;
+    padding: 0 8px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.second .last {
+    border-bottom: none;
+}
+
+.third img {
+    width: 30px;
+    height: auto;
+}
+
+.third .text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center a {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.text-center .google {
+    background-color: #eee;
+    color: #111;
+}
+
+.google:hover {
+    background-color: #aaa;
+}
+
+.text-center .twitter {
+    background-color: #0f5b94;
+    color: #eee;
+}
+
+.twitter:hover {
+    background-color: #0c3f65;
+}
+
+.text-center .logo {
+    margin: auto 10px;
+}
+
+.text-center span {
+    padding: 10px 15px 10px 10px;
+    border-left: 1px solid #0000001c;
+}
+
+.third p {
+    text-align: center;
+    margin-bottom: 40px
+}
+
+/* Circle overlay */
+#overlay {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-color); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay svg {
+    width: 700px;
+    height: 700px;
+    transform: rotate(-90deg);
+}
+
+svg circle {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+}
+
+svg circle.bg {
+    stroke: var(--secondary-color);
+}
+
+svg circle.meter {
+    /* filter: drop-shadow(0 0 3px var(--yellow-logo));
+    stroke: var(--yellow-logo); */
+    stroke-dashoffset: 49px;
+    stroke-dasharray: 300px;
+    /* animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards; */
+}
+
+@keyframes prog {
+    0% { stroke-dashoffset: 49px; }
+    100% { stroke-dashoffset: 300px; }
+}
+/*
+@keyframes glow {
+    0% { stroke-dashoffset: 300px}
+    100% {
+        stroke: greenyellow;
+        filter: drop-shadow(0 0 3px greenyellow);
+        stroke-dashoffset: 49px;
+    }
+}
+*/
+
+.fill-data, #save-pomodoro {
+    color: var(--text-color);
+    width: 600px;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 40px;
+    flex-direction: column;
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+.fill-data .timer {
+    font-size: 150px;
+    margin-top: 90px;
+}
+
+.fill-data .focus {
+    margin-bottom: 10px;
+}
+
+#timer {
+    font-weight: 100;
+}
+
+#cancel, #save {
+    padding: 7px 0;
+    width: 65px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 14px auto 10px auto;
+    background-color: var(--tertiary-color);
+    border: none;
+}
+
+#overlay .last-text {
+    font-size: 14px;
+}
+
+.fill-data .text-input {
+    width: 400px;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 40px;
+    text-align: center;
+    caret-color: var(--text-color);
+    margin-bottom: 11px;
+}
+
+/* Leaderboard */
+.leaderboard-main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 20px;
+}
+
+.leaderboard-container {
+    width: 47%;
+    margin: 40px 0;
+    padding: 10px;
+    background-color: var(--primary-color);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+}
+
+.explanation {
+    padding: 30px;
+}
+
+.leaderboard-container .title {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.leaderboard-container .header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.leaderboard-container li {
+    padding: 20px 30px;
+    font-size: 20px;
+}
+
+.leaderboard-user-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-user-container li {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-leaderboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-leaderboard .left {
+    display: flex;
+    align-items: center;
+}
+
+.user-leaderboard .left img {
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.user-leaderboard .left p {
+    margin-right: 5px;
+}
+
+.rewards {
+    font-size: 13px;
+}
+
+/* Profile */
+.user-profile {
+    margin: 20px 0;
+}
+
+.user-profile .header-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile .username-rewards {
+    display: flex;
+    align-items: flex-end;
+}
+
+.username-rewards .rewards {
+    font-size: 25px;
+}
+
+.user-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2.5px solid var(--border-color);
+}
+
+.user-profile .name-rank {
+    margin: auto 20px;
+}
+
+.user-profile .title {
+    font-size: 40px;
+}
+
+/* Accounts styles */
+.main-account h1 {
+    text-align: center;
+    color: var(--yellow-logo);
+    font-size: 45px;
+    margin-top: 40px;
+}
+
+.main-account>p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow);
+    width: 500px;
+    justify-content: flex-start;
+    margin: 40px auto;
+    border-radius: var(--border-radius);
+}
+
+.account-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-form input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    margin: 20px;
+    width: 400px;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.account-form input:focus {
+    border-bottom: 2px solid var(--yellow-logo);
+    outline: none;
+}
+
+.account-form label {
+    display: none;
+}
+
+.account-form a {
+    border: none;
+}
+
+.account-form button {
+    padding: 8px 15px;
+    margin: 10px auto;
+    color: var(--primary-color);
+    background-color: var(--text-color);
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+.social-account {
+    align-items: center;
+}
+
+@media screen and (max-width: 920px) {
+  .navbar li:not(:last-child) {
+      display: none;
+  }
+
+  .navbar .icon {
+      display: block;
+  }
+}

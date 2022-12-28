@@ -84,8 +84,11 @@ def apiReference(request):
 def token(request):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
+        if user.settings.token is None:
+            user.settings.token = secrets.token_urlsafe(16)
+            user.settings.save()
         return render(request, 'app/token.html', {
-            'message': user.UserSettings.token
+            'message': user.settings.token
         })
     return render(request, 'app/token.html', {
         'message': 'You need to be logged in.'
