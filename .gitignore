@@ -156,5 +156,5 @@ app/static/templates/account/
 app/static/templates/openid/
 app/static/templates/tests/
 app/static/templates/socialaccount/
-templates/
 media/
+migrations/
