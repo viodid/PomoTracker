@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os.path
 from pathlib import Path
 import json
+import subprocess
+import PomoTracker
 
 with open('/etc/pomotracker.config/config.json') as config_file:
     config = json.load(config_file)
@@ -19,6 +21,12 @@ with open('/etc/pomotracker.config/config.json') as config_file:
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# https://stackoverflow.com/a/46237916/17260275
+try:
+    PomoTracker.__build__ = subprocess.check_output(["git", "describe", "--tags", "--always"], cwd=BASE_DIR).decode('UTF-8').strip()
+except subprocess.CalledProcessError:
+    PomoTracker.__build__ = PomoTracker.__version__ + "?"
 
 
 # Quick-start development settings - unsuitable for production
@@ -54,7 +62,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter'
 ]

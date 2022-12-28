@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 
 from datetime import datetime
 from math import ceil
+import secrets
 
 
 class Pomodoro(models.Model):
@@ -21,6 +22,7 @@ class Pomodoro(models.Model):
         }
 
     def checkLastCreated(self):
+        return True
         # Get user
         user = self.user
         # Check whether there is more than one Pomodoro
@@ -58,30 +60,24 @@ class Tag(models.Model):
         return f'{self.tag}'
 
 
-class Token(models.Model):
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='token')
-    token = models.CharField(max_length=27, null=True)
-
-    def __str__(self):
-        return f'{self.token} from {self.user.username}'
-
-
 class UserSettings(models.Model):
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
-    white_theme = models.BooleanField(default=False)
-    image = models.ImageField(default='default.png', upload_to='profile_pics')
     sound_choices_start = (
         ('#ding', 'ding'),
         ('#nana', 'nanana')
     )
-    startSound = models.CharField(max_length=16, choices=sound_choices_start, default='#ding')
     sound_choices_stop = (
         ('#minion', 'minion'),
         ('#whoosh', 'whoosh')
     )
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
+    token = models.CharField(max_length=27, null=True, default=secrets.token_urlsafe(20))
+    white_theme = models.BooleanField(default=False)
+    image = models.ImageField(default='default.png', upload_to='profile_pics')
+    startSound = models.CharField(max_length=16, choices=sound_choices_start, default='#ding')
     stopSound = models.CharField(max_length=16, choices=sound_choices_stop, default='#whoosh')
     focusTime = models.PositiveSmallIntegerField(default=25)
     breakTime = models.PositiveSmallIntegerField(default=5)
+    longBreak = models.PositiveSmallIntegerField(default=15)
     focusColor = models.CharField(default='#f1c232', max_length=7)
     breakColor = models.CharField(default='#ADFF2F', max_length=7)
 
@@ -92,13 +88,15 @@ class UserSettings(models.Model):
             'startSound': self.startSound,
             'stopSound': self.stopSound,
             'focusTime': self.focusTime,
+            'longBreak': self.longBreak,
             'breakTime': self.breakTime,
             'focusColor': self.focusColor,
-            'breakColor': self.breakColor
+            'breakColor': self.breakColor,
+            'token': self.token
         }
 
     def __str__(self):
-        return f'{self.user.username}, {self.white_theme}, {self.image}, {self.startSound}, {self.stopSound}, {self.focusTime}, {self.breakTime}, {self.focusColor}'
+        return f'{self.user.username}, {self.white_theme}, {self.image}, {self.startSound}, {self.stopSound}, {self.focusTime}, {self.breakTime}, {self.focusColor}, {self.token}'
 
 
 class Rewards(models.Model):

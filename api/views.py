@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from app.models import *
+from app.models import Pomodoro, UserSettings, Tag
 
 
 # GET request
@@ -12,9 +12,9 @@ def getAll(request, token):
         return JsonResponse({"error": "GET request required."}, status=400)
 
     try:
-        token = Token.objects.get(token=token)
+        token = UserSettings.objects.get(token=token)
 
-    except Token.DoesNotExist:
+    except UserSettings.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -24,15 +24,16 @@ def getAll(request, token):
 
     return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros], safe=False, status=200)
 
+
 def getSettings(request, token):
 
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
 
     try:
-        token = Token.objects.get(token=token)
+        token = UserSettings.objects.get(token=token)
 
-    except Token.DoesNotExist:
+    except UserSettings.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -42,6 +43,7 @@ def getSettings(request, token):
 
     return JsonResponse(settings.serialize(), safe=False, status=200)
 
+
 # POST request
 @csrf_exempt
 def create(request, token):
@@ -50,9 +52,9 @@ def create(request, token):
         return JsonResponse({"error": "POST request required."}, status=400)
 
     try:
-        token = Token.objects.get(token=token)
+        token = UserSettings.objects.get(token=token)
 
-    except Token.DoesNotExist:
+    except UserSettings.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -77,16 +79,17 @@ def create(request, token):
         return JsonResponse({'message': 'Pomodoro created successfully'}, status=201)
 
     user.pomodoros.last().delete()
-    return JsonResponse({'error':'Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.'}, status=422)
+    return JsonResponse({'error': 'Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.'},
+                        status=422)
 
 
 @csrf_exempt
 def updateDelete(request, token, pomodoro_id):
 
     try:
-        token = Token.objects.get(token=token)
+        token = UserSettings.objects.get(token=token)
 
-    except Token.DoesNotExist:
+    except UserSettings.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -114,9 +117,10 @@ def updateDelete(request, token, pomodoro_id):
             pomodoro.tag = tag
             pomodoro.save()
 
-            return JsonResponse({"message":"Pomodoro updated successfully"}, status=201)
+            return JsonResponse({"message": "Pomodoro updated successfully"},
+                                status=201)
 
-        return JsonResponse({"error":"Invalid pomodoro id"}, status=401)
+        return JsonResponse({"error": "Invalid pomodoro id"}, status=401)
 
     elif request.method == 'DELETE':
 
@@ -125,20 +129,23 @@ def updateDelete(request, token, pomodoro_id):
 
             Pomodoro.objects.filter(id=pomodoro_id).delete()
 
-            return JsonResponse({"message":"Pomodoro removed successfully"}, status=201)
+            return JsonResponse({"message": "Pomodoro removed successfully"},
+                                status=201)
 
-        return JsonResponse({"error":"Invalid pomodoro id"}, status=401)
+        return JsonResponse({"error": "Invalid pomodoro id"},
+                            status=401)
 
-    return JsonResponse({"error":"PUT or DELETE method required."}, status=400)
+    return JsonResponse({"error": "PUT or DELETE method required."},
+                        status=400)
 
 
 @csrf_exempt
 def userSettings(request, token):
 
     try:
-        token = Token.objects.get(token=token)
+        token = UserSettings.objects.get(token=token)
 
-    except Token.DoesNotExist:
+    except UserSettings.DoesNotExist:
         return JsonResponse({
             "error": "Invalid token"
         }, status=401)
@@ -156,6 +163,7 @@ def userSettings(request, token):
         settings = UserSettings.objects.get(user=user)
         settings.white_theme = theme
         settings.save()
-        return JsonResponse({"message":"Settings updated successfully"}, status=201)
+        return JsonResponse({"message": "Settings updated successfully"},
+                            status=201)
 
-    return JsonResponse({"error":"PUT method required."}, status=400)
+    return JsonResponse({"error": "PUT method required."}, status=400)

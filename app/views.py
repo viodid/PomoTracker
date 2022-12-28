@@ -3,9 +3,10 @@ from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
 import secrets
+import PomoTracker
 
-from .models import *
-from .forms import *
+from .models import User, UserSettings, Rewards, SlicePomodoros
+from .forms import ProfileForm
 
 
 def index(request):
@@ -13,19 +14,16 @@ def index(request):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
-        generateToken(request)
-        generateUserSettings(request)
-        generateRewards(request)
         return render(request, 'app/index.html', {
-            'pomodoros': pomodoros
+            'pomodoros': pomodoros,
+            'build': PomoTracker.__build__
         })
     return render(request, 'app/index.html')
 
 
 def profile(request, username):
     if request.user.is_authenticated:
-        token = generateToken(request)
-        user = token.user
+        user = User.objects.get(username=request.user.username)
         if request.method == 'POST' and username == request.user.username:
             form = ProfileForm(request.POST, request.FILES)
 
@@ -36,7 +34,7 @@ def profile(request, username):
                 settings.save()
                 return render(request, 'app/profile.html', {
                     'form': ProfileForm,
-                    'display':True,
+                    'display': True,
                     'message': 'Successfully uploaded'
                 })
             else:
@@ -59,7 +57,6 @@ def profile(request, username):
 
 
 def pomodorosList(request):
-    print('??????????????')
     user = User.objects.get(username=request.user.username)
     pomodoros = user.pomodoros.all().order_by('-datetime')
     return render(request, 'app/pomodoros.html', {
@@ -86,32 +83,13 @@ def apiReference(request):
 
 def token(request):
     if request.user.is_authenticated:
-        token = generateToken(request)
+        user = User.objects.get(username=request.user.username)
         return render(request, 'app/token.html', {
-            'message': token.token
+            'message': user.UserSettings.token
         })
     return render(request, 'app/token.html', {
         'message': 'You need to be logged in.'
     })
-
-
-def generateToken(request):
-    if request.user.is_authenticated:
-        user = User.objects.get(username=request.user.username)
-        token = secrets.token_urlsafe(20)
-        if not Token.objects.filter(user=user):
-            Token(user=user, token=token).save()
-        return user.token
-    return None
-
-
-def generateUserSettings(request):
-    if request.user.is_authenticated:
-        user = User.objects.get(username=request.user.username)
-        if not UserSettings.objects.filter(user=user):
-            UserSettings(user=user, white_theme=False).save()
-        return user.settings
-    return None
 
 
 def leaderboard(request, period):
@@ -150,12 +128,3 @@ def leaderboard(request, period):
         return render(request, 'app/leaderboard.html', {
             'message': 'Invalid period url'
         })
-
-
-def generateRewards(request):
-    if request.user.is_authenticated:
-        if Rewards.objects.filter(user=request.user):
-            return Rewards.objects.get(user=request.user)
-        Rewards(user=request.user).save()
-        return Rewards.objects.get(user=request.user)
-
