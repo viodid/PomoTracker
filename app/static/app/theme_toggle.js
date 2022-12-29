@@ -2,8 +2,6 @@ export function switchDarkMode() {
   document.body.classList.toggle('white-theme');
   const token = document.querySelector('#token').value;
 
-  console.log(token);
-
   let white = document.querySelector('body').classList;
   // eslint-disable-next-line no-unused-expressions
   white.value === 'white-theme' ? white = true : white = false;

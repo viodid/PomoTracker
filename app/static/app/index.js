@@ -13,10 +13,7 @@ import {
   postPomodoro,
 } from './timer.js';
 
-
 const overlay = document.querySelector('#overlay');
-
-console.log(settings.token);
 
 document.querySelector('#start').addEventListener('click', () => {
   runTimer();

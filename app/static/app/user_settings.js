@@ -16,6 +16,7 @@ let bColor = '#ADFF2F';
 let fColor = '#f1c232';
 let bTime = 5;
 let fTime = 25;
+let lBreak = 15;
 let staSound = '#ding';
 let stoSound = '#whoosh';
 let user = null;
@@ -29,6 +30,7 @@ if (settings) {
   fColor =    await settings.then((result) => result.focusColor);
   bTime =     await settings.then((result) => result.breakTime);
   fTime =     await settings.then((result) => result.focusTime);
+  lBreak =    await settings.then((result) => result.longBreak);
   staSound =  await settings.then((result) => result.startSound);
   stoSound =  await settings.then((result) => result.stopSound);
   user =      await settings.then((result) => result.user);
@@ -40,6 +42,7 @@ const breakColor = bColor;
 const focusColor = fColor;
 const breakTime = bTime;
 const focusTime = fTime;
+const longBreak = lBreak;
 const startSound = staSound;
 const stopSound = stoSound;
 const username = user;
@@ -51,6 +54,7 @@ export {
   focusColor,
   breakTime,
   focusTime,
+  longBreak,
   startSound,
   stopSound,
   username,

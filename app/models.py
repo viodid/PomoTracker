@@ -9,9 +9,11 @@ import secrets
 
 
 class Pomodoro(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='pomodoros')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
+                             related_name='pomodoros')
     datetime = models.DateTimeField(auto_now_add=True)
-    tag = models.ForeignKey('Tag', on_delete=models.PROTECT, related_name='pomodoros')
+    tag = models.ForeignKey('Tag', on_delete=models.PROTECT,
+                            related_name='pomodoros')
 
     def serialize(self):
         return {
@@ -48,9 +50,18 @@ class SlicePomodoros:
         self.user = user
         self.all = pomodoros.all()
         self.year = pomodoros.filter(datetime__year=datetime.now().year)
-        self.month = pomodoros.filter(datetime__month=datetime.now().month, datetime__year=datetime.now().year)
-        self.week = pomodoros.filter(datetime__week=datetime.now().isocalendar().week, datetime__month=datetime.now().month, datetime__year=datetime.now().year)
-        self.day = pomodoros.filter(datetime__day=datetime.now().day, datetime__week=datetime.now().isocalendar().week, datetime__month=datetime.now().month, datetime__year=datetime.now().year).order_by('datetime')
+        self.month = pomodoros.filter(datetime__month=datetime.now().month,
+                                      datetime__year=datetime.now().year)
+        self.week = pomodoros.filter(datetime__week=datetime.now()
+                                     .isocalendar().week,
+                                     datetime__month=datetime.now().month,
+                                     datetime__year=datetime.now().year)
+        self.day = pomodoros.filter(datetime__day=datetime.now().day,
+                                    datetime__week=datetime.now()
+                                    .isocalendar().week,
+                                    datetime__month=datetime.now().month,
+                                    datetime__year=datetime
+                                    .now().year).order_by('datetime')
 
 
 class Tag(models.Model):
@@ -69,12 +80,16 @@ class UserSettings(models.Model):
         ('#minion', 'minion'),
         ('#whoosh', 'whoosh')
     )
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='settings')
-    token = models.CharField(max_length=27, null=True, default=secrets.token_urlsafe(16))
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE,
+                                related_name='settings')
+    token = models.CharField(max_length=27, null=True,
+                             default=secrets.token_urlsafe(16))
     white_theme = models.BooleanField(default=False)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
-    startSound = models.CharField(max_length=16, choices=sound_choices_start, default='#ding')
-    stopSound = models.CharField(max_length=16, choices=sound_choices_stop, default='#whoosh')
+    startSound = models.CharField(max_length=16,
+                                  choices=sound_choices_start, default='#ding')
+    stopSound = models.CharField(max_length=16, choices=sound_choices_stop,
+                                 default='#whoosh')
     focusTime = models.PositiveSmallIntegerField(default=25)
     breakTime = models.PositiveSmallIntegerField(default=5)
     longBreak = models.PositiveSmallIntegerField(default=15)
@@ -96,11 +111,14 @@ class UserSettings(models.Model):
         }
 
     def __str__(self):
-        return f'{self.user.username}, {self.white_theme}, {self.image}, {self.startSound}, {self.stopSound}, {self.focusTime}, {self.breakTime}, {self.focusColor}, {self.token}'
+        return f'''{self.user.username}, {self.white_theme}, {self.image},
+        {self.startSound}, {self.stopSound}, {self.focusTime},
+        {self.breakTime}, {self.focusColor}, {self.token}'''
 
 
 class Rewards(models.Model):
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='rewards')
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE,
+                                related_name='rewards')
     gold = models.PositiveSmallIntegerField(default=0)
     silver = models.PositiveSmallIntegerField(default=0)
     bronze = models.PositiveSmallIntegerField(default=0)
@@ -116,4 +134,5 @@ class Rewards(models.Model):
         return ceil(average / (len(self.ranks) - 1))
 
     def __str__(self):
-        return f'{self.user.username}, {self.gold}, {self.silver}, {self.bronze}, {self.ranks}'
+        return f'''{self.user.username}, {self.gold},
+        {self.silver}, {self.bronze}, {self.ranks}'''

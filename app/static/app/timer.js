@@ -61,8 +61,6 @@ function postPomodoro(token) {
         cycle = parseInt(cycle, 10) + 1;
         resetStroke();
 
-        console.log(settings.longBreak, settings.breakTime);
-
         if (parseInt(cycle, 10) % 4 == 0) {
           renderTimer(settings.longBreak, settings.breakColor);
           const atStart = performance.now();
