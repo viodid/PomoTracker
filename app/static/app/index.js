@@ -1,7 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-multi-spaces */
-/* eslint-disable import/extensions */
-/* eslint-disable no-alert */
 import { switchDarkMode, changeLightbulb } from './theme_toggle.js';
 import * as settings from './user_settings.js';
 import {

@@ -52,6 +52,10 @@ a:hover {
     color: var(--yellow-logo);
 }
 
+a:active {
+    color: var(--yellow-logo);
+}
+
 li {
     list-style-type: none;
 }
@@ -252,7 +256,7 @@ main .first {
     margin: 20px
 }
 
-.second .block {
+.block-table {
     display: flex;
     flex-direction: column;
     min-width: 46%;
@@ -262,24 +266,37 @@ main .first {
     box-shadow: var(--box-shadow);
 }
 
-.second .cell {
+
+
+
+.block-table .cell {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--border-color);
     font-size: 16px;
 }
 
-.second .title {
+.block-table .title {
     background-color: var(--secondary-color);
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
 }
 
-.second .left {
+.block-table .left {
     margin: 12px 35px;
 }
 
-.second .right {
+.block-table .center {
+    margin: 12px auto;
+    width: 100%;
+    text-align: center;
+}
+
+.block-table #edit-pomo {
+    margin-right: 15px;
+}
+
+.block-table .right {
     margin: 9px 25px;
     padding: 0 8px;
     border-radius: 100px;
@@ -290,7 +307,7 @@ main .first {
     color: var(--primary-color);
 }
 
-.second .last {
+.block-table .last {
     border-bottom: none;
 }
 
@@ -633,6 +650,34 @@ svg circle.meter {
 
 .social-account {
     align-items: center;
+}
+
+/* Pomodoros styles */
+
+.pomodoros {
+    margin: 50px 100px;
+    font-size: 20px;
+}
+
+.pomodoros .title {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.pomodoros li {
+    margin: 15px auto;
+    width: 100%;
+    text-align: center;
+}
+
+.pomodoros .highlight:hover {
+    color: var(--yellow-logo);
+    cursor: pointer;
+}
+
+.pomodoros .highlight:active {
+    color: var(--yellow-logo);
 }
 
 @media screen and (max-width: 920px) {

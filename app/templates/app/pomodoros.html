@@ -7,39 +7,47 @@ Pomodoros
 
 {% block script %}
 <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
+<script src="{% static 'app/pomodoros.js' %}" type="module"></script>
 {% endblock %}
 
 
 {% block body %}
 <main>
-    <div class="pomodoros-container">
-        <ul class="header">
+    <div class="block-table pomodoros">
+        <ul class="title">
             <li>Tag</li>
-            <li>Time</li>
+            <li>Date</li>
+            <li>Hour</li>
+            <li></li>
         </ul>
         <div class="body">
             {% for pomodoro in pomodoros %}
+            <input type="text" id="pomodoro-id" style="display: none;" value="{{ pomodoro.id }}">
             {% if forloop.last %}
             <div class="cell last">
-                <span class="left">{{ pomodoro.tag }}</span>
-                <span class="left">{{ pomodoro.datetime | date:"h:i A" }}
-                    <span id="edit-pomo">Edit</span>
-                    <span id="delete-pomo">Delete</span>
-                </span>
+              <span class="center">{{ pomodoro.tag }}</span>
+              <span class="center">{{ pomodoro.datetime | date:"Y-m-d" }}</span>
+              <span class="center">{{ pomodoro.datetime | date:"h:i A" }}</span>
+              <div id="edit-pomo" class="center">
+                <span id="edit-pomo" class="disabled">Edit</span>
+                <span id="delete-pomo" class="highlight">Delete</span>
+              </div>
             </div>
             {% else %}
             <div class="cell">
-                <span class="left">{{ pomodoro.tag }}</span>
-                <span class="left">{{ pomodoro.datetime | date:"h:i A"}}
-                    <span id="edit-pomo">Edit</span>
-                    <span id="delete-pomo">Delete</span>
-                </span>
+              <span class="center">{{ pomodoro.tag }}</span>
+              <span class="center">{{ pomodoro.datetime | date:"Y-m-d" }}</span>
+              <span class="center">{{ pomodoro.datetime | date:"h:i A"}}</span>
+              <div id="edit-pomo" class="center">
+                <span id="edit-pomo" class="disabled">Edit</span>
+                <span id="delete-pomo" class="highlight">Delete</span>
+              </div>
             </div>
             {% endif %}
             {% empty %}
             <div class="cell last">
-                <span class="left">No pomodoros to show</span>
-                <span class="left"></span>
+                <span class="center">No pomodoros to show</span>
+                <span class="center"></span>
             </div>
             {% endfor %}
         </div>

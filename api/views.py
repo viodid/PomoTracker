@@ -94,11 +94,11 @@ def updateDelete(request, token, pomodoro_id):
             "error": "Invalid token"
         }, status=401)
 
-    data = json.loads(request.body)
     # Get user from token
     user = token.user
 
     if request.method == 'PUT':
+        data = json.loads(request.body)
         try:
             tag = data['tag']
             tag = tag.upper()

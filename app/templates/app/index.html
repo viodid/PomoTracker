@@ -22,7 +22,7 @@
     </div>
     {% if user.is_authenticated %}
     <div class="second">
-        <div class="block todays-pomodoros">
+        <div class="block-table">
             <div class="title cell">
                 <p class="left">Today's pomodoros</p>
             </div>
@@ -45,7 +45,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="block count-pomodoros">
+        <div class="block-table">
             <div class="today cell">
                 <span class="left">Today</span>
                 <span class="right" id="today">{{ pomodoros.day.count }}</span>

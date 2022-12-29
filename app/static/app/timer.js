@@ -1,7 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable object-shorthand */
-/* eslint-disable no-alert */
-/* eslint-disable import/extensions */
 import {
   appendPomodoro,
   changeLabels,
