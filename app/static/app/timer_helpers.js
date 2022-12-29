@@ -118,11 +118,15 @@ function renderTimer(time, color) {
   const timeToSeconds = time * 60;
 
   const sheet = window.document.styleSheets[0];
-  sheet.insertRule('svg circle.meter {'
-    + `filter: drop-shadow(0 0 3px ${color});`
-    + `stroke: ${color};`
-    + `animation: prog ${timeToSeconds}s linear forwards`
-    + '}', sheet.cssRules.length);
+  sheet.insertRule(`svg circle.meter {
+    filter: drop-shadow(0 0 3px ${color});
+    stroke: ${color};
+    stroke-dashoffset: 49px;
+    stroke-dasharray: 300px;
+    animation: ${timeToSeconds}s linear 0s 1 normal forwards running prog,
+    1s ease-in-out ${timeToSeconds}s 1 normal forwards running glow;
+    }`, sheet.cssRules.length);
+  // console.log(sheet.cssRules.length, sheet, timeToSeconds, color);
 }
 
 export {

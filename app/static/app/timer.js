@@ -39,9 +39,9 @@ function resetTitle() {
 }
 
 function stopTimer() {
+  resetStroke();
   resetTitle();
   changeStop();
-  resetStroke();
 }
 
 function postPomodoro(token) {
@@ -62,11 +62,11 @@ function postPomodoro(token) {
         resetStroke();
 
         if (parseInt(cycle, 10) % 4 == 0) {
-          renderTimer(settings.longBreak, settings.breakColor);
+          renderTimer(settings.longBreak, settings.focusColor);
           const atStart = performance.now();
           startBreakTimer(atStart, settings.longBreak);
         } else {
-          renderTimer(settings.breakTime, settings.breakColor);
+          renderTimer(settings.breakTime, settings.focusColor);
           const atStart = performance.now();
           startBreakTimer(atStart, settings.breakTime);
         }
@@ -98,7 +98,6 @@ function startFocusTimer(atStart, time) {
   if (minutes.innerHTML === '--' && minutes.innerHTML === '--') {
     changeLabels(false);
     hideTimer();
-    stopTimer();
     return;
   }
   // Change clock when finished
@@ -116,7 +115,6 @@ function startBreakTimer(atStart, time) {
   // Timer manual stop
   if (minutes.innerHTML === '--' && seconds.innerHTML === '--') {
     hideTimer();
-    stopTimer();
     changeLabels(false);
     return;
   }

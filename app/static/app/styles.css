@@ -380,19 +380,21 @@ svg circle.bg {
     stroke: var(--secondary-color);
 }
 
+/*
 svg circle.meter {
-    /* filter: drop-shadow(0 0 3px var(--yellow-logo));
-    stroke: var(--yellow-logo); */
+    filter: drop-shadow(0 0 3px var(--yellow-logo));
+    stroke: var(--yellow-logo);
     stroke-dashoffset: 49px;
     stroke-dasharray: 300px;
-    /* animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards; */
+    animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 }
+*/
 
 @keyframes prog {
     0% { stroke-dashoffset: 49px; }
     100% { stroke-dashoffset: 300px; }
 }
-/*
+
 @keyframes glow {
     0% { stroke-dashoffset: 300px}
     100% {
@@ -401,7 +403,6 @@ svg circle.meter {
         stroke-dashoffset: 49px;
     }
 }
-*/
 
 .fill-data, #save-pomodoro {
     color: var(--text-color);
