@@ -67,7 +67,9 @@ function postPomodoro(token) {
           startBreakTimer(atStart, settings.breakTime);
         }
 
-        changeLabels(true);
+        console.log(tag);
+
+        changeLabels(false);
         document.querySelector('.focus').innerHTML = 'Break';
         appendPomodoro(tag);
 

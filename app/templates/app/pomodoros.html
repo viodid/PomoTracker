@@ -22,9 +22,9 @@ Pomodoros
         </ul>
         <div class="body">
             {% for pomodoro in pomodoros %}
-            <input type="text" id="pomodoro-id" style="display: none;" value="{{ pomodoro.id }}">
             {% if forloop.last %}
-            <div class="cell last">
+            <div class="cell last" id="pomo">
+              <input type="text" id="pomodoro-id" style="display: none;" value="{{ pomodoro.id }}">
               <span class="center">{{ pomodoro.tag }}</span>
               <span class="center">{{ pomodoro.datetime | date:"Y-m-d" }}</span>
               <span class="center">{{ pomodoro.datetime | date:"h:i A" }}</span>
@@ -34,7 +34,8 @@ Pomodoros
               </div>
             </div>
             {% else %}
-            <div class="cell">
+            <div class="cell" id="pomo">
+              <input type="text" id="pomodoro-id" style="display: none;" value="{{ pomodoro.id }}">
               <span class="center">{{ pomodoro.tag }}</span>
               <span class="center">{{ pomodoro.datetime | date:"Y-m-d" }}</span>
               <span class="center">{{ pomodoro.datetime | date:"h:i A"}}</span>

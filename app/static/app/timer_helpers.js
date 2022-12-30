@@ -43,7 +43,11 @@ function formatTime(atStart, time) {
     sec = 60;
   }
 
+  const { title } = document;
+
   if (sec <= 0 && min <= 0) {
+    // Change title to 00:00 
+    document.title = `00:00 | ${title.slice(title.length - 11, title.length)}`;
     return ['00', '00'];
   }
 
@@ -52,7 +56,6 @@ function formatTime(atStart, time) {
   sec = checkFormat(sec);
 
   // Change title dynamically
-  const { title } = document;
   document.title = `${min}:${sec} | ${title.slice(title.length - 11, title.length)}`;
 
   return [min, sec];
@@ -96,7 +99,7 @@ function checkNoPomodoros() {
 function appendPomodoro(tag) {
   const hour = formatHour();
 
-  const parent = document.querySelector('.todays-pomodoros');
+  const parent = document.querySelector('#todays-index');
   const node = parent.lastElementChild.cloneNode(true);
   parent.lastElementChild.classList.remove('last');
   node.lastElementChild.innerHTML = tag.toUpperCase();
