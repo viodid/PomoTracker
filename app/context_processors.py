@@ -11,5 +11,5 @@ def global_settings(request):
         'SITE_AUTHOR': 'PomoTracker',
         'SITE_TWITTER': '@PomoTracker',
         'SITE_GITHUB': 'https://github.com/viodid/PomoTracker',
-        'SITE_VERSION': PomoTracker.__build__
+        'SITE_VERSION': PomoTracker.__version__
     }

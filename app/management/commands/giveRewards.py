@@ -29,10 +29,8 @@ class Command(BaseCommand):
                 user = Rewards.objects.get(user=month[i].user)
                 user.ranks.append(i + 1)
                 user.save()
-                print(user.user)
             self.stdout.write('Done!')
             return None
 
         self.stdout.write('Not enough participants!')
         return None
-

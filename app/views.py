@@ -1,22 +1,25 @@
+from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
 import secrets
-import PomoTracker
 
-from .models import User, SlicePomodoros
+from .models import User, SlicePomodoros, UserSettings, Rewards
 from .forms import ProfileForm
 
 
 def index(request):
     if request.user.is_authenticated:
+        generateUserSettings(request)
+        # temporary
+        checkMissingSettings(request)
+        generateRewards(request)
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
         return render(request, 'app/index.html', {
                           'User': user,
                           'pomodoros': pomodoros
-                          #'build': PomoTracker.__build__
                       })
     return render(request, 'app/index.html')
 
@@ -60,8 +63,12 @@ def profile(request, username):
 def pomodorosList(request):
     user = User.objects.get(username=request.user.username)
     pomodoros = user.pomodoros.all().order_by('-datetime')
+    paginator = Paginator(pomodoros, 50)
+
+    pageNumber = request.GET.get('page')
+    pageObj = paginator.get_page(pageNumber)
     return render(request, 'app/pomodoros.html', {
-                      'pomodoros': pomodoros
+                      'page_obj': pageObj
                   })
 
 
@@ -132,3 +139,56 @@ def leaderboard(request, period):
         return render(request, 'app/leaderboard.html', {
                           'message': 'Invalid period url'
                       })
+
+
+def generateToken(request):
+    user = User.objects.get(username=request.user.username)
+    token = secrets.token_urlsafe(16)
+    if not user.settings.token:
+        user.settings.token = token
+        user.settings.save()
+
+
+def generateColors(request):
+    user = User.objects.get(username=request.user.username)
+    if not user.settings.breakColor:
+        user.settings.color = '#ADFF2F'
+    if not user.settings.focusColor:
+        user.settings.focusColor = '#F1C232'
+    user.settings.save()
+
+
+def generateSoundsAndTime(request):
+    user = User.objects.get(username=request.user.username)
+    if not user.settings.startSound:
+        user.settings.startSound = '#ding'
+    if not user.settings.stopSound:
+        user.settings.stopSound = '#whoosh'
+    if not user.settings.longBreak:
+        user.settings.longBreak = 15
+    user.settings.save()
+
+
+def checkMissingSettings(request):
+    if request.user.is_authenticated:
+        generateToken(request)
+        generateColors(request)
+        generateSoundsAndTime(request)
+    return None
+
+
+def generateUserSettings(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        if not UserSettings.objects.filter(user=user):
+            UserSettings(user=user).save()
+        return user.settings
+    return None
+
+def generateRewards(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        if not Rewards.objects.filter(user=user):
+            Rewards(user=user).save()
+        return user.rewards
+    return None

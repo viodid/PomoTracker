@@ -112,8 +112,8 @@ class UserSettings(models.Model):
 
     def __str__(self):
         return f'''{self.user.username}, {self.white_theme}, {self.image},
-        {self.startSound}, {self.stopSound}, {self.focusTime},
-        {self.breakTime}, {self.focusColor}, {self.token}'''
+        {self.startSound}, {self.stopSound}, {self.focusTime}, {self.longBreak},
+        {self.breakTime}, {self.focusColor}, {self.breakColor}, {self.token}'''
 
 
 class Rewards(models.Model):
