@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # https://stackoverflow.com/a/46237916/17260275
 try:
-    PomoTracker.__build__ = subprocess.check_output(["git", "describe", "--tags", "--always"], cwd=BASE_DIR).decode('UTF-8').strip()
+    PomoTracker.__build__ = subprocess.check_output(["git", "describe", "--tags", "--always"],
+                                                    cwd=BASE_DIR).decode('UTF-8').strip()
 except subprocess.CalledProcessError:
     PomoTracker.__build__ = PomoTracker.__version__ + "?"
 
@@ -119,6 +120,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # https://stackoverflow.com/questions/2223429/django-global-template-variables
+                'app.context_processors.global_settings',
             ],
         },
     },

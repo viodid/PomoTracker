@@ -1,3 +1,4 @@
+from django.template import Context
 import subprocess
 from pathlib import Path
 
@@ -8,4 +9,6 @@ __version__ = subprocess.check_output(["git", "describe", "--tags", "--always"],
                                       cwd=BASE_DIR).decode('UTF-8').strip()
 __build__ = ''
 
-print('here', __version__, __build__)
+c = Context({'version': __version__})
+
+print(__version__)

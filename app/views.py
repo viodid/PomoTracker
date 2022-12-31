@@ -10,14 +10,13 @@ from .forms import ProfileForm
 
 
 def index(request):
-    """ Function for index """
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
         return render(request, 'app/index.html', {
                           'User': user,
-                          'pomodoros': pomodoros,
-                          'build': PomoTracker.__build__
+                          'pomodoros': pomodoros
+                          #'build': PomoTracker.__build__
                       })
     return render(request, 'app/index.html')
 
