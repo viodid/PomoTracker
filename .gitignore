@@ -157,4 +157,3 @@ app/templates/tests/
 app/templates/socialaccount/
 /media/
 /static/
-migrations/
