@@ -9,6 +9,9 @@ version = subprocess.check_output(["git", "describe", "--tags", "--always"],
 
 version = version.split('-')
 
-__version__ = version[0] + '.' + version[1]
+try:
+    __version__ = version[0] + '.' + version[1]
+except:
+    __version__ = version[0]
 
 print(__version__)
