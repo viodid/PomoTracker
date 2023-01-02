@@ -24,7 +24,7 @@
     <div class="second">
         <div class="block-table" id="todays-index">
             <div class="title cell">
-              <p class="left"><a href="{% url 'pomodoros' %}">Today's pomodoros</a></p>
+		    <p class="left"><a href="{% url 'pomodoros' %}"><u>Today's pomodoros</u></a></p>
             </div>
             {% for pomodoro in pomodoros.day %}
                 {% if forloop.last %}
