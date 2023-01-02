@@ -115,9 +115,6 @@ function appendPomodoro(tag) {
 }
 
 function renderTimer(time, color) {
-  minutes.innerHTML = time.toString();
-  seconds.innerHTML = '00';
-
   const timeToSeconds = time * 60;
 
   const sheet = window.document.styleSheets[0];
