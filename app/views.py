@@ -56,7 +56,8 @@ def profile(request, username):
     if User.objects.filter(username=username):
         userProfile = User.objects.get(username=username)
         return render(request, 'app/profile.html', {
-                          'userProfile': userProfile
+                          'userProfile': userProfile,
+                          'averagePomos': Pomodoro.getAveragePomodoros(userProfile)
                       })
     return HttpResponseNotFound(request)
 
