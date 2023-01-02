@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 import secrets
 
-from .models import User, SlicePomodoros, UserSettings, Rewards
+from .models import User, SlicePomodoros, UserSettings, Rewards, Pomodoro
 from .forms import ProfileForm
 
 
@@ -49,7 +49,8 @@ def profile(request, username):
             return render(request, 'app/profile.html', {
                               'form': ProfileForm,
                               'display': True,
-                              'userProfile': user
+                              'userProfile': user,
+                              'averagePomos': Pomodoro.getAveragePomodoros(user)
                           })
 
     if User.objects.filter(username=username):

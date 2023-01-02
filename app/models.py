@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import ArrayField
 
 from datetime import datetime
 from math import ceil
-import secrets
 
 
 class Pomodoro(models.Model):
@@ -23,8 +22,26 @@ class Pomodoro(models.Model):
             'tag': self.tag.tag
         }
 
+    @staticmethod
+    def getAveragePomodoros(user):
+        # Get all pomodoros
+        pomodoros = user.pomodoros.all()
+        # Get the first pomodoro
+        first = pomodoros.first()
+        # Get the last pomodoro
+        last = pomodoros.last()
+        # Get the difference between the first and last pomodoro
+        diff = last.datetime - first.datetime
+        # Get the number of pomodoros
+        num = pomodoros.count()
+        # Get the average pomodoros per day
+        avg = num / diff.days
+
+        # print("------", round(avg, 2), diff.days, num, first, last)
+
+        return round(avg, ndigits=2)
+
     def checkLastCreated(self):
-        return True
         # Get user
         user = self.user
         # Check whether there is more than one Pomodoro
@@ -82,8 +99,7 @@ class UserSettings(models.Model):
     )
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE,
                                 related_name='settings')
-    token = models.CharField(max_length=27, null=True,
-                             default=secrets.token_urlsafe(16))
+    token = models.CharField(max_length=27, null=True, unique=True)
     white_theme = models.BooleanField(default=False)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
     startSound = models.CharField(max_length=16,

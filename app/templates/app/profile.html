@@ -27,7 +27,10 @@
                         <span class="rewards">🥉{{ userProfile.rewards.bronze }}</span>
                     {% endif %}
                 </div>
-                <p>#{{ userProfile.rewards.getAverageRank }}</p>
+                <p>
+                <span title="Average Rank">#{{ userProfile.rewards.getAverageRank }}</span>
+                <span title="Average Pomodoros per day">#{{ averagePomos }}</span>
+                </p>
             </div>
         </div>
         <div class="body-profile">
