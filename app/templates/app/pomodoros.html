@@ -13,6 +13,23 @@ Pomodoros
 
 {% block body %}
 <main>
+  <div class="pagination top">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo;</a>
+      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        |  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}  |
+      </span>
+
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+      {% endif %}
+    </span>
+  </div>
   <div class="block-table pomodoros">
     <ul class="title">
       <li>Tag</li>
@@ -25,22 +42,26 @@ Pomodoros
       {% if forloop.last %}
       <div class="cell last" id="pomo">
         <input type="text" id="pomodoro-id" style="display: none;" value="{{ pomodoro.id }}">
-        <span class="center">{{ pomodoro.tag }}</span>
+        <span class="center" id="tag">{{ pomodoro.tag }}</span>
         <span class="center">{{ pomodoro.datetime | date:"Y-m-d" }}</span>
         <span class="center">{{ pomodoro.datetime | date:"h:i A" }}</span>
-        <div id="edit-pomo" class="center">
-          <span id="edit-pomo" class="disabled">Edit</span>
+        <div class="center">
+          <span id="edit-pomo" class="highlight" style="display: initial">Edit</span>
+          <span id="save-pomo" class="highlight" style="display: none">Save</span>
           <span id="delete-pomo" class="highlight">Delete</span>
         </div>
       </div>
       {% else %}
       <div class="cell" id="pomo">
         <input type="text" id="pomodoro-id" style="display: none;" value="{{ pomodoro.id }}">
-        <span class="center">{{ pomodoro.tag }}</span>
+        <span class="center" id="tag">{{ pomodoro.tag }}</span>
+        <input type="text" class="text-input" id="text-input"
+        placeholder="New tag" style="display: none;" autocomplete="on">
         <span class="center">{{ pomodoro.datetime | date:"Y-m-d" }}</span>
         <span class="center">{{ pomodoro.datetime | date:"h:i A"}}</span>
-        <div id="edit-pomo" class="center">
-          <span id="edit-pomo" class="disabled">Edit</span>
+        <div class="center">
+          <span id="edit-pomo" class="highlight" style="display: initial">Edit</span>
+          <span id="save-pomo" class="highlight" style="display: none">Save</span>
           <span id="delete-pomo" class="highlight">Delete</span>
         </div>
       </div>
@@ -53,7 +74,7 @@ Pomodoros
       {% endfor %}
     </div>
   </div>
-  <div class="pagination">
+  <div class="pagination bottom">
     <span class="step-links">
       {% if page_obj.has_previous %}
       <a href="?page=1">&laquo;</a>
@@ -61,7 +82,7 @@ Pomodoros
       {% endif %}
 
       <span class="current">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        |  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}  |
       </span>
 
       {% if page_obj.has_next %}

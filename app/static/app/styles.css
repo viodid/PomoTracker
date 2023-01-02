@@ -292,9 +292,6 @@ main .first {
     text-align: center;
 }
 
-.block-table #edit-pomo {
-    margin-right: 15px;
-}
 
 .block-table .right {
     margin: 9px 25px;
@@ -655,7 +652,7 @@ svg circle.meter {
 /* Pomodoros styles */
 
 .pomodoros {
-    margin: 50px 100px;
+    margin: 30px 100px;
     font-size: 20px;
 }
 
@@ -678,6 +675,24 @@ svg circle.meter {
 
 .pomodoros .highlight:active {
     color: var(--yellow-logo);
+}
+
+.block-table #edit-pomo, #save-pomo {
+    margin-right: 15px;
+}
+
+
+.pagination {
+    text-align: center;
+    font-size: 18px;
+}
+
+.pagination.top {
+    margin-top: 30px;
+}
+
+.pagination.bottom {
+    margin-bottom: 30px;
 }
 
 @media screen and (max-width: 920px) {
