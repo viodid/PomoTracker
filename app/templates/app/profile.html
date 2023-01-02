@@ -11,6 +11,9 @@
 
 {% block body %}
 <main>
+  <div style="font-size:18px;margin-top:20px;">
+    {{ message }}
+  </div>
     <div class="user-profile">
         <div class="header-profile">
             <img src="{{ userProfile.settings.image.url }}" alt="Profile image" class="user-profile-img">
@@ -34,7 +37,6 @@
             </div>
         </div>
         <div class="body-profile">
-            {{ message }}
             {% if display %}
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}

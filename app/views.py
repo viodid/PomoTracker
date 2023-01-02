@@ -38,7 +38,8 @@ def profile(request, username):
                 return render(request, 'app/profile.html', {
                                   'form': ProfileForm,
                                   'display': True,
-                                  'message': 'Successfully uploaded'
+                                  'userProfile': user,
+                                  'averagePomos': Pomodoro.getAveragePomodoros(user)
                               })
             else:
                 return render(request, 'app/profile.html', {
