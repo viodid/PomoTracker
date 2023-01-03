@@ -49,7 +49,7 @@ document.querySelector('#slider').addEventListener('click', () => {
 function runTimer() {
   showTimer();
   renderTimer(settings.focusTime, settings.focusColor);
-  const atStart = performance.now();
   document.querySelector('.focus').innerHTML = 'Focus';
+  const atStart = performance.now();
   startFocusTimer(atStart, settings.focusTime);
 }
