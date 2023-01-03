@@ -28,7 +28,7 @@ const settings = getSettings(htmlToken);
 if (settings) {
   bColor =    await settings.then((result) => result.breakColor);
   fColor =    await settings.then((result) => result.focusColor);
-  bTime =     await settings.then((result) => result.breakTime);
+  bTime =     await settings.then((result) => result.shortBreak);
   fTime =     await settings.then((result) => result.focusTime);
   lBreak =    await settings.then((result) => result.longBreak);
   staSound =  await settings.then((result) => result.startSound);
@@ -40,7 +40,7 @@ if (settings) {
 
 const breakColor = bColor;
 const focusColor = fColor;
-const breakTime = bTime;
+const shortBreak = bTime;
 const focusTime = fTime;
 const longBreak = lBreak;
 const startSound = staSound;
@@ -52,7 +52,7 @@ const token = tkn;
 export {
   breakColor,
   focusColor,
-  breakTime,
+  shortBreak,
   focusTime,
   longBreak,
   startSound,

@@ -150,6 +150,7 @@ postgres_docker/
 node_modules/
 *.json
 package*
+/templates/
 app/templates/account/
 app/templates/openid/
 app/templates/tests/
@@ -157,3 +158,5 @@ app/templates/socialaccount/
 /media/
 /static/
 .idea/
+migrations/
+script_log.txt

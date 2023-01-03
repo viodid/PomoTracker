@@ -27,16 +27,18 @@ def index(request):
 def profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
+        form = ProfileForm(initial={
+                               'shortBreak': user.settings.shortBreak,
+                               'longBreak': user.settings.longBreak,
+                               'focusColor': user.settings.focusColor,
+                               'startSound': user.settings.startSound,
+                               'stopSound': user.settings.stopSound
+                           })
         if request.method == 'POST' and username == request.user.username:
-            form = ProfileForm(request.POST, request.FILES)
-
             if form.is_valid():
-                cleanData = form.cleaned_data
-                settings = user.settings
-                settings.image = cleanData['image']
-                settings.save()
+                saveSettings(form.cleaned_data, user)
                 return render(request, 'app/profile.html', {
-                                  'form': ProfileForm,
+                                  'form': form,
                                   'display': True,
                                   'userProfile': user,
                                   'averagePomos': Pomodoro.getAveragePomodoros(user)
@@ -48,7 +50,7 @@ def profile(request, username):
 
         if request.user.username == username:
             return render(request, 'app/profile.html', {
-                              'form': ProfileForm,
+                              'form': form,
                               'display': True,
                               'userProfile': user,
                               'averagePomos': Pomodoro.getAveragePomodoros(user)
@@ -61,6 +63,24 @@ def profile(request, username):
                           'averagePomos': Pomodoro.getAveragePomodoros(userProfile)
                       })
     return HttpResponseNotFound(request)
+
+
+def saveSettings(form, user):
+    print(form)
+    settings = user.settings
+    if form['image']:
+        settings.name = form['image']
+    if form['shortBreak']:
+        settings.shortBreak = int(form['shortBreak'])
+    if form['longBreak']:
+        settings.longBreak = int(form['longBreak'])
+    if form['focusColor']:
+        settings.focusColor = form['focusColor']
+    if form['startSound']:
+        settings.startSound = form['startSound']
+    if form['stopSound']:
+        settings.stopSound = form['stopSound']
+    settings.save()
 
 
 def pomodorosList(request):

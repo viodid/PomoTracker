@@ -5,6 +5,8 @@
 
 {% block script %}
     <script src="{% static 'app/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
+    <script src="{% static 'app/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
+    <script src="{% static 'app/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
 {% endblock %}
 
 {% block body %}

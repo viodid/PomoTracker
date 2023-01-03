@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block title %}
-    {{ userProfile.username }}
+{{ userProfile.username }}
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
+<script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
 {% endblock %}
 
 {% block body %}
@@ -14,37 +14,36 @@
   <div style="font-size:18px;margin-top:20px;">
     {{ message }}
   </div>
-    <div class="user-profile">
-        <div class="header-profile">
-            <img src="{{ userProfile.settings.image.url }}" alt="Profile image" class="user-profile-img">
-            <div class="name-rank">
-                <div class="username-rewards">
-                    <p class="title">{{ userProfile.username }}</p>
-                    {% if userProfile.rewards.gold %}
-                        <span class="rewards">🥇{{ userProfile.rewards.gold }}</span>
-                    {% endif %}
-                    {% if userProfile.rewards.silver %}
-                        <span class="rewards">🥈{{ userProfile.rewards.silver }}</span>
-                    {% endif %}
-                    {% if userProfile.rewards.bronze %}
-                        <span class="rewards">🥉{{ userProfile.rewards.bronze }}</span>
-                    {% endif %}
-                </div>
-                <p>
-                <span title="Average Rank">#{{ userProfile.rewards.getAverageRank }}</span>
-                <span title="Average Pomodoros per day">#{{ averagePomos }}</span>
-                </p>
-            </div>
-        </div>
-        <div class="body-profile">
-            {% if display %}
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form }}
-                <button type="submit">Upload</button>
-            </form>
-            {% endif %}
-        </div>
+  <div class="user-profile">
+    <div class="header-profile">
+      <div class="left">
+        <img src="{{ userProfile.settings.image.url }}" alt="Profile image" class="user-profile-img">
+        <p class="title">{{ userProfile.username }}</p>
+        {% if userProfile.rewards.gold %}
+        <span class="rewards">🥇{{ userProfile.rewards.gold }}</span>
+        {% endif %}
+        {% if userProfile.rewards.silver %}
+        <span class="rewards">🥈{{ userProfile.rewards.silver }}</span>
+        {% endif %}
+        {% if userProfile.rewards.bronze %}
+        <span class="rewards">🥉{{ userProfile.rewards.bronze }}</span>
+        {% endif %}
+      </div>
+      <div class="right">
+        <p title="Average Rank" id="first"><span>&#128310;</span>{{ userProfile.rewards.getAverageRank }}</p>
+        <p title="Average Pomodoros per day"><span>&#128310;</span>{{ averagePomos }}</p>
+      </div>
     </div>
+    {% if display %}
+    <div class="body-profile">
+      <h2>User Settings</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Save</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
 </main>
 {% endblock %}

@@ -26,16 +26,20 @@ class Pomodoro(models.Model):
     def getAveragePomodoros(user):
         # Get all pomodoros
         pomodoros = user.pomodoros.all()
+        # Make sure there are pomodoros
+        if not pomodoros:
+            return 0
         # Get the first pomodoro
         first = pomodoros.first()
-        # Get the last pomodoro
-        last = pomodoros.last()
-        # Get the difference between the first and last pomodoro
-        diff = last.datetime - first.datetime
+        # Get the difference between the first pomodoro day and today
+        diff = datetime.now() - first.datetime
         # Get the number of pomodoros
         num = pomodoros.count()
         # Get the average pomodoros per day
-        avg = num / diff.days
+        try:
+            avg = num / diff.days
+        except ZeroDivisionError:
+            avg = num
 
         # print("------", round(avg, 2), diff.days, num, first, last)
 
@@ -107,7 +111,7 @@ class UserSettings(models.Model):
     stopSound = models.CharField(max_length=16, choices=sound_choices_stop,
                                  default='#whoosh')
     focusTime = models.PositiveSmallIntegerField(default=25)
-    breakTime = models.PositiveSmallIntegerField(default=5)
+    shortBreak = models.PositiveSmallIntegerField(default=5)
     longBreak = models.PositiveSmallIntegerField(default=15)
     focusColor = models.CharField(default='#f1c232', max_length=7)
     breakColor = models.CharField(default='#ADFF2F', max_length=7)
@@ -120,7 +124,7 @@ class UserSettings(models.Model):
             'stopSound': self.stopSound,
             'focusTime': self.focusTime,
             'longBreak': self.longBreak,
-            'breakTime': self.breakTime,
+            'shortBreak': self.shortBreak,
             'focusColor': self.focusColor,
             'breakColor': self.breakColor,
             'token': self.token
@@ -129,7 +133,7 @@ class UserSettings(models.Model):
     def __str__(self):
         return f'''{self.user.username}, {self.white_theme}, {self.image},
         {self.startSound}, {self.stopSound}, {self.focusTime}, {self.longBreak},
-        {self.breakTime}, {self.focusColor}, {self.breakColor}, {self.token}'''
+        {self.shortBreak}, {self.focusColor}, {self.breakColor}, {self.token}'''
 
 
 class Rewards(models.Model):

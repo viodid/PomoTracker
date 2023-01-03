@@ -62,9 +62,9 @@ function postPomodoro(token) {
           const atStart = performance.now();
           startBreakTimer(atStart, settings.longBreak);
         } else {
-          renderTimer(settings.breakTime, 'transparent');
+          renderTimer(settings.shortBreak, 'transparent');
           const atStart = performance.now();
-          startBreakTimer(atStart, settings.breakTime);
+          startBreakTimer(atStart, settings.shortBreak);
         }
 
         changeLabels(false);
