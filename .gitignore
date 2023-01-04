@@ -160,3 +160,4 @@ app/templates/socialaccount/
 .idea/
 migrations/
 script_log.txt
+update_version_txt.sh

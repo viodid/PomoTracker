@@ -114,6 +114,10 @@ def updateDelete(request, token, pomodoro_id):
         # Save updated pomodoro only if pomodoro_id is valid
         if Pomodoro.objects.filter(id=pomodoro_id):
             pomodoro = Pomodoro.objects.get(id=pomodoro_id)
+            if pomodoro.user != user.username:
+                return JsonResponse({'message':
+                                    'This pomodoro does not belong to you'},
+                                    status=401)
             pomodoro.tag = tag
             pomodoro.save()
 
