@@ -27,14 +27,15 @@ def index(request):
 def profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
-        form = ProfileForm(initial={
-                               'shortBreak': user.settings.shortBreak,
-                               'longBreak': user.settings.longBreak,
-                               'focusColor': user.settings.focusColor,
-                               'startSound': user.settings.startSound,
-                               'stopSound': user.settings.stopSound
-                           })
         if request.method == 'POST' and username == request.user.username:
+            form = ProfileForm(request.POST, request.FILES, initial={
+                                   'shortBreak': user.settings.shortBreak,
+                                   'longBreak': user.settings.longBreak,
+                                   #'focusColor': user.settings.focusColor,
+                                   'startSound': user.settings.startSound,
+                                   'stopSound': user.settings.stopSound
+                               })
+
             if form.is_valid():
                 saveSettings(form.cleaned_data, user)
                 return render(request, 'app/profile.html', {
@@ -49,6 +50,13 @@ def profile(request, username):
                               })
 
         if request.user.username == username:
+            form = ProfileForm(initial={
+                                   'shortBreak': user.settings.shortBreak,
+                                   'longBreak': user.settings.longBreak,
+                                   #'focusColor': user.settings.focusColor,
+                                   'startSound': user.settings.startSound,
+                                   'stopSound': user.settings.stopSound
+                               })
             return render(request, 'app/profile.html', {
                               'form': form,
                               'display': True,
@@ -74,8 +82,8 @@ def saveSettings(form, user):
         settings.shortBreak = int(form['shortBreak'])
     if form['longBreak']:
         settings.longBreak = int(form['longBreak'])
-    if form['focusColor']:
-        settings.focusColor = form['focusColor']
+    #if form['focusColor']:
+        #settings.focusColor = form['focusColor']
     if form['startSound']:
         settings.startSound = form['startSound']
     if form['stopSound']:
