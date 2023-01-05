@@ -48,11 +48,12 @@ a {
   color: inherit;
 }
 
-a:hover {
+a:hover, .linkable:hover {
   color: var(--yellow-logo);
+  cursor: pointer;
 }
 
-a:active {
+a:active, linkable:active {
   color: var(--yellow-logo);
 }
 
@@ -63,6 +64,10 @@ li {
 .disabled {
   pointer-events: none;
   color: var(--border-color);
+}
+
+.hidden {
+  display: none;
 }
 
 /* Navbar styles */
@@ -215,6 +220,17 @@ footer img {
   font-size: 22px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+}
+
+.version-notes {
+  padding: 3px 50px 50px 50px;
+  text-align: left;
+}
+
+#close-parent {
+  font-size: 40px;
+  width: 100%;
+  text-align: right;
 }
 
 .button {

@@ -11,6 +11,14 @@ import {
 
 const overlay = document.querySelector('#overlay');
 
+// Switch version notes visibility
+const toogleNotes = document.querySelectorAll('#toggle-notes');
+toogleNotes.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelector('.version-notes').classList.toggle('hidden');
+  });
+});
+
 document.querySelector('#start').addEventListener('click', () => {
   console.log(settings);
   runTimer();
@@ -21,7 +29,6 @@ document.querySelector('#save').addEventListener('click', () => {
 });
 
 document.querySelector('#cancel').addEventListener('click', () => {
-  // eslint-disable-next-line no-restricted-globals
   if (confirm('Sure?')) {
     hideTimer();
     stopTimer();
@@ -34,7 +41,6 @@ document.addEventListener('keydown', (event) => {
   } else if (event.code === 'Space' && (overlay.style.visibility === 'hidden' || overlay.style.visibility === '')) {
     runTimer();
   } else if (event.code === 'Escape' && overlay.style.visibility === 'visible') {
-    // eslint-disable-next-line no-restricted-globals
     if (confirm('Sure?')) {
       hideTimer();
       stopTimer();
