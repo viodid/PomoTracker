@@ -70,6 +70,17 @@ li {
   display: none;
 }
 
+.message-banner {
+  font-size: 18px;
+  padding: 10px;
+  text-align: center;
+  background-color: #003300;
+}
+
+.error {
+  background-color: #330000;
+}
+
 /* Navbar styles */
 .navbar-brand {
   margin: auto 40px;
@@ -225,6 +236,7 @@ footer img {
 .version-notes {
   padding: 3px 50px 50px 50px;
   text-align: left;
+  font-size: 17px;
 }
 
 #close-parent {
@@ -275,7 +287,7 @@ main .first {
 .block-table {
   display: flex;
   flex-direction: column;
-  min-width: 46%;
+  min-width: 47%;
   background-color: var(--softest-color);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -606,34 +618,36 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   margin-left: 10px;
 }
 
-.body-profile {
+.settings-profile {
   background: var(--primary-color);
   padding: 30px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   margin: 30px 0;
+  width: 47%;
 }
 
-.body-profile form {
+.settings-profile form {
   display: flex;
   flex-direction: column;
   font-size: 18px;
 }
 
-.body-profile form label {
-  margin-top: 10px;
+.settings-profile form label {
+  margin: 10px 0 5px 0;
 }
 
-.body-profile form input, .body-profile form select {
+.settings-profile form input, .settings-profile form select {
   background-color: var(--softest-color);
   border: none;
   border-radius: 2px;
   height: 30px;
   color: var(--text-color);
   font-size: 17px;
+  padding-right: 5px;
 }
 
-.body-profile button {
+.settings-profile button {
   width: 90px;
   font-size: 18px;
   padding: 4px;

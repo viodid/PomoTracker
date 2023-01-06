@@ -11,9 +11,6 @@
 
 {% block body %}
 <main>
-  <div style="font-size:18px;margin-top:20px;">
-    {{ message }}
-  </div>
   <div class="user-profile">
     <div class="header-profile">
       <div class="left">
@@ -35,8 +32,8 @@
       </div>
     </div>
     {% if display %}
-    <div class="body-profile">
-      <h2>User Settings</h2>
+    <div class="settings-profile">
+      <h2>{{ userProfile.username | title }} Settings</h2>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}

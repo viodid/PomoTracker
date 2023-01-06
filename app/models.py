@@ -95,7 +95,7 @@ class Tag(models.Model):
 class UserSettings(models.Model):
     sound_choices_start = (
         ('#ding', 'ding'),
-        ('#nana', 'nanana')
+        ('#folks', 'nanana')
     )
     sound_choices_stop = (
         ('#minion', 'minion'),

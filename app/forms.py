@@ -18,7 +18,7 @@ class ProfileForm(forms.Form):
     #                                   ('#FFA500', 'Orange')])
     startSound = forms.ChoiceField(required=False, label='Focus sound',
                                    choices=[('#ding', 'Ding'),
-                                       ('#nana', 'Looney Tunes')])
+                                       ('#folks', 'Looney Tunes')])
     stopSound = forms.ChoiceField(required=False, label='Break sound',
                                   choices=[('#whoosh', 'Whoosh'),
                                       ('#minion', 'Minion')])

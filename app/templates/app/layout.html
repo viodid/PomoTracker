@@ -1,120 +1,125 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Pomodoro Timer Online{% endblock %} | PomoTracker</title>
-        <meta name="description" content="PomoTracker is a customizable pomodoro timer app. Stay focused, be productive, track everything.">
-        <link rel="stylesheet" href="{% static 'app/styles.css' %}">
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/favicon/favicon-16x16.png' %}">
-        <link rel="manifest" href="{% static 'app/favicon/site.webmanifest' %}">
-        <link rel="mask-icon" href="{% static 'app/favicon/safari-pinned-tab.svg' %}" color="#f1c232">
-        <meta name="apple-mobile-web-app-title" content="PomoTracker">
-        <meta name="application-name" content="PomoTracker">
-        <meta name="msapplication-TileColor" content="#2b5797">
-        <meta name="theme-color" content="#fdfdfd">
-        {% block script %}{% endblock %}
-    </head>
-    <input type="text" id="token" style="display: none;" value="{{ user.settings.token }}">
-    {% if user.settings.white_theme %}
-    <body class="white-theme">
-        {% else %}
-        <body>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Pomodoro Timer Online{% endblock %} | PomoTracker</title>
+    <meta name="description" content="PomoTracker is a customizable pomodoro timer app. Stay focused, be productive, track everything.">
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'app/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'app/favicon/safari-pinned-tab.svg' %}" color="#f1c232">
+    <meta name="apple-mobile-web-app-title" content="PomoTracker">
+    <meta name="application-name" content="PomoTracker">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#fdfdfd">
+    {% block script %}{% endblock %}
+  </head>
+  <input type="text" id="token" style="display: none;" value="{{ user.settings.token }}">
+  {% if user.settings.white_theme %}
+  <body class="white-theme">
+    {% else %}
+    <body>
+      {% endif %}
+      {% if message %}
+      <div class="message-banner {{ message_class }}">
+        {{ message }}
+      </div>
+      {% endif %}
+      <div id="overlay">
+        <svg viewBox="0 0 100 100">
+          <circle class="bg" cx="50" cy="50" r="40"></circle>
+          <circle class="meter" cx="50" cy="50" r="40"></circle>
+        </svg>
+        <div class="fill-data">
+          <p class="timer" id="timer"><span id="minute">01</span>:<span id="second">01</span></p>
+          <p class="focus">Focus</p>
+          <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none" autocomplete="on">
+          <span class="button" id="cancel">Cancel</span>
+          <span class="button" id="save" style="display: none">Save</span>
+          <p class="last-text">or press ESC</p>
+        </div>
+      </div>
+      <audio src="{% static 'app/sounds/ding-idea-40142.mp3' %}" id="ding"></audio>
+      <audio src="{% static 'app/sounds/whoosh-6316.mp3' %}" id="whoosh"></audio>
+      <audio src="{% static 'app/sounds/blaublau.mp3' %}" id="minion"></audio>
+      <audio src="{% static 'app/sounds/folks.mp3' %}" id="folks"></audio>
+      <nav class="navbar" id="navbar">
+        <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
+        <div>
+          <ul id="topnav" class="topnav">
+            {% if user.settings.white_theme %}
+            <li id="lightbulb" style="display: none">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
+                <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
+              </svg>
+            </li>
+            <li id="moon" style="display: block;">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
+                <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
+              </svg>
+            </li>
+            {% else %}
+            <li id="lightbulb" style="display: block">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
+                <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
+              </svg>
+            </li>
+            <li id="moon" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
+                <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
+              </svg>
+            </li>
             {% endif %}
-            <div id="overlay">
-                <svg viewBox="0 0 100 100">
-                    <circle class="bg" cx="50" cy="50" r="40"></circle>
-                    <circle class="meter" cx="50" cy="50" r="40"></circle>
-                </svg>
-                <div class="fill-data">
-                    <p class="timer" id="timer"><span id="minute">01</span>:<span id="second">01</span></p>
-                    <p class="focus">Focus</p>
-                    <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none" autocomplete="on">
-                    <span class="button" id="cancel">Cancel</span>
-                    <span class="button" id="save" style="display: none">Save</span>
-                    <p class="last-text">or press ESC</p>
-                </div>
+            <li>
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider round" id="slider"></span>
+              </label>
+            </li>
+            <li><a href="{% url 'leaderboard' period='month' %}">Leaderboards</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a></li>
+            <li><a id="user-logged" href="{% url 'logout' %}">Sign Out</a></li>
+            {% else %}
+            <li><a id="user-logged" href="/accounts/login">Sign In</a></li>
+            <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+            {% endif %}
+            <li class="icon">
+              <img src="{% static 'app/images/menu.svg' %}" alt="">
+            </li>
+          </ul>
+        </div>
+      </nav>
+      {% block body %}{% endblock %}
+      <footer>
+        <div class="block 1">
+          <div class="top">
+            <div class="left">
+              <p><a href="https://www.buymeacoffee.com/davidyunta"><u>This app will always be free, please consider supporting the project:</u></a></p>
+              <p><a href="{% url 'api' %}">API Reference</a></p>
+              <p><a href="" class="disabled">Statistics</a></p>
             </div>
-            <audio src="{% static 'app/sounds/ding-idea-40142.mp3' %}" id="ding"></audio>
-            <audio src="{% static 'app/sounds/whoosh-6316.mp3' %}" id="whoosh"></audio>
-            <audio src="{% static 'app/sounds/blaublau.mp3' %}" id="minion"></audio>
-            <audio src="{% static 'app/sounds/folks.mp3' %}" id="folks"></audio>
-            <nav class="navbar" id="navbar">
-                <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
-                <div>
-                    <ul id="topnav" class="topnav">
-                        {% if user.settings.white_theme %}
-                        <li id="lightbulb" style="display: none">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
-                                <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
-                            </svg>
-                        </li>
-                        <li id="moon" style="display: block;">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
-                                <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
-                            </svg>
-                        </li>
-                        {% else %}
-                        <li id="lightbulb" style="display: block">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
-                                <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
-                            </svg>
-                        </li>
-                        <li id="moon" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
-                                <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
-                            </svg>
-                        </li>
-                        {% endif %}
-                        <li>
-                            <label class="switch">
-                                <input type="checkbox">
-                                <span class="slider round" id="slider"></span>
-                            </label>
-                        </li>
-                        <li><a href="{% url 'leaderboard' period='month' %}">Leaderboards</a></li>
-                        {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a></li>
-                        <li><a id="user-logged" href="{% url 'logout' %}">Sign Out</a></li>
-                        {% else %}
-                        <li><a id="user-logged" href="/accounts/login">Sign In</a></li>
-                        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-                        {% endif %}
-                        <li class="icon">
-                            <img src="{% static 'app/images/menu.svg' %}" alt="">
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            {% block body %}{% endblock %}
-            <footer>
-                <div class="block 1">
-                    <div class="top">
-                        <div class="left">
-                            <p><a href="https://www.buymeacoffee.com/davidyunta"><u>This app will always be free, please consider supporting the project:</u></a></p>
-                            <p><a href="{% url 'api' %}">API Reference</a></p>
-                            <p><a href="" class="disabled">Statistics</a></p>
-                        </div>
-                        <a href="https://www.buymeacoffee.com/davidyunta" target="_blank">
-                            <img src="{% static 'app/images/coffee.jpg' %}" alt="Buy me a coffee">
-                        </a>
-                    </div>
-                    <div class="bottom">
-                        <p>This application is not affiliated, associated or endorsed by the Pomodoro Technique® or Francesco Cirillo.</p>
-                        <p>The Pomodoro Technique® and Pomodoro™ are registered trademarks by Francesco Cirillo.</p>
-                    </div>
-                </div>
-                <div class="block 2">
-                    <p><a href="{% url 'privacy' %}">Privacy policy</a></p>
-                    <p><a href="{% url 'terms' %}">Terms and conditions</a></p>
-                    <p><a href="mailto:contact@pomotracker.app">contact@pomotracker.app</a></p>
-                    <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - <span id="toggle-notes" class="linkable">v{{ SITE_VERSION }}</span></p>
-                </div>
-            </footer>
-        </body>
+            <a href="https://www.buymeacoffee.com/davidyunta" target="_blank">
+              <img src="{% static 'app/images/coffee.jpg' %}" alt="Buy me a coffee">
+            </a>
+          </div>
+          <div class="bottom">
+            <p>This application is not affiliated, associated or endorsed by the Pomodoro Technique® or Francesco Cirillo.</p>
+            <p>The Pomodoro Technique® and Pomodoro™ are registered trademarks by Francesco Cirillo.</p>
+          </div>
+        </div>
+        <div class="block 2">
+          <p><a href="{% url 'privacy' %}">Privacy policy</a></p>
+          <p><a href="{% url 'terms' %}">Terms and conditions</a></p>
+          <p><a href="mailto:contact@pomotracker.app">contact@pomotracker.app</a></p>
+          <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - <span id="toggle-notes" class="linkable">v{{ SITE_VERSION }}</span></p>
+        </div>
+      </footer>
+    </body>
 </html>

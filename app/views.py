@@ -39,6 +39,7 @@ def profile(request, username):
             if form.is_valid():
                 saveSettings(form.cleaned_data, user)
                 return render(request, 'app/profile.html', {
+                                  'message': 'Profile updated successfully.',
                                   'form': form,
                                   'display': True,
                                   'userProfile': user,
@@ -46,7 +47,8 @@ def profile(request, username):
                               })
             else:
                 return render(request, 'app/profile.html', {
-                                  'message': 'Invalid form'
+                                  'message': 'Invalid form',
+                                  'message_class': 'error'
                               })
 
         if request.user.username == username:
@@ -168,7 +170,8 @@ def leaderboard(request, period):
                       })
     else:
         return render(request, 'app/leaderboard.html', {
-                          'message': 'Invalid period url'
+                          'message': 'Invalid period url',
+                          'message_class': 'error'
                       })
 
 
