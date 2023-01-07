@@ -7,5 +7,5 @@ urlpatterns = [
     path('<str:token>/getSettings', views.getSettings, name='settings'),
     path('<str:token>/create', views.create, name='create'),
     path('<str:token>/<int:pomodoro_id>', views.updateDelete, name='update-delete'),
-    path('<str:token>/settings', views.userSettings, name='user-settings')
+    path('<str:token>/settings', views.updateSettings, name='user-settings')
 ]

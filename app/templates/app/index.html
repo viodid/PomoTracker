@@ -3,10 +3,15 @@
 {% load socialaccount %}
 {% load static %}
 
+{% block styles %}
+<link rel="stylesheet" href="{% static 'app/charts.css' %}">
+{% endblock %}
+
 {% block script %}
 <script src="{% static 'app/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
 <script src="{% static 'app/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
 <script src="{% static 'app/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
+<script src="{% static 'app/charts.js' %}?{{ SITE_VERSION }}" type="module"></script>
 {% endblock %}
 
 {% block body %}
@@ -20,8 +25,12 @@
   {% else %}
   <div class="intro-dialog version-notes">
     <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
-    <p><b>Version 1.3.0</b> - User Settings release</p>
+    <p><b class="colored">Version 1.4.0</b> - Charts are comming!</p>
     <ul>
+      <li>1.4.1: Density chart <i>"Github like"</i> in the main page!</li>
+    </ul>
+    <br>
+    <p><b class="colored">Version 1.3.0</b> - User Settings release</p> <ul>
       <li>1.3.12: Enhance error messages. Minor bugs.</li>
       <li>1.3.11: Fixing form user settings. Now <a href="{% url 'profile' username=request.user.username %}">
           <u>you can change the settings</u></a> without any errors.</li>
@@ -76,6 +85,37 @@
         <span class="right">{{ pomodoros.year.count }}</span>
       </div>
     </div>
+  </div>
+  <div class="third-graph">
+    <div class="graph">
+      <ul class="months">
+        <li>Jan</li>
+        <li>Feb</li>
+        <li>Mar</li>
+        <li>Apr</li>
+        <li>May</li>
+        <li>Jun</li>
+        <li>Jul</li>
+        <li>Aug</li>
+        <li>Sep</li>
+        <li>Oct</li>
+        <li>Nov</li>
+        <li>Dec</li>
+      </ul>
+      <ul class="days">
+        <li>Sun</li>
+        <li>Mon</li>
+        <li>Tue</li>
+        <li>Wed</li>
+        <li>Thu</li>
+        <li>Fri</li>
+        <li>Sat</li>
+      </ul>
+      <ul class="squares">
+        <!-- added via javascript -->
+      </ul>
+    </div>
+    <p class="tag-squares">Click on a square to see the pomodoros of that day.</p>
   </div>
   {% endif %}
   {% if not user.is_authenticated %}

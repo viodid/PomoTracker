@@ -144,7 +144,7 @@ def updateDelete(request, token, pomodoro_id):
 
 
 @csrf_exempt
-def userSettings(request, token):
+def updateSettings(request, token):
 
     try:
         token = UserSettings.objects.get(token=token)

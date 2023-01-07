@@ -48,6 +48,10 @@ a {
   color: inherit;
 }
 
+.colored {
+  color: var(--yellow-logo);
+}
+
 a:hover, .linkable:hover {
   color: var(--yellow-logo);
   cursor: pointer;
@@ -284,6 +288,10 @@ main .first {
   margin: 20px
 }
 
+.left-block {
+  width: 47%;
+}
+
 .block-table {
   display: flex;
   flex-direction: column;
@@ -293,9 +301,6 @@ main .first {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
-
-
-
 
 .block-table .cell {
   display: flex;
@@ -385,6 +390,10 @@ main .first {
 .third p {
   text-align: center;
   margin-bottom: 40px
+}
+
+.third-graph {
+  margin: 10px auto;
 }
 
 /* Circle overlay */

@@ -1,0 +1,143 @@
+body {
+  --primary-color: #202020;
+  --secondary-color: #2c2c2c;
+  --tertiary-color: #313131;
+  --softest-color: #434343;
+  --text-color: #efefef;
+  --border-color: #999;
+  --yellow-logo: #f1c232;
+  --box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 10px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  --border-radius: 10px;
+  /* color levels charts */
+  --level-1: #3b300c;
+  --level-2: #554411;
+  --level-3: #8f6f1c;
+  --level-4: #f1c232;
+}
+
+body.white-theme {
+  --primary-color: #ebebeb;
+  --secondary-color: #eee;
+  --tertiary-color: #fefefe;
+  --softest-color: #fff;
+  --text-color: #121212;
+  --border-color: #333;
+  --yellow-logo: #f1c232;
+  --box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 7px 1px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  --border-radius: 10px;
+  /* color levels charts */
+  --level-4: #ffc40e;
+  --level-3: #ffd874;
+  --level-2: #ffe492;
+  --level-1: #fff4ce;
+}
+/* Article - https://bitsofco.de/github-contribution-graph-css-grid/ */
+
+/* Grid-related CSS */
+
+:root {
+  --square-size: 15px;
+  --square-gap: 1px;
+  --week-width: calc(var(--square-size) + var(--square-gap));
+}
+
+.months { grid-area: months; }
+.days { grid-area: days; }
+.squares { grid-area: squares; }
+
+.graph {
+  display: inline-grid;
+  grid-template-areas: "empty months"
+                       "days squares";
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: calc(var(--week-width) * 4) /* Jan */
+                         calc(var(--week-width) * 4) /* Feb */
+                         calc(var(--week-width) * 4) /* Mar */
+                         calc(var(--week-width) * 5) /* Apr */
+                         calc(var(--week-width) * 4) /* May */
+                         calc(var(--week-width) * 4) /* Jun */
+                         calc(var(--week-width) * 5) /* Jul */
+                         calc(var(--week-width) * 4) /* Aug */
+                         calc(var(--week-width) * 4) /* Sep */
+                         calc(var(--week-width) * 5) /* Oct */
+                         calc(var(--week-width) * 4) /* Nov */
+                         calc(var(--week-width) * 5) /* Dec */;
+}
+
+.days,
+.squares {
+  display: grid;
+  grid-gap: var(--square-gap);
+  grid-template-rows: repeat(7, var(--square-size));
+}
+
+.squares {
+  grid-auto-flow: column;
+  grid-auto-columns: var(--square-size);
+}
+
+
+/* Other styling */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 12px;
+}
+
+.graph {
+  padding: 20px;
+  border: var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  background-color: var(--primary-color);
+}
+
+.days li:nth-child(odd) {
+  visibility: hidden;
+}
+
+.squares li {
+  background-color: var(--tertiary-color);
+  list-style-type: none;
+  border-radius: 1.5px;
+  margin: 0.2px;
+}
+
+.squares li:hover {
+  border: 1px solid var(--text-color);
+}
+
+.squares li[data-level="1"] {
+  background-color: var(--level-1);
+}
+
+.squares li[data-level="2"] {
+  background-color: var(--level-2);
+}
+
+.squares li[data-level="3"] {
+  background-color: var(--level-3);
+}
+
+.squares li[data-level="4"] {
+  background-color: var(--level-4);
+}
+
+.tag-squares {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+
+.tag-squares:hover {
+  opacity: 0;
+}

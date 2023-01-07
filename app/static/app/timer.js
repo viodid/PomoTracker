@@ -97,7 +97,7 @@ function startFocusTimer(atStart, time) {
     return;
   }
   // Change clock when finished
-  if (minutes.innerHTML === '00' && seconds.innerHTML === '00') {
+  if (minutes.innerHTML <= '00' && seconds.innerHTML <= '00') {
     document.querySelector(settings.startSound).play();
     changeLabels(true);
     changeTimer();
@@ -115,7 +115,7 @@ function startBreakTimer(atStart, time) {
     return;
   }
   // Change clock when finished
-  if (minutes.innerHTML === '00' && seconds.innerHTML === '00') {
+  if (minutes.innerHTML <= '00' && seconds.innerHTML <= '00') {
     document.querySelector(settings.stopSound).play();
     hideTimer();
     stopTimer();
