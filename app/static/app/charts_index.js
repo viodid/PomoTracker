@@ -19,40 +19,59 @@ if (isLeapYear(date.getFullYear())) {
   keys[1].days = 29;
 }
 // Add squares
-const squares = document.querySelector('.squares');
-const desctiptor = document.querySelector('.tag-squares');
-convertPomosToJSON().then((data) => {
+const squares = document.querySelector('.squares'); const desctiptor = document.querySelector('.tag-squares');
+const selectedYear = document.querySelectorAll('.buttons-index-graph>span');
+console.log(selectedYear);
+createSquares();
 
-  for (let i = 0; i < keys.length; i++) {
-    const month = keys[i];
-    for (let day = 1; day <= month.days; day++) {
-      let count = data[month.name][day];
-      if (typeof count === "undefined") count = 0;
-      const level = convertToLevel(count);
-      squares.insertAdjacentHTML('beforeend', `<li data-level="${level}"
-      data-date="${month.name} ${day}" data-count="${count}"></li>`);
+
+selectedYear.forEach((year) => {
+  year.addEventListener('click', () => {
+    const getYear = year.getAttribute('data-year');
+    console.log(getYear);
+    createSquares(getYear);
+  });
+});
+
+function createSquares(year=2023) {
+
+  convertPomosToJSON(year).then((data) => {
+    // check any childs and remove them
+    while (squares.firstChild) {
+      squares.removeChild(squares.firstChild);
     }
-  }
-})
-  .then(() => {
-    const tag_squares = document.querySelector('.tag-squares');
-    const squares = document.querySelectorAll('.squares li');
-    const current = new Date();
-    squares.forEach((square) => {
-      square.addEventListener('mouseover', () => {
-        const date = square.getAttribute('data-date');
-        const count = square.getAttribute('data-count');
-        if (count > 0) {
-          tag_squares.innerHTML = `${count} pomodoros on ${date}, ${current.getFullYear()}`;
-        } else {
-          tag_squares.innerHTML = `No pomodoros on ${date}, ${current.getFullYear()}`;
-        }
+    for (let i = 0; i < keys.length; i++) {
+      const month = keys[i];
+      for (let day = 1; day <= month.days; day++) {
+        let count = data[month.name][day];
+        if (typeof count === "undefined") count = 0;
+        const level = convertToLevel(count);
+        squares.insertAdjacentHTML('beforeend', `<li data-level="${level}"
+        data-date="${month.name} ${day}" data-count="${count}"></li>`);
+      }
+    }
+  })
+    .then(() => {
+      const tag_squares = document.querySelector('.tag-squares');
+      const squares = document.querySelectorAll('.squares li');
+      squares.forEach((square) => {
+        square.addEventListener('mouseover', () => {
+          const date = square.getAttribute('data-date');
+          const count = square.getAttribute('data-count');
+          if (count > 0) {
+            tag_squares.innerHTML = `${count} pomodoros on ${date}, ${year}`;
+          } else {
+            tag_squares.innerHTML = `No pomodoros on ${date}, ${year}`;
+          }
+        });
       });
     });
-  });
+}
 
 
-async function convertPomosToJSON() {
+
+
+async function convertPomosToJSON(selectedYear) {
 
   let output = {
     January: {},
@@ -77,14 +96,13 @@ async function convertPomosToJSON() {
 
     for (let i = 0; i < pomos.length; i++) {
 
-      const current = new Date();
       const pomo = pomos[i];
       const date = pomo.created_at;
       const year = date.split('-')[0];
       const month = parseInt(date.split('-')[1] - 1);
       const day = parseInt(date.split('-')[2].split('T')[0]);
 
-      if (year == current.getFullYear()) {
+      if (year == selectedYear) {
         if (output[keys[month]][day]) {
           output[keys[month]][day] += 1;
         } else {

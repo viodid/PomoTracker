@@ -392,8 +392,14 @@ main .first {
   margin-bottom: 40px
 }
 
+.flex-third {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .third-graph {
-  margin: 10px auto;
+  margin: 10px 0;
 }
 
 /* Circle overlay */
