@@ -1,7 +1,7 @@
 import { token } from './user_settings.js';
 import { getAllPomodoros } from './api_calls.js';
-
-const months = [
+const date = new Date();
+const keys = [
   { name: "January", days: 31 },
   { name: "February", days: 28 },
   { name: "March", days: 31 },
@@ -15,58 +15,85 @@ const months = [
   { name: "November", days: 30 },
   { name: "December", days: 31 }
 ];
+if (isLeapYear(date.getFullYear())) {
+  keys[1].days = 29;
+}
 // Add squares
 const squares = document.querySelector('.squares');
 const desctiptor = document.querySelector('.tag-squares');
-const pomosData = await convertPomosToJSON().then((data) => {
+convertPomosToJSON().then((data) => {
 
-  for (let i = 0; i < months.length; i++) {
-    const month = months[i];
+  for (let i = 0; i < keys.length; i++) {
+    const month = keys[i];
     for (let day = 1; day <= month.days; day++) {
-      const count = pomosData[month][day];
+      let count = data[month.name][day];
+      if (typeof count === "undefined") count = 0;
       const level = convertToLevel(count);
       squares.insertAdjacentHTML('beforeend', `<li data-level="${level}"
-      data-date="${month}-${day}" data-count="${count}"></li>`);
+      data-date="${month.name} ${day}" data-count="${count}"></li>`);
     }
   }
-});
+})
+  .then(() => {
+    const tag_squares = document.querySelector('.tag-squares');
+    const squares = document.querySelectorAll('.squares li');
+    const current = new Date();
+    squares.forEach((square) => {
+      square.addEventListener('mouseover', () => {
+        const date = square.getAttribute('data-date');
+        const count = square.getAttribute('data-count');
+        if (count > 0) {
+          tag_squares.innerHTML = `${count} pomodoros on ${date}, ${current.getFullYear()}`;
+        } else {
+          tag_squares.innerHTML = `No pomodoros on ${date}, ${current.getFullYear()}`;
+        }
+      });
+    });
+  });
+
 
 async function convertPomosToJSON() {
+
+  let output = {
+    January: {},
+    February: {},
+    March: {},
+    April: {},
+    May: {},
+    June: {},
+    July: {},
+    August: {},
+    September: {},
+    October: {},
+    November: {},
+    December: {}
+  };
 
   const response = await fetch(`/api/${token}/get`)
 
   await response.json().then((pomos) => {
 
+    const keys = Object.keys(output);
 
-    let output = {
-      January: {},
-      February: {},
-      March: {},
-      April: {},
-      May: {},
-      June: {},
-      July: {},
-      August: {},
-      September: {},
-      October: {},
-      November: {},
-      December: {}
-    };
     for (let i = 0; i < pomos.length; i++) {
+
+      const current = new Date();
       const pomo = pomos[i];
-      console.log(pomo);
-      const date = formatPythonDatetime(pomo.date);
-      const month = date.split('-')[1];
-      const day = date.split('-')[2].split('T')[0];
-      if (output[date.month][date.day]) {
-        output[month][day] += 1;
-      } else {
-        output[month][day] = 1;
+      const date = pomo.created_at;
+      const year = date.split('-')[0];
+      const month = parseInt(date.split('-')[1] - 1);
+      const day = parseInt(date.split('-')[2].split('T')[0]);
+
+      if (year == current.getFullYear()) {
+        if (output[keys[month]][day]) {
+          output[keys[month]][day] += 1;
+        } else {
+          output[keys[month]][day] = 1;
+        }
       }
     }
-    console.log(output);
-    return output;
   });
+  return output;
 }
 
 
@@ -84,21 +111,12 @@ function convertToLevel(pomos) {
   }
 }
 
-function formatPythonDatetime(datetimeString) {
-  const date = new Date(Date.parse(datetimeString));
-  return serializeDate(date);
+function isLeapYear(year) {
+  if (year % 4 !== 0) {
+    return false;
+  }
+  if (year % 100 === 0 && year % 400 !== 0) {
+    return false;
+  }
+  return true;
 }
-
-function serializeDate(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-}
-
-
-

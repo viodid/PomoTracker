@@ -134,10 +134,4 @@ body {
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
-  opacity: 1;
-  transition: opacity 0.1s ease;
-}
-
-.tag-squares:hover {
-  opacity: 0;
 }
