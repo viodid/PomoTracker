@@ -14,6 +14,7 @@ urlpatterns = [
     path('leaderboard/<str:period>', views.leaderboard, name='leaderboard'),
     path('<str:username>/', views.profile, name='profile'),
     path('pomodoros', views.pomodorosList, name='pomodoros'),
+    path('charts', views.charts, name='charts')
 ]
 
 if settings.DEBUG:

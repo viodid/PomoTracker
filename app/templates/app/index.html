@@ -4,14 +4,14 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'app/charts.css' %}">
+<link rel="stylesheet" href="{% static 'app/charts_index.css' %}">
 {% endblock %}
 
 {% block script %}
 <script src="{% static 'app/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
 <script src="{% static 'app/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
 <script src="{% static 'app/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
-<script src="{% static 'app/charts.js' %}?{{ SITE_VERSION }}" type="module"></script>
+<script src="{% static 'app/charts_index.js' %}?{{ SITE_VERSION }}" type="module"></script>
 {% endblock %}
 
 {% block body %}
@@ -27,6 +27,8 @@
     <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
     <p><b class="colored">Version 1.4.0</b> - Charts are comming!</p>
     <ul>
+      <li>1.4.3: Track pomodoros by tag chart!</li>
+      <li>1.4.2: Minor bugs.</li>
       <li>1.4.1: Density chart <i>"Github like"</i> in the main page!</li>
     </ul>
     <br>
@@ -115,7 +117,7 @@
         <!-- added via javascript -->
       </ul>
     </div>
-    <p class="tag-squares"></p>
+    <p class="tag-squares">Hover on cells to display more info</p>
   </div>
   {% endif %}
   {% if not user.is_authenticated %}

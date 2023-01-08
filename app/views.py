@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
@@ -93,6 +93,7 @@ def saveSettings(form, user):
     settings.save()
 
 
+@login_required
 def pomodorosList(request):
     user = User.objects.get(username=request.user.username)
     pomodoros = user.pomodoros.all().order_by('-datetime')
@@ -103,6 +104,13 @@ def pomodorosList(request):
     return render(request, 'app/pomodoros.html', {
                       'page_obj': pageObj
                   })
+
+
+@login_required
+def charts(request):
+    user = User.objects.get(username=request.user.username)
+    #pomodoros = user.pomodoros.filter()
+    return render(request, 'app/charts.html')
 
 
 def privacy(request):

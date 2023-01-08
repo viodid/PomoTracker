@@ -13,7 +13,7 @@ body {
   --level-1: #3b300c;
   --level-2: #554411;
   --level-3: #8f6f1c;
-  --level-4: #f1c232;
+  --level-4: #b9962c;
 }
 
 body.white-theme {
@@ -85,12 +85,6 @@ body.white-theme {
 
 
 /* Other styling */
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 12px;
-}
-
 .graph {
   padding: 20px;
   border: var(--border-color);

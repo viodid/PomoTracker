@@ -83,6 +83,9 @@
                 <span class="slider round" id="slider"></span>
               </label>
             </li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'charts' %}">Charts</a></li>
+            {% endif %}
             <li><a href="{% url 'leaderboard' period='month' %}">Leaderboards</a></li>
             {% if request.user.is_authenticated %}
             <li><a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a></li>
