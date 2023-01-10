@@ -14,6 +14,7 @@ function getSettings(tokenParam) {
 
 let bColor = '#ADFF2F';
 let fColor = '#f1c232';
+let tColor = '#000000';
 let bTime = 5;
 let fTime = 25;
 let lBreak = 15;

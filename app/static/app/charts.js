@@ -1,29 +1,143 @@
-import { focusColor, token } from './user_settings.js'
-google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawStuff);
+import { focusColor, token, whiteTheme } from './user_settings.js';
 
-async function drawStuff() {
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawBarChart1);
+google.charts.setOnLoadCallback(drawBarChart2);
+
+async function drawBarChart1() {
   const pomos = await pomosPerHour()
     .then((pomos) => {
-      console.log(pomos);
-
-      var data = new google.visualization.arrayToDataTable(pomos);
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Hour');
+      data.addColumn('number', 'Count');
+      data.addRows(pomos);
 
       var options = {
-        title: 'Count of pomodoros, per hour',
-        width: 800,
-        legend: { position: 'none' },
         colors: [focusColor],
-        hAxis: {
-          ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 , 14, 15, 16, 17, 18, 19 , 20, 21, 22, 23]
+        title: 'Pomodoros per Hour',
+        titleTextStyle: {
+          color: fontColor(),
+          fontSize: 22,
+          bold: false,
         },
-        bar: { groupWidth: "90%" }
+        legend: { position: 'none' },
+        fontName: 'Roboto',
+        backgroundColor: { 
+          fill:'transparent',
+        },
+        bar: { groupWidth: "90%" },
+        chartArea: {
+          width: "85%",
+          height: "75%"
+        },
+        hAxis: {
+          title: 'Hour',
+          titleTextStyle: {
+            color: fontColor(),
+            fontSize: 15,
+            italic: false,
+          },
+          textStyle: {
+            color: fontColor(),
+          },
+        },
+        vAxis: {
+          title: 'Count',
+          titleTextStyle: {
+            color: fontColor(),
+            fontSize: 15,
+            italic: false,
+          },
+          textStyle: {
+            color: fontColor(),
+          },
+          minorGridlines: {
+            count: 0
+          },
+          baselineColor: fontColor(),
+        },
+        animation: {
+          duration: 1000,
+          easing: 'out',
+          startup: true,
+        },
       };
 
-      var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-      chart.draw(data, google.charts.Bar.convertOptions(options));
+      var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-left'));
+      chart.draw(data, options);
     });
 }
+
+function drawBarChart2() {
+  const pomos = pomosPerDay()
+  .then((pomos) => {
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Count');
+    data.addRows(pomos);
+
+    var options = {
+      colors: [focusColor],
+      title: 'Pomodoros per Day',
+      titleTextStyle: {
+        color: fontColor(),
+        fontSize: 22,
+        bold: false,
+      },
+      legend: { position: 'none' },
+      fontName: 'Roboto',
+      backgroundColor: { 
+        fill:'transparent',
+      },
+      bar: { groupWidth: "75%" },
+      chartArea: {
+        width: "85%",
+        height: "75%"
+      },
+      hAxis: {
+        textStyle: {
+          color: fontColor(),
+        },
+        gridlines: {
+          count: 0
+        },
+        baselineColor: fontColor(),
+      },
+      vAxis: {
+        title: 'Count',
+        titleTextStyle: {
+          color: fontColor(),
+          fontSize: 15,
+          italic: false,
+        },
+        textStyle: {
+          color: fontColor(),
+        },
+        minorGridlines: {
+          count: 0
+        },
+        baselineColor: fontColor(),
+      },
+      animation: {
+        duration: 1000,
+        easing: 'out',
+        startup: true,
+      },
+      trendlines: {
+        0: {
+          color: 'green',
+          lineWidth: 3,
+          opacity: 0.5,
+        }
+      },
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-right'));
+    chart.draw(data, options);
+
+  });
+}
+
 
 async function pomosPerHour() {
   let aggregated = {};
@@ -49,19 +163,70 @@ async function pomosPerHour() {
         aggregated[hour] = 1;
       }
     }
-    console.log(aggregated);
   });
   return aggregateToChart(aggregated);
 }
 
-function aggregateToChart(aggregated) {
-  let output = [['Hour', 'Count']];
+function aggregateToChart(aggregated, date = false) {
+  let output = [];
   const keys = Object.keys(aggregated);
   for (let i = 0; i < keys.length; i++) {
-    output.push([keys[i], aggregated[keys[i]]]);
+    if (date) {
+      const date = new Date(keys[i]);
+      output.push([date, aggregated[keys[i]]]);
+    } else {
+      output.push([keys[i], aggregated[keys[i]]]);
+    }
   }
   return output;
 }
 
+function fontColor() {
+  return (whiteTheme) ? '#121212' : '#efefef';
+}
+
+async function pomosPerDay() {
+  let aggregated = {};
+  const response = await fetch(`/api/${token}/get`);
+  await response.json().then((pomos) => {
+
+    const keys = Object.keys(pomos);
+    let firstDate = new Date();
+    firstDate = parseDate(firstDate);
+    let lastDate = new Date(pomos[pomos.length - 1]["created_at"]);
+    lastDate = parseDate(lastDate);
+
+    // initialize the days
+    while (firstDate > lastDate) {
+      aggregated[firstDate] = 0;
+      firstDate = new Date(firstDate);
+      firstDate.setDate(firstDate.getDate() - 1);
+      firstDate = parseDate(firstDate);
+    }
+
+
+    for (let i = 0; i < pomos.length; i++) {
+
+      let date = new Date(Date.parse(pomos[i]["created_at"]));
+      date = parseDate(date);
+      const pomo = pomos[i];
+
+      if (aggregated[date]) {
+        aggregated[date] += 1;
+      } else {
+        aggregated[date] = 1;
+      }
+    }
+  });
+  console.log(aggregated);
+  return aggregateToChart(aggregated, true);
+}
+
+function parseDate(date) {
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1; // Month is 0-indexed
+  let day = date.getDate();
+  return `${year}-${month}-${day}`;
+}
 
 

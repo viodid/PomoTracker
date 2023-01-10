@@ -21,7 +21,7 @@
                 <a href="{% url 'leaderboard' period='week' %}" id="week-leaderboard">Week</a>
             </li>
             <li>
-                <a href="{% url 'leaderboard' period='month' %}" id="month-leaderboard">Month🏆</a>
+                <a href="{% url 'leaderboard' period='month' %}" id="month-leaderboard">Month&#127942;</a>
             </li>
             <li>
                 <a href="{% url 'leaderboard' period='year' %}" id="year-leaderboard">Year</a>
@@ -39,13 +39,13 @@
                             <p><a href="{% url 'profile' username=pomodoros.first.user.username  %}">{{ pomodoros.first.user.username }}</a></p>
                             <div class="rewards-container">
                                 {% if pomodoros.first.user.rewards.gold %}
-                                    <span class="rewards">🥇{{ pomodoros.first.user.rewards.gold }}</span>
+                                    <span class="rewards">&#129351;{{ pomodoros.first.user.rewards.gold }}</span>
                                 {% endif %}
                                 {% if pomodoros.first.user.rewards.silver %}
-                                    <span class="rewards">🥈{{ pomodoros.first.user.rewards.silver }}</span>
+                                    <span class="rewards">&#129352;{{ pomodoros.first.user.rewards.silver }}</span>
                                 {% endif %}
                                 {% if pomodoros.first.user.rewards.bronze %}
-                                    <span class="rewards">🥉{{ pomodoros.first.user.rewards.bronze }}</span>
+                                    <span class="rewards">&#129353;{{ pomodoros.first.user.rewards.bronze }}</span>
                                 {% endif %}
                             </div>
                         </div>

@@ -18,7 +18,6 @@ export function editPomodoro(token, id, tag) {
 }
 
 export function getAllPomodoros(token) {
-  console.log(token);
   fetch(`/api/${token}/get`)
     .then((response) => response.json())
     .then((data) => {

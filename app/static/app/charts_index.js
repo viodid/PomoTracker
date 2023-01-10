@@ -21,14 +21,12 @@ if (isLeapYear(date.getFullYear())) {
 // Add squares
 const squares = document.querySelector('.squares'); const desctiptor = document.querySelector('.tag-squares');
 const selectedYear = document.querySelectorAll('.buttons-index-graph>span');
-console.log(selectedYear);
 createSquares();
 
 
 selectedYear.forEach((year) => {
   year.addEventListener('click', () => {
     const getYear = year.getAttribute('data-year');
-    console.log(getYear);
     createSquares(getYear);
   });
 });
