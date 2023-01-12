@@ -11,7 +11,9 @@
 <script src="{% static 'app/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
 <script src="{% static 'app/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
 <script src="{% static 'app/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
+{% if user.is_authenticated %}
 <script src="{% static 'app/charts_index.js' %}?{{ SITE_VERSION }}" type="module"></script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -27,11 +29,9 @@
     <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
     <p><b class="colored">Version 1.4.0</b> - Charts are comming!</p>
     <ul>
-      <li>1.4.6: Fixed bug updating profile image and other bugs.</li>
+      <li>1.4.6: Fixed bug updating profile image and minor bugs.</li>
       <li>1.4.5: Added charts for pomodoros per hour and per day</li>
       <li>1.4.4: Hide version notes by default. Add year buttons to the density chart.</li>
-      <li>1.4.3: Track pomodoros by tag chart!</li>
-      <li>1.4.2: Minor bugs.</li>
       <li>1.4.1: Density chart <i>"Github like"</i> in the main page!</li>
     </ul>
     <br>

@@ -3,9 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('<str:token>/get', views.getAll, name='all'),
-    path('<str:token>/getSettings', views.getSettings, name='settings'),
+    path('<str:username>/get', views.getAll),
+    path('<str:token>/getSettings', views.getSettings),
     path('<str:token>/create', views.create, name='create'),
-    path('<str:token>/<int:pomodoro_id>', views.updateDelete, name='update-delete'),
-    path('<str:token>/settings', views.updateSettings, name='user-settings')
+    path('<str:token>/<int:pomodoro_id>', views.updateDelete),
+    path('<str:token>/settings', views.updateSettings)
 ]

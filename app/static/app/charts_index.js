@@ -1,4 +1,4 @@
-import { token } from './user_settings.js';
+import { username } from './user_settings.js';
 import { getAllPomodoros } from './api_calls.js';
 const date = new Date();
 const keys = [
@@ -86,7 +86,7 @@ async function convertPomosToJSON(selectedYear) {
     December: {}
   };
 
-  const response = await fetch(`/api/${token}/get`)
+  const response = await fetch(`/api/${username}/get`)
 
   await response.json().then((pomos) => {
 

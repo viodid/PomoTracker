@@ -17,8 +17,8 @@ export function editPomodoro(token, id, tag) {
     });
 }
 
-export function getAllPomodoros(token) {
-  fetch(`/api/${token}/get`)
+export function getAllPomodoros(username) {
+  fetch(`/api/${username}/get`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);

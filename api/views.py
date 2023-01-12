@@ -2,27 +2,27 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from app.models import Pomodoro, UserSettings, Tag
+from app.models import Pomodoro, UserSettings, Tag, User
 
 
 # GET request
-def getAll(request, token):
+def getAll(request, username):
 
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
 
     try:
-        token = UserSettings.objects.get(token=token)
+        user = User.objects.get(username=username)
 
-    except UserSettings.DoesNotExist:
+    except User.DoesNotExist:
         return JsonResponse({
-            "error": "Invalid token"
+            "error": "Username does not exist."
         }, status=401)
 
-    user = token.user
     pomodoros = Pomodoro.objects.filter(user=user).order_by('-datetime')
 
-    return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros], safe=False, status=200)
+    return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
+                        safe=False, status=200)
 
 
 def getSettings(request, token):

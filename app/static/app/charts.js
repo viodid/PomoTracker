@@ -1,4 +1,4 @@
-import { focusColor, token, whiteTheme } from './user_settings.js';
+import { focusColor, username, whiteTheme } from './user_settings.js';
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawBarChart1);
@@ -141,7 +141,7 @@ function drawBarChart2() {
 
 async function pomosPerHour() {
   let aggregated = {};
-  const response = await fetch(`/api/${token}/get`);
+  const response = await fetch(`/api/${username}/get`);
   await response.json().then((pomos) => {
 
     const keys = Object.keys(pomos);
@@ -187,8 +187,11 @@ function fontColor() {
 
 async function pomosPerDay() {
   let aggregated = {};
-  const response = await fetch(`/api/${token}/get`);
+  const response = await fetch(`/api/${username}/get`);
   await response.json().then((pomos) => {
+    if (!pomos.length) {
+      return [0];
+    }
 
     const keys = Object.keys(pomos);
     let firstDate = new Date();
@@ -218,7 +221,6 @@ async function pomosPerDay() {
       }
     }
   });
-  console.log(aggregated);
   return aggregateToChart(aggregated, true);
 }
 

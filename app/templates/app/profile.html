@@ -5,8 +5,19 @@
 {{ userProfile.username }}
 {% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{% static 'app/charts.css' %}">
+{% endblock %}
+
 {% block script %}
 <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
+{% if not display %}
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="{% static 'app/charts.js' %}" type="module"></script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
 {% endblock %}
 
 {% block body %}
@@ -39,6 +50,49 @@
         {{ form }}
         <button type="submit">Save</button>
       </form>
+    </div>
+    {% else %}
+    <div class="first-char-container">
+      <div id="bar-chart-left" class="chart"></div>
+    </div>
+    <div class="flex-third">
+      <div class="third-graph">
+        <div class="graph">
+          <ul class="months">
+            <li>Jan</li>
+            <li>Feb</li>
+            <li>Mar</li>
+            <li>Apr</li>
+            <li>May</li>
+            <li>Jun</li>
+            <li>Jul</li>
+            <li>Aug</li>
+            <li>Sep</li>
+            <li>Oct</li>
+            <li>Nov</li>
+            <li>Dec</li>
+          </ul>
+          <ul class="days">
+            <li>Sun</li>
+            <li>Mon</li>
+            <li>Tue</li>
+            <li>Wed</li>
+            <li>Thu</li>
+            <li>Fri</li>
+            <li>Sat</li>
+          </ul>
+          <ul class="squares">
+            <!-- added via javascript -->
+          </ul>
+        </div>
+        <p class="tag-squares">Hover on cells to display more info</p>
+      </div>
+      <div class="buttons-index-graph">
+        {% now "Y" as this_year %}
+        <span data-year="{{ this_year }}">{{ this_year }}</span>
+        <span data-year="{{ this_year|add:"-1" }}">{{ this_year|add:"-1" }}</span>
+        <span data-year="{{ this_year|add:"-2" }}">{{ this_year|add:"-2" }}</span>
+      </div>
     </div>
     {% endif %}
   </div>
