@@ -32,7 +32,7 @@ def profile(request, username):
             form = ProfileForm(request.POST, request.FILES, initial={
                                    'shortBreak': user.settings.shortBreak,
                                    'longBreak': user.settings.longBreak,
-                                   #'focusColor': user.settings.focusColor,
+                                   # 'focusColor': user.settings.focusColor,
                                    'startSound': user.settings.startSound,
                                    'stopSound': user.settings.stopSound
                                })
@@ -56,7 +56,7 @@ def profile(request, username):
             form = ProfileForm(initial={
                                    'shortBreak': user.settings.shortBreak,
                                    'longBreak': user.settings.longBreak,
-                                   #'focusColor': user.settings.focusColor,
+                                   # 'focusColor': user.settings.focusColor,
                                    'startSound': user.settings.startSound,
                                    'stopSound': user.settings.stopSound
                                })
@@ -77,10 +77,9 @@ def profile(request, username):
 
 
 def saveSettings(form, user):
-    print(form)
     settings = user.settings
     if form['image']:
-        settings.name = form['image']
+        settings.image = form['image']
     if form['shortBreak']:
         settings.shortBreak = int(form['shortBreak'])
     if form['longBreak']:
