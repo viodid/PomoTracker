@@ -528,7 +528,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 .leaderboard-container {
   width: 47%;
   margin: 40px 0;
-  padding: 10px;
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
@@ -547,6 +546,9 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid var(--border-color);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  background-color: var(--softest-color);
 }
 
 .leaderboard-container li {
@@ -554,9 +556,20 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   font-size: 20px;
 }
 
+.leaderboard-container .header li {
+  font-size: 20px;
+  width: 20%;
+  height: 61px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
 .leaderboard-user-container {
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 
 .leaderboard-user-container li {
