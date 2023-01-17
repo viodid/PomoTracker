@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
+from django.utils import timezone
 
 from datetime import datetime
 from math import ceil
@@ -10,7 +11,7 @@ from math import ceil
 class Pomodoro(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
                              related_name='pomodoros')
-    datetime = models.DateTimeField(auto_now_add=True)
+    datetime = models.DateTimeField(default=timezone.now)
     tag = models.ForeignKey('Tag', on_delete=models.PROTECT,
                             related_name='pomodoros')
 
@@ -32,7 +33,7 @@ class Pomodoro(models.Model):
         # Get the first pomodoro
         first = pomodoros.first()
         # Get the difference between the first pomodoro day and today
-        diff = datetime.now() - first.datetime
+        diff = timezone.now() - first.datetime
         # Get the number of pomodoros
         num = pomodoros.count()
         # Get the average pomodoros per day
@@ -40,10 +41,30 @@ class Pomodoro(models.Model):
             avg = num / diff.days
         except ZeroDivisionError:
             avg = num
-
-        # print("------", round(avg, 2), diff.days, num, first, last)
-
         return round(avg, ndigits=2)
+
+    @staticmethod
+    def aggregatePomodorosByTag(user):
+        # Get all pomodoros
+        pomodoros = user.pomodoros.all()
+        # Make sure there are pomodoros
+        if not pomodoros:
+            return {}
+        # Get all tags
+        tags = Tag.objects.all()
+        # Initialize the dictionary
+        tagDict = {}
+        # Loop through all tags
+        for tag in tags:
+            # Get all pomodoros with the tag
+            pomodorosWithTag = pomodoros.filter(tag=tag)
+            # Get the number of pomodoros with the tag
+            num = pomodorosWithTag.count()
+            # Add the number of pomodoros with the tag to the dictionary if it
+            # is not 0
+            if num != 0:
+                tagDict[tag.tag] = num
+        return dict(sorted(tagDict.items(), key=lambda x: x[1], reverse=True))
 
     def checkLastCreated(self):
         # Get user
@@ -115,6 +136,7 @@ class UserSettings(models.Model):
     longBreak = models.PositiveSmallIntegerField(default=15)
     focusColor = models.CharField(default='#f1c232', max_length=7)
     breakColor = models.CharField(default='#ADFF2F', max_length=7)
+    timezone = models.CharField(max_length=64, default='UTC')
 
     def serialize(self):
         return {
@@ -133,7 +155,8 @@ class UserSettings(models.Model):
     def __str__(self):
         return f'''{self.user.username}, {self.white_theme}, {self.image},
         {self.startSound}, {self.stopSound}, {self.focusTime}, {self.longBreak},
-        {self.shortBreak}, {self.focusColor}, {self.breakColor}, {self.token}'''
+        {self.shortBreak}, {self.focusColor}, {self.breakColor}, {self.token,
+        {self.timezone}}'''
 
 
 class Rewards(models.Model):

@@ -139,7 +139,7 @@ DATABASES = {
         'USER': config['DATABASES']['USER'],
         'HOST': 'localhost',
         'PORT': 5432,
-        'PASSWORD': config['DATABASES']['PASSWORD']
+        'PASSWORD': config['DATABASES']['PASSWORD'],
     }
 }
 
@@ -172,9 +172,9 @@ TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
-USE_DEPRECATED_PYTZ = True
+# USE_DEPRECATED_PYTZ = True
 
 
 # Static files (CSS, JavaScript, Images)

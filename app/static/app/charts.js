@@ -3,7 +3,9 @@ import { focusColor, username, whiteTheme } from './user_settings.js';
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawBarChart1);
 google.charts.setOnLoadCallback(drawBarChart2);
+google.charts.setOnLoadCallback(drawPieChart1);
 
+// Pomodoros per Hour
 async function drawBarChart1() {
   const pomos = await pomosPerHour()
     .then((pomos) => {
@@ -68,6 +70,7 @@ async function drawBarChart1() {
     });
 }
 
+// Pomodoros per Day
 function drawBarChart2() {
   const pomos = pomosPerDay()
   .then((pomos) => {
@@ -95,13 +98,21 @@ function drawBarChart2() {
         height: "75%"
       },
       hAxis: {
+        title: 'Date',
+        titleTextStyle: {
+          color: fontColor(),
+          fontSize: 15,
+          italic: false,
+        },
         textStyle: {
           color: fontColor(),
+        },
+        minorGridlines: {
+          count: 0
         },
         gridlines: {
           count: 0
         },
-        baselineColor: fontColor(),
       },
       vAxis: {
         title: 'Count',
@@ -125,10 +136,10 @@ function drawBarChart2() {
       },
       trendlines: {
         0: {
-          color: 'green',
+          color: 'red',
           lineWidth: 3,
           opacity: 0.5,
-        }
+        },
       },
     };
 
@@ -137,6 +148,55 @@ function drawBarChart2() {
 
   });
 }
+
+async function drawPieChart1() {
+  const pomos = await aggregatedPomosByTag()
+  .then((pomos) => {
+    console.log(pomos);
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Tag');
+    data.addColumn('number', 'Count');
+    data.addRows(pomos);
+
+    var options = {
+        title: 'Pomodoros by Tag',
+        fontName: 'Roboto',
+        titleTextStyle: {
+          color: fontColor(),
+          fontSize: 22,
+          bold: false,
+        },
+        legend: {
+          position: 'right',
+          textStyle: {
+            color: fontColor(),
+          },
+        },
+        backgroundColor: { 
+          fill:'transparent',
+        },
+        chartArea: {
+          width: "100%",
+          height: "75%",
+          bottom: 20,
+          left: 40,
+        },
+      }
+
+    var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+    chart.draw(data, options);
+  });
+}
+
+async function aggregatedPomosByTag() {
+  let aggregated = {};
+  const response = await fetch(`/api/${username}/tag`);
+  await response.json().then((data) => {
+      aggregated = data;
+    });
+  return aggregateToChart(aggregated);
+}
+
 
 
 async function pomosPerHour() {

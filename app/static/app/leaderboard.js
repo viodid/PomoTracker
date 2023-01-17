@@ -7,7 +7,6 @@ const path = window.location.pathname.split('/').pop();
 const selection = document.querySelector(`#${path}-leaderboard`);
 selection.style.color = '#f1c232';
 const parent = selection.parentElement;
-console.log(whiteTheme);
 if (!whiteTheme) {
   parent.style.color = '#efefef';
   parent.style.backgroundColor = '#202020';

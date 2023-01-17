@@ -34,7 +34,8 @@ def profile(request, username):
                                    'longBreak': user.settings.longBreak,
                                    # 'focusColor': user.settings.focusColor,
                                    'startSound': user.settings.startSound,
-                                   'stopSound': user.settings.stopSound
+                                   'stopSound': user.settings.stopSound,
+                                   'timezone': user.settings.timezone,
                                })
 
             if form.is_valid():
@@ -58,7 +59,8 @@ def profile(request, username):
                                    'longBreak': user.settings.longBreak,
                                    # 'focusColor': user.settings.focusColor,
                                    'startSound': user.settings.startSound,
-                                   'stopSound': user.settings.stopSound
+                                   'stopSound': user.settings.stopSound,
+                                   'timezone': user.settings.timezone,
                                })
             return render(request, 'app/profile.html', {
                               'form': form,
@@ -90,6 +92,8 @@ def saveSettings(form, user):
         settings.startSound = form['startSound']
     if form['stopSound']:
         settings.stopSound = form['stopSound']
+    if form['timezone']:
+        settings.timezone = form['timezone']
     settings.save()
 
 
