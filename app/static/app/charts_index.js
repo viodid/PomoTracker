@@ -86,7 +86,7 @@ async function convertPomosToJSON(selectedYear) {
     December: {}
   };
 
-  const response = await fetch(`/api/${username}/get`)
+  const response = await fetch(`/api/${username}/get/pomodoros`)
 
   await response.json().then((pomos) => {
 

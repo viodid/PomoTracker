@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 import secrets
 
-from .models import User, SlicePomodoros, UserSettings, Rewards, Pomodoro
+from .models import User, SlicePomodoros, UserSettings, Rewards, Pomodoro, Statistics
 from .forms import ProfileForm
 
 
@@ -45,7 +45,7 @@ def profile(request, username):
                                   'form': form,
                                   'display': True,
                                   'userProfile': user,
-                                  'averagePomos': Pomodoro.getAveragePomodoros(user)
+                                  'averagePomos': Statistics.getAveragePomodoros(user)
                               })
             else:
                 return render(request, 'app/profile.html', {
@@ -66,14 +66,14 @@ def profile(request, username):
                               'form': form,
                               'display': True,
                               'userProfile': user,
-                              'averagePomos': Pomodoro.getAveragePomodoros(user)
+                              'averagePomos': Statistics.getAveragePomodoros(user)
                           })
 
     if User.objects.filter(username=username):
         userProfile = User.objects.get(username=username)
         return render(request, 'app/profile.html', {
                           'userProfile': userProfile,
-                          'averagePomos': Pomodoro.getAveragePomodoros(userProfile)
+                          'averagePomos': Statistics.getAveragePomodoros(userProfile)
                       })
     return HttpResponseNotFound(request)
 

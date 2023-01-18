@@ -2,13 +2,13 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from app.models import Pomodoro, UserSettings, Tag, User
+from app.models import Pomodoro, UserSettings, Tag, User, Statistics
 from datetime import datetime
 import pytz
 
 
 # GET request
-def getAll(request, username):
+def getAll(request, username, endpoint):
 
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
@@ -21,29 +21,14 @@ def getAll(request, username):
             "error": "Username does not exist."
         }, status=401)
 
-    pomodoros = Pomodoro.objects.filter(user=user).order_by('-datetime')
+    if endpoint == 'pomodoros':
+        pomodoros = Pomodoro.objects.filter(user=user).order_by('-datetime')
+        return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
+                            safe=False, status=200)
 
-    return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
-                        safe=False, status=200)
-
-
-# GET request
-def aggregatePomodorosByTag(request, username):
-    if request.method != 'GET':
-        return JsonResponse({"error": "GET request required."}, status=400)
-
-    try:
-        user = User.objects.get(username=username)
-
-    except User.DoesNotExist:
-        return JsonResponse({
-                                "error": "Username does not exist."
-                            }, status=401)
-
-    tagDict = Pomodoro.aggregatePomodorosByTag(user)
-    print(tagDict)
-
-    return JsonResponse(tagDict, safe=False, status=200)
+    elif endpoint == 'tag':
+        tagDict = Statistics.aggregatePomodorosByTag(user)
+        return JsonResponse(tagDict, safe=False, status=200)
 
 
 def getSettings(request, token):

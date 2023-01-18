@@ -134,13 +134,6 @@ function drawBarChart2() {
         easing: 'out',
         startup: true,
       },
-      trendlines: {
-        0: {
-          color: 'red',
-          lineWidth: 3,
-          opacity: 0.5,
-        },
-      },
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-right'));
@@ -181,6 +174,11 @@ async function drawPieChart1() {
           bottom: 20,
           left: 40,
         },
+        is3D: true,
+        sliceVisibilityThreshold: 0.03,
+        tooltip: {
+          showColorCode: true,
+        },
       }
 
     var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
@@ -190,7 +188,7 @@ async function drawPieChart1() {
 
 async function aggregatedPomosByTag() {
   let aggregated = {};
-  const response = await fetch(`/api/${username}/tag`);
+  const response = await fetch(`/api/${username}/get/tag`);
   await response.json().then((data) => {
       aggregated = data;
     });
@@ -201,7 +199,7 @@ async function aggregatedPomosByTag() {
 
 async function pomosPerHour() {
   let aggregated = {};
-  const response = await fetch(`/api/${username}/get`);
+  const response = await fetch(`/api/${username}/get/pomodoros`);
   await response.json().then((pomos) => {
 
     const keys = Object.keys(pomos);
@@ -230,6 +228,7 @@ async function pomosPerHour() {
 function aggregateToChart(aggregated, date = false) {
   let output = [];
   const keys = Object.keys(aggregated);
+  console.log(keys);
   for (let i = 0; i < keys.length; i++) {
     if (date) {
       const date = new Date(keys[i]);
@@ -247,7 +246,7 @@ function fontColor() {
 
 async function pomosPerDay() {
   let aggregated = {};
-  const response = await fetch(`/api/${username}/get`);
+  const response = await fetch(`/api/${username}/get/pomodoros`);
   await response.json().then((pomos) => {
     if (!pomos.length) {
       return [0];
