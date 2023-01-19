@@ -54,47 +54,10 @@
     {% else %}
     <div class="first-char-container">
       <div id="bar-chart-left" class="chart"></div>
+      <div id="bar-chart-right" class="chart"></div>
     </div>
-    <div class="flex-third">
-      <div class="third-graph">
-        <div class="graph">
-          <ul class="months">
-            <li>Jan</li>
-            <li>Feb</li>
-            <li>Mar</li>
-            <li>Apr</li>
-            <li>May</li>
-            <li>Jun</li>
-            <li>Jul</li>
-            <li>Aug</li>
-            <li>Sep</li>
-            <li>Oct</li>
-            <li>Nov</li>
-            <li>Dec</li>
-          </ul>
-          <ul class="days">
-            <li>Sun</li>
-            <li>Mon</li>
-            <li>Tue</li>
-            <li>Wed</li>
-            <li>Thu</li>
-            <li>Fri</li>
-            <li>Sat</li>
-          </ul>
-          <ul class="squares">
-            <!-- added via javascript -->
-          </ul>
-        </div>
-        <p class="tag-squares">Hover on cells to display more info</p>
-      </div>
-      <div class="buttons-index-graph">
-        {% now "Y" as this_year %}
-        <span data-year="{{ this_year }}">{{ this_year }}</span>
-        <span data-year="{{ this_year|add:"-1" }}">{{ this_year|add:"-1" }}</span>
-        <span data-year="{{ this_year|add:"-2" }}">{{ this_year|add:"-2" }}</span>
-      </div>
-    </div>
-    {% endif %}
+  </div>
+  {% endif %}
   </div>
 </main>
 {% endblock %}

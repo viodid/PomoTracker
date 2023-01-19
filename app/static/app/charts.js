@@ -4,6 +4,10 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawBarChart1);
 google.charts.setOnLoadCallback(drawBarChart2);
 google.charts.setOnLoadCallback(drawPieChart1);
+let path_username = window.location.pathname.split('/')[1];
+if (path_username === 'charts') {
+  path_username = username;
+}
 
 // Pomodoros per Hour
 async function drawBarChart1() {
@@ -175,7 +179,7 @@ async function drawPieChart1() {
           left: 40,
         },
         is3D: true,
-        sliceVisibilityThreshold: 0.03,
+        sliceVisibilityThreshold: 0.01,
         tooltip: {
           showColorCode: true,
         },
@@ -188,7 +192,7 @@ async function drawPieChart1() {
 
 async function aggregatedPomosByTag() {
   let aggregated = {};
-  const response = await fetch(`/api/${username}/get/tag`);
+  const response = await fetch(`/api/${path_username}/get/tag`);
   await response.json().then((data) => {
       aggregated = data;
     });
@@ -199,7 +203,7 @@ async function aggregatedPomosByTag() {
 
 async function pomosPerHour() {
   let aggregated = {};
-  const response = await fetch(`/api/${username}/get/pomodoros`);
+  const response = await fetch(`/api/${path_username}/get/pomodoros`);
   await response.json().then((pomos) => {
 
     const keys = Object.keys(pomos);
@@ -246,7 +250,7 @@ function fontColor() {
 
 async function pomosPerDay() {
   let aggregated = {};
-  const response = await fetch(`/api/${username}/get/pomodoros`);
+  const response = await fetch(`/api/${path_username}/get/pomodoros`);
   await response.json().then((pomos) => {
     if (!pomos.length) {
       return [0];
