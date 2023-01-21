@@ -25,10 +25,18 @@
 
             </div>
         {% else %}
+            <div class="intro-dialog version-notes" id="message-index">
+                <p><b class="colored">NEW THEME COLORS!</b></p>
+                <p>Go to your <a href="{% url 'profile' username=request.user.username %}" class="colored">settings</a>
+                and choose your favorite one!</p>
+            </div>
             <div class="intro-dialog version-notes hidden">
                 <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
                 <p><b class="colored">Version 1.5.0</b> - THEME COLORS!</p>
-                <li>1.5.1: Colors to enlight our life!</li>
+                <ul>
+                    <li>1.5.1: Colors to enlight our life!</li>
+                </ul>
+                <br>
                 <p><b class="colored">Version 1.4.0</b> - Charts are comming!</p>
                 <ul>
                     <li>1.4.12: Fixed a bug with the charts in profiles.</li>

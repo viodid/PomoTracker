@@ -290,6 +290,15 @@ footer img {
   box-shadow: var(--box-shadow);
 }
 
+#message-index {
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 55px;
+}
+
 .version-notes {
   padding: 3px 50px 50px 50px;
   text-align: left;
