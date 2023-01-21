@@ -111,6 +111,7 @@ def updateDelete(request, token, pomodoro_id):
         try:
             tag = data['tag']
             tag = tag.upper()
+            tag = tag.replace(' ', '_')
         except KeyError:
             return JsonResponse({"error": "PUT request error."}, status=400)
 
