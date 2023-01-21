@@ -1,14 +1,4 @@
 body {
-  --primary-color: #202020;
-  --secondary-color: #2c2c2c;
-  --tertiary-color: #313131;
-  --softest-color: #434343;
-  --text-color: #efefef;
-  --border-color: #999;
-  --yellow-logo: #f1c232;
-  --box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 10px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  --border-radius: 10px;
   /* color levels charts */
   --level-1: #3b300c;
   --level-2: #554411;
@@ -16,22 +6,44 @@ body {
   --level-4: #b9962c;
 }
 
-body.white-theme {
-  --primary-color: #ebebeb;
-  --secondary-color: #eee;
-  --tertiary-color: #fefefe;
-  --softest-color: #fff;
-  --text-color: #121212;
-  --border-color: #333;
-  --yellow-logo: #f1c232;
-  --box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 7px 1px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  --border-radius: 10px;
+body.white {
   /* color levels charts */
   --level-4: #ffc40e;
   --level-3: #ffd874;
   --level-2: #ffe492;
   --level-1: #fff4ce;
+}
+
+body.forest {
+  /* color levels charts */
+  --level-4: #727055;;
+  --level-3: #959473;;
+  --level-2: #bebb8f;;
+  --level-1: #EAE7B1;;
+}
+
+body.aquamarine {
+    /* color levels charts */
+    --level-4: #2e4a4a;
+    --level-3: #426868;
+    --level-2: #4e7d7d;
+    --level-1: #6baaaa;
+}
+
+body.garnet {
+    /* color levels charts */
+    --level-4: #4a2e2e;
+    --level-3: #683838;
+    --level-2: #7d4e4e;
+    --level-1: #aa6b6b;
+}
+
+body.coral {
+    /* color levels charts */
+    --level-4: #72624c;
+    --level-3: #947e61;
+    --level-2: #ceb086;
+    --level-1: #FAD6A5;
 }
 /* Article - https://bitsofco.de/github-contribution-graph-css-grid/ */
 

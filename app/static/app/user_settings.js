@@ -14,14 +14,13 @@ function getSettings(tokenParam) {
 
 let bColor = '#ADFF2F';
 let fColor = '#f1c232';
-let tColor = '#000000';
 let bTime = 5;
 let fTime = 25;
 let lBreak = 15;
 let staSound = '#ding';
 let stoSound = '#whoosh';
 let user = null;
-let theme = false;
+let pre_theme = 'default';
 let tkn = htmlToken;
 
 const settings = getSettings(htmlToken);
@@ -35,7 +34,7 @@ if (settings) {
   staSound =  await settings.then((result) => result.startSound);
   stoSound =  await settings.then((result) => result.stopSound);
   user =      await settings.then((result) => result.user);
-  theme =     await settings.then((result) => result.white_theme);
+  pre_theme =     await settings.then((result) => result.theme);
   tkn =     await settings.then((result) => result.token);
 }
 
@@ -47,8 +46,9 @@ const longBreak = lBreak;
 const startSound = staSound;
 const stopSound = stoSound;
 const username = user;
-const whiteTheme = theme;
+const theme = pre_theme;
 const token = tkn;
+
 
 export {
   breakColor,
@@ -59,6 +59,6 @@ export {
   startSound,
   stopSound,
   username,
-  whiteTheme,
+  theme,
   token,
 };

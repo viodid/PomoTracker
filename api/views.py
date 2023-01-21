@@ -174,7 +174,7 @@ def updateSettings(request, token):
             return JsonResponse({"error": "PUT request error."}, status=400)
 
         settings = UserSettings.objects.get(user=user)
-        settings.white_theme = theme
+        settings.theme = theme
         settings.save()
         return JsonResponse({"message": "Settings updated successfully"},
                             status=201)

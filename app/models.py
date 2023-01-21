@@ -79,10 +79,19 @@ class UserSettings(models.Model):
         ('#minion', 'minion'),
         ('#whoosh', 'whoosh')
     )
+    theme_choices = (
+        ('default', 'default'),
+        ('white', 'white'),
+        ('forest', 'forest'),
+        ('aquamarine', 'aquamarine'),
+        ('garnet', 'garnet'),
+        ('coral', 'coral'),
+    )
+
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE,
                                 related_name='settings')
     token = models.CharField(max_length=27, null=True, unique=True)
-    white_theme = models.BooleanField(default=False)
+    theme = models.CharField(max_length=16, default='default', choices=theme_choices)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
     startSound = models.CharField(max_length=16,
                                   choices=sound_choices_start, default='#ding')
@@ -98,7 +107,7 @@ class UserSettings(models.Model):
     def serialize(self):
         return {
             'user': self.user.username,
-            'white_theme': self.white_theme,
+            'theme': self.theme,
             'startSound': self.startSound,
             'stopSound': self.stopSound,
             'focusTime': self.focusTime,
@@ -110,7 +119,7 @@ class UserSettings(models.Model):
         }
 
     def __str__(self):
-        return f'''{self.user.username}, {self.white_theme}, {self.image},
+        return f'''{self.user.username}, {self.theme}, {self.image},
         {self.startSound}, {self.stopSound}, {self.focusTime}, {self.longBreak},
         {self.shortBreak}, {self.focusColor}, {self.breakColor}, {self.token,
         {self.timezone}}'''

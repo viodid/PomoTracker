@@ -8,6 +8,12 @@ class ProfileForm(forms.Form):
                                     min_value=1, max_value=60, initial=5)
     longBreak = forms.IntegerField(required=False, label='Long break time',
                                    min_value=1, max_value=60, initial=15)
+    theme = forms.ChoiceField(required=False, label='Theme',
+                              choices=[('default', 'Default'),
+                                       ('forest', 'Forest'),
+                                       ('aquamarine', 'Aquamarine'),
+                                       ('garnet', 'Garnet'),
+                                       ('coral', 'Coral')])
     # focusColor = forms.ChoiceField(required=False, label='Theme color',
     #                               choices=[('#f1c232', 'Yellow'),
     #                                   ('#ADFF2F', 'Green'),

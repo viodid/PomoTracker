@@ -1,15 +1,22 @@
 export function switchDarkMode() {
-  document.body.classList.toggle('white-theme');
   const token = document.querySelector('#token').value;
 
-  let white = document.querySelector('body').classList;
-  // eslint-disable-next-line no-unused-expressions
-  white.value === 'white-theme' ? white = true : white = false;
-
+  const bodyclass = document.querySelector('body').classList;
+  let submit;
+  console.log(bodyclass.value);
+  if (bodyclass.value.includes('white')) {
+    console.log('true');
+    bodyclass.remove('white');
+    submit = 'default';
+  } else {
+    console.log('false');
+    bodyclass.add('white');
+    submit = 'white';
+  }
   fetch(`/api/${token}/settings`, {
     method: 'PUT',
     body: JSON.stringify({
-      white_theme: white,
+      white_theme: submit,
     }),
   });
 }

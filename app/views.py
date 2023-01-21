@@ -19,9 +19,8 @@ def index(request):
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
         return render(request, 'app/index.html', {
-                          'User': user,
-                          'pomodoros': pomodoros
-                      })
+            'pomodoros': pomodoros
+        })
     return render(request, 'app/index.html')
 
 
@@ -30,51 +29,52 @@ def profile(request, username):
         user = User.objects.get(username=request.user.username)
         if request.method == 'POST' and username == request.user.username:
             form = ProfileForm(request.POST, request.FILES, initial={
-                                   'shortBreak': user.settings.shortBreak,
-                                   'longBreak': user.settings.longBreak,
-                                   # 'focusColor': user.settings.focusColor,
-                                   'startSound': user.settings.startSound,
-                                   'stopSound': user.settings.stopSound,
-                                   'timezone': user.settings.timezone,
-                               })
-
+                'shortBreak': user.settings.shortBreak,
+                'longBreak': user.settings.longBreak,
+                'theme': user.settings.theme,
+                # 'focusColor': user.settings.focusColor,
+                'startSound': user.settings.startSound,
+                'stopSound': user.settings.stopSound,
+                'timezone': user.settings.timezone,
+            })
             if form.is_valid():
                 saveSettings(form.cleaned_data, user)
                 return render(request, 'app/profile.html', {
-                                  'message': 'Profile updated successfully.',
-                                  'form': form,
-                                  'display': True,
-                                  'userProfile': user,
-                                  'averagePomos': Statistics.getAveragePomodoros(user)
-                              })
+                    'message': 'Profile updated successfully.',
+                    'form': form,
+                    'display': True,
+                    'userProfile': user,
+                    'averagePomos': Statistics.getAveragePomodoros(user)
+                })
             else:
                 return render(request, 'app/profile.html', {
-                                  'message': 'Invalid form',
-                                  'message_class': 'error'
-                              })
+                    'message': 'Invalid form',
+                    'message_class': 'error'
+                })
 
         if request.user.username == username:
             form = ProfileForm(initial={
-                                   'shortBreak': user.settings.shortBreak,
-                                   'longBreak': user.settings.longBreak,
-                                   # 'focusColor': user.settings.focusColor,
-                                   'startSound': user.settings.startSound,
-                                   'stopSound': user.settings.stopSound,
-                                   'timezone': user.settings.timezone,
-                               })
+                'shortBreak': user.settings.shortBreak,
+                'longBreak': user.settings.longBreak,
+                'theme': user.settings.theme,
+                # 'focusColor': user.settings.focusColor,
+                'startSound': user.settings.startSound,
+                'stopSound': user.settings.stopSound,
+                'timezone': user.settings.timezone,
+            })
             return render(request, 'app/profile.html', {
-                              'form': form,
-                              'display': True,
-                              'userProfile': user,
-                              'averagePomos': Statistics.getAveragePomodoros(user)
-                          })
+                'form': form,
+                'display': True,
+                'userProfile': user,
+                'averagePomos': Statistics.getAveragePomodoros(user)
+            })
 
     if User.objects.filter(username=username):
         userProfile = User.objects.get(username=username)
         return render(request, 'app/profile.html', {
-                          'userProfile': userProfile,
-                          'averagePomos': Statistics.getAveragePomodoros(userProfile)
-                      })
+            'userProfile': userProfile,
+            'averagePomos': Statistics.getAveragePomodoros(userProfile)
+        })
     return HttpResponseNotFound(request)
 
 
@@ -86,8 +86,20 @@ def saveSettings(form, user):
         settings.shortBreak = int(form['shortBreak'])
     if form['longBreak']:
         settings.longBreak = int(form['longBreak'])
+    if form['theme']:
+        settings.theme = form['theme']
+        if form['theme'] == 'forest':
+            settings.focusColor = '#EAE7B1'
+        elif form['theme'] == 'aquamarine':
+            settings.focusColor = '#6BAAAA'
+        elif form['theme'] == 'default':
+            settings.focusColor = '#f1c232'
+        elif form['theme'] == 'garnet':
+            settings.focusColor = '#9a1b18'
+        elif form['theme'] == 'coral':
+            settings.focusColor = '#FAD6A5'
     #if form['focusColor']:
-        #settings.focusColor = form['focusColor']
+    #settings.focusColor = form['focusColor']
     if form['startSound']:
         settings.startSound = form['startSound']
     if form['stopSound']:
@@ -106,14 +118,12 @@ def pomodorosList(request):
     pageNumber = request.GET.get('page')
     pageObj = paginator.get_page(pageNumber)
     return render(request, 'app/pomodoros.html', {
-                      'page_obj': pageObj
-                  })
+        'page_obj': pageObj
+    })
 
 
 @login_required
 def charts(request):
-    user = User.objects.get(username=request.user.username)
-    #pomodoros = user.pomodoros.filter()
     return render(request, 'app/charts.html')
 
 
@@ -141,11 +151,11 @@ def token(request):
             user.settings.token = secrets.token_urlsafe(16)
             user.settings.save()
         return render(request, 'app/token.html', {
-                          'message': user.settings.token
-                      })
+            'message': user.settings.token
+        })
     return render(request, 'app/token.html', {
-                      'message': 'You need to be logged in.'
-                  })
+        'message': 'You need to be logged in.'
+    })
 
 
 def leaderboard(request, period):
@@ -158,33 +168,33 @@ def leaderboard(request, period):
     if period == 'day':
         day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-                          'pomos': [pomo.day for pomo in day]
-                      })
+            'pomos': [pomo.day for pomo in day]
+        })
     elif period == 'week':
         week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-                          'pomos': [pomo.week for pomo in week]
-                      })
+            'pomos': [pomo.week for pomo in week]
+        })
     elif period == 'month':
         month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-                          'pomos': [pomo.month for pomo in month]
-                      })
+            'pomos': [pomo.month for pomo in month]
+        })
     elif period == 'year':
         year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-                          'pomos': [pomo.year for pomo in year]
-                      })
+            'pomos': [pomo.year for pomo in year]
+        })
     elif period == 'all':
         all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
         return render(request, 'app/leaderboard.html', {
-                          'pomos': [pomo.all for pomo in all]
-                      })
+            'pomos': [pomo.all for pomo in all]
+        })
     else:
         return render(request, 'app/leaderboard.html', {
-                          'message': 'Invalid period url',
-                          'message_class': 'error'
-                      })
+            'message': 'Invalid period url',
+            'message_class': 'error'
+        })
 
 
 def generateToken(request):
@@ -230,6 +240,7 @@ def generateUserSettings(request):
             UserSettings(user=user).save()
         return user.settings
     return None
+
 
 def generateRewards(request):
     if request.user.is_authenticated:

@@ -1,4 +1,4 @@
-import { focusColor, username, whiteTheme } from './user_settings.js';
+import { focusColor, username, theme } from './user_settings.js';
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawBarChart1);
@@ -28,7 +28,7 @@ async function drawBarChart1() {
         },
         legend: { position: 'none' },
         fontName: 'Roboto',
-        backgroundColor: { 
+        backgroundColor: {
           fill:'transparent',
         },
         bar: { groupWidth: "90%" },
@@ -93,7 +93,7 @@ function drawBarChart2() {
       },
       legend: { position: 'none' },
       fontName: 'Roboto',
-      backgroundColor: { 
+      backgroundColor: {
         fill:'transparent',
       },
       bar: { groupWidth: "75%" },
@@ -169,7 +169,7 @@ async function drawPieChart1() {
             color: fontColor(),
           },
         },
-        backgroundColor: { 
+        backgroundColor: {
           fill:'transparent',
         },
         chartArea: {
@@ -245,7 +245,11 @@ function aggregateToChart(aggregated, date = false) {
 }
 
 function fontColor() {
-  return (whiteTheme) ? '#121212' : '#efefef';
+  if (theme === 'white') {
+    return '#121212';
+  } else {
+    return '#efefef';
+  }
 }
 
 async function pomosPerDay() {
