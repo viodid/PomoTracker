@@ -31,7 +31,7 @@ async function drawBarChart1() {
         backgroundColor: {
           fill:'transparent',
         },
-        bar: { groupWidth: "90%" },
+        bar: { groupWidth: "75%" },
         chartArea: {
           width: "85%",
           height: "75%"
@@ -96,7 +96,7 @@ function drawBarChart2() {
       backgroundColor: {
         fill:'transparent',
       },
-      bar: { groupWidth: "75%" },
+      bar: { groupWidth: "100%" },
       chartArea: {
         width: "85%",
         height: "75%"
