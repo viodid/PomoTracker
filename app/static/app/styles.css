@@ -38,10 +38,10 @@ body.aquamarine {
 }
 
 body.forest {
-  --primary-color: #1e312a;
-  --secondary-color: #243b34;
-  --tertiary-color: #2a433a;
-  --softest-color: #385a4f;
+  --primary-color: #253c34;
+  --secondary-color: #2e4b42;
+  --tertiary-color: #38584c;
+  --softest-color: #4d7a6b;
   --text-color: #efefef;
   --border-color: #A6BB8D;
   --yellow-logo: #EAE7B1;
@@ -51,13 +51,13 @@ body.forest {
 }
 
 body.garnet {
-  --primary-color: #2a0600;
-  --secondary-color: #39100a;
-  --tertiary-color: #421815;
-  --softest-color: #552120;
+  --primary-color: #202020;
+  --secondary-color: #2c2c2c;
+  --tertiary-color: #313131;
+  --softest-color: #434343;
   --text-color: #efefef;
-  --border-color: #a57a79;
-  --yellow-logo: #9a1b18;
+  --border-color: #999;
+  --yellow-logo: #9d1e1b;
   --box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 10px 0px,
   rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   --border-radius: 10px;
