@@ -23,7 +23,7 @@ pomos.forEach((pomo) => {
     if (tag.length > 0) {
       editPomodoro(token, id, tag);
       tag = tag.toUpperCase();
-      tag = tag.replace(' ', '_');
+      tag = tag.replaceAll(' ', '_');
       pomo.querySelector('#tag').textContent = tag;
     }
     pomo.querySelector('#edit-pomo').style.display = 'initial';
