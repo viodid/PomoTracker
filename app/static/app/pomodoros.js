@@ -32,4 +32,3 @@ pomos.forEach((pomo) => {
     pomo.querySelector('#text-input').style.display = 'none';
     });
 })
-

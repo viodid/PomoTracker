@@ -147,7 +147,7 @@ class Rewards(models.Model):
         {self.silver}, {self.bronze}, {self.ranks}'''
 
 
-class Statistics(models.Model):
+class Statistics:
 
     @staticmethod
     def getAveragePomodoros(user):

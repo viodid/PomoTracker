@@ -1,12 +1,30 @@
 import { focusColor, username, theme } from './user_settings.js';
 
 google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawTimeline1);
 google.charts.setOnLoadCallback(drawBarChart1);
 google.charts.setOnLoadCallback(drawBarChart2);
 google.charts.setOnLoadCallback(drawPieChart1);
 let path_username = window.location.pathname.split('/')[1];
 if (path_username === 'charts') {
   path_username = username;
+}
+
+// Timeline tags
+async  function drawTimeline1() {
+  const pomos = await aggregatedPomosByTag()
+    .then((pomos) => {
+     const data = new google.visualization.DataTable();
+     data.addColumn({ type: 'string', id: 'Tag' });
+     data.addColumn({ type: 'date', id: 'Start' });
+      data.addColumn({ type: 'date', id: 'End' });
+
+
+
+
+      const chart = new google.visualization.PieChart(document.getElementById('timeline-chart'));
+      chart.draw(data, options);
+    });
 }
 
 // Pomodoros per Hour
@@ -69,7 +87,7 @@ async function drawBarChart1() {
         },
       };
 
-      var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-left'));
+      var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-first'));
       chart.draw(data, options);
     });
 }
@@ -140,7 +158,7 @@ function drawBarChart2() {
       },
     };
 
-    var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-right'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-second'));
     chart.draw(data, options);
 
   });
@@ -149,13 +167,12 @@ function drawBarChart2() {
 async function drawPieChart1() {
   const pomos = await aggregatedPomosByTag()
   .then((pomos) => {
-    console.log(pomos);
-    var data = new google.visualization.DataTable();
+    const data = new google.visualization.DataTable();
     data.addColumn('string', 'Tag');
     data.addColumn('number', 'Count');
     data.addRows(pomos);
 
-    var options = {
+    const options = {
         title: 'Pomodoros by Tag',
         fontName: 'Roboto',
         titleTextStyle: {
@@ -185,7 +202,7 @@ async function drawPieChart1() {
         },
       }
 
-    var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+    const chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
     chart.draw(data, options);
   });
 }
@@ -297,5 +314,3 @@ function parseDate(date) {
   let day = date.getDate();
   return `${year}-${month}-${day}`;
 }
-
-

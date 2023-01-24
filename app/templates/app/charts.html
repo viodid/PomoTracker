@@ -2,18 +2,18 @@
 {% load static %}
 
 {% block title %}
-Pomodoros
+    Pomodoros
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'app/charts.css' %}">
+    <link rel="stylesheet" href="{% static 'app/charts.css' %}">
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
-<script src="{% static 'app/pomodoros.js' %}" type="module"></script>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="{% static 'app/charts.js' %}" type="module"></script>
+    <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
+    <script src="{% static 'app/pomodoros.js' %}" type="module"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{% static 'app/charts.js' %}" type="module"></script>
 {% endblock %}
 
 {% block content %}
@@ -21,12 +21,13 @@ Pomodoros
 
 
 {% block body %}
-<main>
-  <div class="first-char-container">
-    <div id="pie-chart" class="chart half pie"></div>
-    <div id="bar-chart-left" class="chart"></div>
-    <div id="bar-chart-right" class="chart"></div>
-  </div>
-</main> 
+    <main>
+        <div class="first-char-container">
+            <div id="pie-chart" class="chart half pie"></div>
+            <div id="timeline-chart" class="chart"></div>
+            <div id="bar-chart-first" class="chart"></div>
+            <div id="bar-chart-second" class="chart"></div>
+        </div>
+    </main>
 {% endblock body %}
 

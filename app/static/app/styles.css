@@ -359,7 +359,6 @@ main .first {
   flex-direction: column;
   min-width: 47%;
   background-color: var(--softest-color);
-  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
@@ -702,8 +701,14 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   border: 2.5px solid var(--border-color);
 }
 
+.user-profile .step-links {
+  text-align: end;
+  display: block;
+  padding: 0 18%;
+}
 
-.user-profile .title {
+
+.header-profile .title {
   font-size: 40px;
   margin-left: 10px;
 }
@@ -747,6 +752,24 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   border-radius: 2px;
   box-shadow: var(--box-shadow);
   margin-top: 30px;
+}
+
+.settings-profile button:hover {
+  cursor: pointer;
+}
+
+.settings-profile button:active {
+  transform: scale(0.95);
+}
+
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#tags-settings {
+  margin: 30px 0;
 }
 
 /* Accounts styles */

@@ -27,7 +27,12 @@ def index(request):
 def profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
-        if request.method == 'POST' and username == request.user.username:
+        if username == request.user.username:
+            tags = tuple(Statistics.aggregatePomodorosByTag(user).items())
+            paginator = Paginator(tags, 13)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            message = ''
             form = ProfileForm(request.POST, request.FILES, initial={
                 'shortBreak': user.settings.shortBreak,
                 'longBreak': user.settings.longBreak,
@@ -37,36 +42,22 @@ def profile(request, username):
                 'stopSound': user.settings.stopSound,
                 'timezone': user.settings.timezone,
             })
-            if form.is_valid():
-                saveSettings(form.cleaned_data, user)
-                return render(request, 'app/profile.html', {
-                    'message': 'Profile updated successfully.',
-                    'form': form,
-                    'display': True,
-                    'userProfile': user,
-                    'averagePomos': Statistics.getAveragePomodoros(user)
-                })
-            else:
-                return render(request, 'app/profile.html', {
-                    'message': 'Invalid form',
-                    'message_class': 'error'
-                })
-
-        if request.user.username == username:
-            form = ProfileForm(initial={
-                'shortBreak': user.settings.shortBreak,
-                'longBreak': user.settings.longBreak,
-                'theme': user.settings.theme,
-                # 'focusColor': user.settings.focusColor,
-                'startSound': user.settings.startSound,
-                'stopSound': user.settings.stopSound,
-                'timezone': user.settings.timezone,
-            })
+            if request.method == 'POST':
+                if form.is_valid():
+                    saveSettings(form.cleaned_data, user)
+                    message = 'Profile updated successfully.'
+                else:
+                    return render(request, 'app/profile.html', {
+                        'message': 'Invalid form',
+                        'message_class': 'error'
+                    })
             return render(request, 'app/profile.html', {
+                'message': message,
                 'form': form,
                 'display': True,
                 'userProfile': user,
-                'averagePomos': Statistics.getAveragePomodoros(user)
+                'averagePomos': Statistics.getAveragePomodoros(user),
+                'page_obj': page_obj
             })
 
     if User.objects.filter(username=username):
