@@ -25,7 +25,7 @@
 
             </div>
         {% else %}
-            <div class="intro-dialog version-notes" id="message-index">
+            <div class="hidden" id="message-index">
                 <p><b class="colored">NEW THEME COLORS!</b></p>
                 <p>Go to your <a href="{% url 'profile' username=request.user.username %}" class="colored">settings</a>
                 and choose your favorite one!</p>
@@ -34,6 +34,7 @@
                 <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
                 <p><b class="colored">Version 1.5.0</b> - THEME COLORS!</p>
                 <ul>
+                    <li>1.5.9: New tag table in settings. Update Pomodoro tags in bulk!</li>
                     <li>1.5.6: Adjust in color schemes and edit tags in pomodoro page.</li>
                     <li>1.5.1: Colors to enlight our life!</li>
                 </ul>

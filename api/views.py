@@ -9,7 +9,6 @@ import pytz
 
 # GET request
 def getAll(request, username, endpoint):
-
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
 
@@ -32,7 +31,6 @@ def getAll(request, username, endpoint):
 
 
 def getSettings(request, token):
-
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
 
@@ -53,7 +51,6 @@ def getSettings(request, token):
 # POST request
 @csrf_exempt
 def create(request, token):
-
     if request.method != 'POST':
         return JsonResponse({"error": "POST request required."}, status=400)
 
@@ -92,58 +89,56 @@ def create(request, token):
                         status=422)
 
 
-
 @csrf_exempt
 def updateTags(request, token, tag_to_replace):
+    print(request.method)
+    if request.method != 'PATCH':
+        return JsonResponse({"error": "PATCH request required."}, status=400)
 
-        if request.method != 'PATCH':
-            return JsonResponse({"error": "PATCH request required."}, status=400)
+    try:
+        token = UserSettings.objects.get(token=token)
 
-        try:
-            token = UserSettings.objects.get(token=token)
+    except UserSettings.DoesNotExist:
+        return JsonResponse({
+            "error": "Invalid token"
+        }, status=401)
 
-        except UserSettings.DoesNotExist:
-            return JsonResponse({
-                "error": "Invalid token"
-            }, status=401)
+    # Check if tag_to_replace exists
+    if not Tag.objects.filter(tag=tag_to_replace):
+        return JsonResponse({"error": "Invalid tag"}, status=401)
 
-        # Check if tag_to_replace exists
-        if not Tag.objects.filter(tag=tag_to_replace):
-            return JsonResponse({"error": "Invalid tag"}, status=401)
+    # Check format data and get user from token
+    data = json.loads(request.body)
+    try:
+        new_tag = data['tag']
+        new_tag = new_tag.upper()
+        new_tag = new_tag.replace(' ', '_')
+    except KeyError:
+        return JsonResponse({"error": "PATCH data key error."}, status=400)
 
-        # Check format data and get user from token
-        data = json.loads(request.body)
-        try:
-            new_tag = data['tag']
-            new_tag = new_tag.upper()
-            new_tag = new_tag.replace(' ', '_')
-        except KeyError:
-            return JsonResponse({"error": "PATCH request error."}, status=400)
+    user = token.user
 
-        user = token.user
+    # Create new Tag only if it doesn't exist already
+    if not Tag.objects.filter(tag=new_tag):
+        Tag(tag=new_tag).save()
 
-        # Create new Tag only if it doesn't exist already
-        if not Tag.objects.filter(tag=new_tag):
-            Tag(tag=new_tag).save()
+    new_tag = Tag.objects.get(tag=new_tag)
 
-        new_tag = Tag.objects.get(tag=new_tag)
+    # Update all pomodoros with the same tag
+    pomodoros = Pomodoro.objects.filter(tag__tag=tag_to_replace, user=user)
+    for pomodoro in pomodoros:
+        if pomodoro.user != user:
+            return JsonResponse({'message': f'Tag does not belong to {user.username}'},
+                                status=401)
+        pomodoro.tag = new_tag
+        pomodoro.save()
 
-        # Update all pomodoros with the same tag
-        pomodoros = Pomodoro.objects.filter(tag__tag=tag_to_replace)
-        for pomodoro in pomodoros:
-            if pomodoro.user != user:
-                return JsonResponse({'message': f'Tag does not belong to {user.username}'},
-                                    status=401)
-            pomodoro.tag = new_tag
-            pomodoro.save()
-
-        return JsonResponse({"message": "Tags updated successfully"},
-                            status=201)
+    return JsonResponse({"message": "Tags updated successfully"},
+                        status=201)
 
 
 @csrf_exempt
 def updateDelete(request, token, pomodoro_id):
-
     try:
         token = UserSettings.objects.get(token=token)
 
@@ -171,11 +166,11 @@ def updateDelete(request, token, pomodoro_id):
         tag = Tag.objects.get(tag=tag)
 
         # Save updated pomodoro only if pomodoro_id is valid
-        if request.method == 'PUT' and Pomodoro.objects.filter(id=pomodoro_id):
+        if Pomodoro.objects.filter(id=pomodoro_id):
             pomodoro = Pomodoro.objects.get(id=pomodoro_id)
             if pomodoro.user != user:
                 return JsonResponse({'message':
-                                    f'Pomodoro does not belong to {user.username}'},
+                                         f'Pomodoro does not belong to {user.username}'},
                                     status=401)
             pomodoro.tag = tag
             pomodoro.save()
@@ -187,7 +182,6 @@ def updateDelete(request, token, pomodoro_id):
 
         # Check pomodo_id is correct and correspond to the token's user
         if Pomodoro.objects.filter(id=pomodoro_id) and user.pomodoros.filter(id=pomodoro_id):
-
             Pomodoro.objects.filter(id=pomodoro_id).delete()
 
             return JsonResponse({"message": "Pomodoro removed successfully"},
@@ -202,7 +196,6 @@ def updateDelete(request, token, pomodoro_id):
 
 @csrf_exempt
 def updateSettings(request, token):
-
     try:
         token = UserSettings.objects.get(token=token)
 
