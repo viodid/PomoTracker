@@ -181,7 +181,7 @@ async function drawPieChart1() {
           bold: false,
         },
         legend: {
-          position: 'right',
+          position: 'none',
           textStyle: {
             color: fontColor(),
           },
@@ -190,15 +190,16 @@ async function drawPieChart1() {
           fill:'transparent',
         },
         chartArea: {
-          width: "100%",
-          height: "75%",
-          bottom: 20,
+          width: "87%",
+          height: "87%",
           left: 40,
+          right: 40,
         },
         is3D: true,
         sliceVisibilityThreshold: 0.01,
         tooltip: {
           showColorCode: true,
+          ignoreBounds: true,
         },
       }
 
