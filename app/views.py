@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 import secrets
 
@@ -33,7 +33,7 @@ def profile(request, username):
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
             message = ''
-            form = ProfileForm(request.POST, request.FILES, initial={
+            form = ProfileForm(initial={
                 'shortBreak': user.settings.shortBreak,
                 'longBreak': user.settings.longBreak,
                 'theme': user.settings.theme,
@@ -43,12 +43,19 @@ def profile(request, username):
                 'timezone': user.settings.timezone,
             })
             if request.method == 'POST':
+                form = ProfileForm(request.POST, request.FILES)
                 if form.is_valid():
                     saveSettings(form.cleaned_data, user)
                     message = 'Profile updated successfully.'
+                    return redirect('profile', username=username)
                 else:
                     return render(request, 'app/profile.html', {
                         'message': 'Invalid form',
+                        'form': form,
+                        'display': True,
+                        'userProfile': user,
+                        'averagePomos': Statistics.getAveragePomodoros(user),
+                        'page_obj': page_obj,
                         'message_class': 'error'
                     })
             return render(request, 'app/profile.html', {
