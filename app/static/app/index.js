@@ -4,7 +4,6 @@ import {
   showTimer,
   renderTimer,
   startFocusTimer,
-  stopTimer,
   hideTimer,
   postPomodoro,
 } from './timer.js';
@@ -31,7 +30,6 @@ document.querySelector('#save').addEventListener('click', () => {
 document.querySelector('#cancel').addEventListener('click', () => {
   if (confirm('Sure?')) {
     hideTimer();
-    stopTimer();
   }
 });
 
@@ -43,7 +41,6 @@ document.addEventListener('keydown', (event) => {
   } else if (event.code === 'Escape' && overlay.style.visibility === 'visible') {
     if (confirm('Sure?')) {
       hideTimer();
-      stopTimer();
     }
   }
 });

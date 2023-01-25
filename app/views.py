@@ -169,61 +169,22 @@ def token(request):
 
 def leaderboard(request, period):
 
+    user_request = User.objects.get(username=request.user.username)
     slice_pomodoro_users = []
     for user in User.objects.all():
         pomodoros = SlicePomodoros(user.pomodoros, user)
         slice_pomodoro_users.append(pomodoros)
 
-    if period == 'day':
-        day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
-        pomos = [pomo.day for pomo in day]
-        paginator = Paginator(pomos, 50)
-        pageNumber = request.GET.get('page')
-        pageObj = paginator.get_page(pageNumber)
-        return render(request, 'app/leaderboard.html', {
-            'pomos': pageObj
-        })
-    elif period == 'week':
-        week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
-        pomos = [pomo.week for pomo in week]
-        paginator = Paginator(pomos, 50)
-        pageNumber = request.GET.get('page')
-        pageObj = paginator.get_page(pageNumber)
-        return render(request, 'app/leaderboard.html', {
-            'pomos': pageObj
-        })
-    elif period == 'month':
-        month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
-        pomos = [pomo.month for pomo in month]
-        paginator = Paginator(pomos, 50)
-        pageNumber = request.GET.get('page')
-        pageObj = paginator.get_page(pageNumber)
-        return render(request, 'app/leaderboard.html', {
-            'pomos': pageObj
-        })
-    elif period == 'year':
-        year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
-        pomos = [pomo.year for pomo in year]
-        paginator = Paginator(pomos, 50)
-        pageNumber = request.GET.get('page')
-        pageObj = paginator.get_page(pageNumber)
-        return render(request, 'app/leaderboard.html', {
-            'pomos': pageObj
-        })
-    elif period == 'all':
-        all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
-        pomos = [pomo.all for pomo in all]
-        paginator = Paginator(pomos, 50)
-        pageNumber = request.GET.get('page')
-        pageObj = paginator.get_page(pageNumber)
-        return render(request, 'app/leaderboard.html', {
-            'pomos': pageObj
-        })
-    else:
-        return render(request, 'app/leaderboard.html', {
-            'message': 'Invalid period url',
-            'message_class': 'error'
-        })
+    period_pomos = sorted(slice_pomodoro_users, key=lambda pomos: getattr(pomos, period).count(), reverse=True)
+    pomos = [getattr(pomo, period) for pomo in period_pomos]
+    paginator = Paginator(pomos, 50)
+    pageNumber = request.GET.get('page')
+    pageObj = paginator.get_page(pageNumber)
+
+    return render(request, 'app/leaderboard.html', {
+        'pomos': pageObj,
+        #'sumPomosCount': Statistics.totalSumPomodoros(user_request, period)
+    })
 
 
 def generateToken(request):

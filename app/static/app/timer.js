@@ -17,6 +17,10 @@ function showTimer() {
 
 function hideTimer() {
   overlay.style.visibility = 'hidden';
+  resetStroke();
+  resetTitle();
+  changeStop();
+  changeLabels(false);
 }
 
 function changeStop() {
@@ -32,12 +36,6 @@ function resetStroke() {
 
 function resetTitle() {
   document.title = 'Pomodoro Timer Online | PomoTracker';
-}
-
-function stopTimer() {
-  resetStroke();
-  resetTitle();
-  changeStop();
 }
 
 function postPomodoro(token) {
@@ -57,7 +55,7 @@ function postPomodoro(token) {
         cycle = parseInt(cycle, 10) + 1;
         resetStroke();
 
-        if (parseInt(cycle, 10) % 4 == 0) {
+        if (parseInt(cycle, 10) % 4 === 0) {
           renderTimer(settings.longBreak, 'transparent');
           const atStart = performance.now();
           startBreakTimer(atStart, settings.longBreak);
@@ -112,15 +110,12 @@ function startBreakTimer(atStart, time) {
   // Timer manual stop
   if (minutes.innerHTML === '--' && seconds.innerHTML === '--') {
     hideTimer();
-    changeLabels(false);
     return;
   }
   // Change clock when finished
   if (minutes.innerHTML <= '00' && seconds.innerHTML <= '00') {
     document.querySelector(settings.stopSound).play();
     hideTimer();
-    stopTimer();
-    changeLabels(false);
     return;
   }
   [minutes.innerHTML, seconds.innerHTML] = formatTime(atStart, time);
@@ -133,6 +128,5 @@ export {
   hideTimer,
   startBreakTimer,
   startFocusTimer,
-  stopTimer,
   postPomodoro,
 };

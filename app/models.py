@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import ceil
 
 
@@ -191,3 +191,33 @@ class Statistics:
             if num != 0:
                 tagDict[tag.tag] = num
         return dict(sorted(tagDict.items(), key=lambda x: x[1], reverse=True))
+
+    @staticmethod
+    def totalSumPomodoros(user, period):
+        # Get all pomodoros within the period
+        pomodoros = user.pomodoros.all()
+        slicePomodoros = getattr(SlicePomodoros(pomodoros, user), period)
+        # Make sure there are pomodoros
+        if not slicePomodoros:
+            return 0
+        # Store the total sum of pomodoros
+        totalSum = {}
+        # Loop through all pomodoros
+        for pomodoro in slicePomodoros:
+            # Get the date of the pomodoro
+            date = pomodoro.datetime.date()
+            # Get the number of pomodoros on that date
+            num = slicePomodoros.filter(datetime__date=date).count()
+            numPrint = slicePomodoros.filter(datetime__date=date)
+            # print only if date is equal to 2023-01-18
+            if date == datetime(2023, 1, 17).date():
+                print(numPrint)
+                print(num)
+                print('----', date, '----')
+            if date not in totalSum:
+                totalSum[date] = num
+                # Sum the number of pomodoros on dates before if exists
+                if date - timedelta(days=1) in totalSum:
+                    totalSum[date] += totalSum[date - timedelta(days=1)]
+
+        return totalSum
