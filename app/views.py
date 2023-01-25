@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 import secrets
 
-from .models import User, SlicePomodoros, UserSettings, Rewards, Pomodoro, Statistics
+from .models import User, SlicePomodoros, UserSettings, Rewards, Statistics
 from .forms import ProfileForm
 
 
@@ -32,7 +32,6 @@ def profile(request, username):
             paginator = Paginator(tags, 13)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
-            message = ''
             form = ProfileForm(initial={
                 'shortBreak': user.settings.shortBreak,
                 'longBreak': user.settings.longBreak,
@@ -43,11 +42,25 @@ def profile(request, username):
                 'timezone': user.settings.timezone,
             })
             if request.method == 'POST':
-                form = ProfileForm(request.POST, request.FILES)
+                form = ProfileForm(request.POST, request.FILES, initial={
+                    'shortBreak': user.settings.shortBreak,
+                    'longBreak': user.settings.longBreak,
+                    'theme': user.settings.theme,
+                    # 'focusColor': user.settings.focusColor,
+                    # 'startSound': user.settings.startSound,
+                    'stopSound': user.settings.stopSound,
+                    'timezone': user.settings.timezone,
+                })
                 if form.is_valid():
                     saveSettings(form.cleaned_data, user)
-                    message = 'Profile updated successfully.'
-                    return redirect('profile', username=username)
+                    return render(request, 'app/profile.html', {
+                        'message': 'Settings saved successfully',
+                        'form': form,
+                        'display': True,
+                        'userProfile': user,
+                        'averagePomos': Statistics.getAveragePomodoros(user),
+                        'page_obj': page_obj,
+                    })
                 else:
                     return render(request, 'app/profile.html', {
                         'message': 'Invalid form',
@@ -56,10 +69,8 @@ def profile(request, username):
                         'userProfile': user,
                         'averagePomos': Statistics.getAveragePomodoros(user),
                         'page_obj': page_obj,
-                        'message_class': 'error'
                     })
             return render(request, 'app/profile.html', {
-                'message': message,
                 'form': form,
                 'display': True,
                 'userProfile': user,
