@@ -158,28 +158,48 @@ def leaderboard(request, period):
 
     if period == 'day':
         day = sorted(slice_pomodoro_users, key=lambda pomos: pomos.day.count(), reverse=True)
+        pomos = [pomo.day for pomo in day]
+        paginator = Paginator(pomos, 50)
+        pageNumber = request.GET.get('page')
+        pageObj = paginator.get_page(pageNumber)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.day for pomo in day]
+            'pomos': pageObj
         })
     elif period == 'week':
         week = sorted(slice_pomodoro_users, key=lambda pomos: pomos.week.count(), reverse=True)
+        pomos = [pomo.week for pomo in week]
+        paginator = Paginator(pomos, 50)
+        pageNumber = request.GET.get('page')
+        pageObj = paginator.get_page(pageNumber)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.week for pomo in week]
+            'pomos': pageObj
         })
     elif period == 'month':
         month = sorted(slice_pomodoro_users, key=lambda pomos: pomos.month.count(), reverse=True)
+        pomos = [pomo.month for pomo in month]
+        paginator = Paginator(pomos, 50)
+        pageNumber = request.GET.get('page')
+        pageObj = paginator.get_page(pageNumber)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.month for pomo in month]
+            'pomos': pageObj
         })
     elif period == 'year':
         year = sorted(slice_pomodoro_users, key=lambda pomos: pomos.year.count(), reverse=True)
+        pomos = [pomo.year for pomo in year]
+        paginator = Paginator(pomos, 50)
+        pageNumber = request.GET.get('page')
+        pageObj = paginator.get_page(pageNumber)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.year for pomo in year]
+            'pomos': pageObj
         })
     elif period == 'all':
         all = sorted(slice_pomodoro_users, key=lambda pomos: pomos.all.count(), reverse=True)
+        pomos = [pomo.all for pomo in all]
+        paginator = Paginator(pomos, 50)
+        pageNumber = request.GET.get('page')
+        pageObj = paginator.get_page(pageNumber)
         return render(request, 'app/leaderboard.html', {
-            'pomos': [pomo.all for pomo in all]
+            'pomos': pageObj
         })
     else:
         return render(request, 'app/leaderboard.html', {

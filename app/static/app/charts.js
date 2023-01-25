@@ -199,7 +199,7 @@ async function drawPieChart1() {
         sliceVisibilityThreshold: 0.01,
         tooltip: {
           showColorCode: true,
-          ignoreBounds: true,
+          ignoreBounds: false,
         },
       }
 

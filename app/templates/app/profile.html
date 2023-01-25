@@ -100,12 +100,12 @@
                         <a href="?page={{ page_obj.next_page_number }}">next</a>
                         <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
                     {% endif %}
-                    </span>
-                    {% else %}
-                    <div class="first-char-container">
-                        <div id="bar-chart-first" class="chart"></div>
-                        <div id="bar-chart-second" class="chart"></div>
-                    </div>
+                </span>
+                {% else %}
+                <div class="first-char-container">
+                    <div id="bar-chart-first" class="chart"></div>
+                    <div id="bar-chart-second" class="chart"></div>
+                </div>
             {% endif %}
         </div>
     </main>

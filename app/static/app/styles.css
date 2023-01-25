@@ -539,11 +539,15 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 
 .fill-data .timer {
   font-size: 150px;
-  margin-top: 90px;
+  margin-top: 21px;
 }
 
 .fill-data .focus {
   margin-bottom: 10px;
+}
+
+.leaderboard-timer-link {
+  margin-top: 21px;
 }
 
 #timer {
@@ -587,10 +591,15 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 
 .leaderboard-container {
   width: 47%;
-  margin: 40px 0;
+  margin: 40px 0 20px 0;
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
+}
+
+.step-links-leaderboard {
+  padding-left: 19%;
+  margin-bottom: 20px;
 }
 
 .explanation {

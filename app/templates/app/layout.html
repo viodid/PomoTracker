@@ -34,6 +34,7 @@
         <circle class="meter" cx="50" cy="50" r="40"></circle>
     </svg>
     <div class="fill-data">
+        <p class="leaderboard-timer-link" style="visibility: hidden"><a href="{% url 'leaderboard' period='day' %}" target="_blank">Leaderboard</a></p>
         <p class="timer" id="timer"><span id="minute">01</span>:<span id="second">01</span></p>
         <p class="focus">Focus</p>
         <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none" autocomplete="on">

@@ -52,7 +52,6 @@
                         <p class="right">{{ pomodoros.count }}</p>
                     </li>
                 {% endif %}
-
             {% endfor %}
         </ol>
     </div>
@@ -65,6 +64,16 @@
         <p>The rewards are visible for everyone.</p>
     </div>
 </div>
-
+<span class="step-links step-links-leaderboard">
+  {% if pomos.has_previous %}
+      <a href="?page=1">&laquo;</a>
+      <a href="?page={{ pomos.previous_page_number }}">previous</a>
+  {% endif %}
+        <span class="current">|  Page {{ pomos.number }} of {{ pomos.paginator.num_pages }}  |</span>
+        {% if pomos.has_next %}
+            <a href="?page={{ pomos.next_page_number }}">next</a>
+            <a href="?page={{ pomos.paginator.num_pages }}">&raquo;</a>
+        {% endif %}
+</span>
 </main>
 {% endblock %}

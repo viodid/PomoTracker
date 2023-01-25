@@ -46,7 +46,7 @@ function formatTime(atStart, time) {
   const { title } = document;
 
   if (sec <= 0 && min <= 0) {
-    // Change title to 00:00 
+    // Change title to 00:00
     document.title = `00:00 | ${title.slice(title.length - 11, title.length)}`;
     return ['00', '00'];
   }
@@ -76,6 +76,7 @@ function changeLabels(change) {
     parent.querySelector('.last-text').innerHTML = 'or press ESC';
     parent.querySelector('.focus').style.display = 'block';
     parent.querySelector('.text-input').style.display = 'none';
+    parent.querySelector('.leaderboard-timer-link').style.visibility = 'hidden';
   }
 }
 

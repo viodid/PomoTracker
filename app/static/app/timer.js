@@ -75,6 +75,7 @@ function postPomodoro(token) {
         alert('Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.');
       }
       changeLabels(false);
+      document.querySelector('.leaderboard-timer-link').style.visibility = 'visible';
     });
 }
 
