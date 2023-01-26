@@ -14,7 +14,9 @@ const overlay = document.querySelector('#overlay');
 const toogleNotes = document.querySelectorAll('#toggle-notes');
 toogleNotes.forEach((btn) => {
   btn.addEventListener('click', () => {
-    document.querySelector('.version-notes').classList.toggle('hidden');
+    const notes = document.querySelector('.version-notes');
+    notes.classList.toggle('hidden');
+    notes.scrollIntoView({ behavior: 'smooth' });
   });
 });
 
