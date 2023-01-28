@@ -169,7 +169,6 @@ def token(request):
 
 def leaderboard(request, period):
 
-    user_request = User.objects.get(username=request.user.username)
     slice_pomodoro_users = []
     for user in User.objects.all():
         pomodoros = SlicePomodoros(user.pomodoros, user)

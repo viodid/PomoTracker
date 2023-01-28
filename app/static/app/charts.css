@@ -50,7 +50,7 @@ body.coral {
 /* Grid-related CSS */
 
 :root {
-  --square-size: 15px;
+  --square-size: 20px;
   --square-gap: 1px;
   --week-width: calc(var(--square-size) + var(--square-gap));
 }
@@ -180,5 +180,34 @@ body.coral {
 
 .pie {
   height: 400px;
+}
+
+/* Responsive */
+@media screen and (max-width: 800px) {
+    .flex-third {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 801px) {
+    :root {
+        --square-size: 9px;
+        --square-gap: 0.5px;
+    }
+
+    .squares li {
+        margin: 0.15px;
+    }
+}
+
+@media screen and (max-width: 1400px) and (min-width: 1025px) {
+    :root {
+        --square-size: 11px;
+        --square-gap: 0.5px;
+    }
+
+    .squares li {
+        margin: 0.15px;
+    }
 }
 
