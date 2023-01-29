@@ -494,7 +494,7 @@ main .first {
 
 #overlay svg {
   width: 700px;
-  height: 700px;
+  height: auto;
   transform: rotate(-90deg);
 }
 
@@ -905,16 +905,44 @@ text-align: center;
 
 /* Media queries */
 @media screen and (max-width: 870px) {
-  .navbar li:not(:last-child) {
+  .navbar li {
     display: none;
+    margin: 15px;
+  }
+
+  .navbar .show {
+    display: block!important;
   }
 
   .navbar .icon {
-    display: block;
+    margin: 0;
+    transition: 0.5s;
+  }
+
+  .navbar .not-show {
+    display: none!important;
+  }
+
+  .navbar-brand img {
+    width: 200px;
+  }
+
+  #sidebar {
+    flex-direction: column;
+    width: 0;
+    z-index: 2;
+    top: 116px;
+    left: 0;
+    background-color: #FFFEFE;
+    overflow-x: hidden;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   body {
-    --padding: 25px;
+    --padding: 15px;
   }
 
   .fill-data, #save-pomodoro {
@@ -954,6 +982,14 @@ text-align: center;
     margin: 30px 0;
   }
 
+  .leaderboard-main-container {
+    flex-direction: column;
+  }
+
+  .leaderboard-container {
+    width: 100%;
+  }
+
   footer {
     flex-direction: column-reverse;
   }
@@ -963,13 +999,43 @@ text-align: center;
   }
 }
 
-@media screen and (max-width: 1400px) and (min-width: 870px) {
-  .navbar li:not(:last-child) {
+@media screen and (max-width: 1600px) and (min-width: 870px) {
+  .navbar li {
     display: none;
+    margin: 15px;
+  }
+
+  .navbar .show {
+    display: block!important;
   }
 
   .navbar .icon {
-    display: block;
+    margin: 0;
+    transition: 0.5s;
+  }
+
+  .navbar .not-show {
+    display: none!important;
+  }
+
+  .navbar-brand img {
+    width: 200px;
+  }
+
+  #sidebar {
+    flex-direction: column;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 116px;
+    left: 0;
+    background-color: #FFFEFE;
+    overflow-x: hidden;
+    transition: 0.5s;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   body {
@@ -979,20 +1045,28 @@ text-align: center;
 
 @media screen and (min-width: 2152px) and (max-width: 3000px) {
   html {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   body {
     --padding: 400px;
   }
+
+  #overlay svg {
+    width: 850px;
+  }
 }
 
 @media screen and (min-width: 3000px) {
     html {
-        font-size: 22px;
+        font-size: 18px;
     }
 
     body {
         --padding: 700px;
+    }
+
+    #overlay svg {
+        width: 850px;
     }
 }

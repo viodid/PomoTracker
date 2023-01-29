@@ -67,29 +67,31 @@
     <div>
         <ul id="topnav" class="topnav">
             {% if user.settings.white_theme %}
-                <li id="lightbulb" style="display: none">
+                <li id="lightbulb" style="display: none" class="not-show">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
                         <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
                     </svg>
                 </li>
-                <li id="moon" style="display: block;">
+                <li id="moon" style="display: block;" class="not-show">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
                         <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
                     </svg>
                 </li>
             {% else %}
-                <li id="lightbulb" style="display: block">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
+                <li id="lightbulb" style="display: block" class="not-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
                         <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
                     </svg>
                 </li>
-                <li id="moon" style="display: none;">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
+                <li id="moon" style="display: none;" class="not-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
                         <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
                     </svg>
                 </li>
             {% endif %}
-            <li>
+            <li class="show">
                 <label class="switch">
                     <input type="checkbox">
                     <span class="slider round" id="slider"></span>
@@ -106,12 +108,26 @@
                 <li><a id="user-logged" href="/accounts/login">Sign In</a></li>
                 <li class="last-navbar"><a href="{% url 'account_signup' %}">Sign Up</a></li>
             {% endif %}
-            <li class="icon">
-                <img src="{% static 'app/images/menu.svg' %}" alt="">
-            </li>
+            <li class="icon show" id="open-sidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     version="1.1" id="mdi-menu" width="60" height="60" viewBox="0 0 24 24"
+                     fill="#efefef"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/></svg>
         </ul>
     </div>
 </nav>
+<div id="sidebar" class="hidden">
+    {% if user.is_authenticated %}
+        <a href="{% url 'charts' %}">Charts</a>
+    {% endif %}
+    <a href="{% url 'leaderboard' period='month' %}">Leaderboards</a>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a>
+        <a id="user-logged" href="{% url 'logout' %}">Sign Out</a>
+    {% else %}
+        <a id="user-logged" href="/accounts/login">Sign In</a>
+        <a href="{% url 'account_signup' %}">Sign Up</a>
+    {% endif %}
+</div>
 {% block body %}{% endblock %}
 <footer>
     <div class="block 1">
