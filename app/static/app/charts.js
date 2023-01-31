@@ -114,7 +114,7 @@ function drawBarChart2() {
       backgroundColor: {
         fill:'transparent',
       },
-      bar: { groupWidth: "100%" },
+      bar: { groupWidth: "97%" },
       chartArea: {
         width: "85%",
         height: "75%"

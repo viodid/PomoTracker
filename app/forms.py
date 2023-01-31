@@ -10,6 +10,7 @@ class ProfileForm(forms.Form):
                                    min_value=1, max_value=60, initial=15)
     theme = forms.ChoiceField(required=False, label='Theme',
                               choices=[('default', 'Default'),
+                                       ('white', 'White'),
                                        ('forest', 'Forest'),
                                        ('aquamarine', 'Aquamarine'),
                                        ('garnet', 'Garnet'),

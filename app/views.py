@@ -101,7 +101,7 @@ def saveSettings(form, user):
             settings.focusColor = '#EAE7B1'
         elif form['theme'] == 'aquamarine':
             settings.focusColor = '#6BAAAA'
-        elif form['theme'] == 'default':
+        elif form['theme'] == 'default' or form['theme'] == 'white':
             settings.focusColor = '#f1c232'
         elif form['theme'] == 'garnet':
             settings.focusColor = '#9a1b18'
