@@ -68,6 +68,7 @@
     <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
     <div>
         <ul id="topnav" class="topnav">
+        <!--
             {% if user.settings.white_theme %}
                 <li id="lightbulb" style="display: none" class="not-show">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
@@ -99,6 +100,7 @@
                     <span class="slider round" id="slider"></span>
                 </label>
             </li>
+            -->
             {% if user.is_authenticated %}
                 <li><a href="{% url 'charts' %}">Charts</a></li>
             {% endif %}
