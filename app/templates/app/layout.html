@@ -34,6 +34,8 @@
     <link rel="mask-icon" href="{% static 'app/favicon/safari-pinned-tab.svg' %}" color="#f1c232">
     <link rel="stylesheet" href="{% static 'app/styles.css' %}">
     {% block styles %}{% endblock %}
+    <script src="{% static 'app/sidebar.js' %}"></script>
+    <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
     {% block script %}{% endblock %}
 </head>
 <input type="text" id="token" style="display: none;" value="{{ user.settings.token }}">

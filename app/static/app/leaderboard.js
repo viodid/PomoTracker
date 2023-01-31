@@ -1,7 +1,4 @@
-import { switchDarkMode, changeLightbulb } from './theme_toggle.js';
 import { theme } from './user_settings.js';
-
-console.log(theme);
 
 // Denote element by changing its color
 const path = window.location.pathname.split('/').pop();
@@ -40,8 +37,3 @@ if (path === 'day') {
 } else if (path === 'all') {
   parent.style.borderTopRightRadius = '10px';
 }
-
-document.querySelector('#slider').addEventListener('click', () => {
-  switchDarkMode();
-  changeLightbulb();
-});

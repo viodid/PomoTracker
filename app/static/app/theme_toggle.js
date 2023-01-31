@@ -3,13 +3,10 @@ export function switchDarkMode() {
 
   const bodyclass = document.querySelector('body').classList;
   let submit;
-  console.log(bodyclass.value);
   if (bodyclass.value.includes('white')) {
-    console.log('true');
     bodyclass.remove('white');
     submit = 'default';
   } else {
-    console.log('false');
     bodyclass.add('white');
     submit = 'white';
   }

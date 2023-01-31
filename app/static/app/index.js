@@ -1,4 +1,3 @@
-import { switchDarkMode, changeLightbulb } from './theme_toggle.js';
 import * as settings from './user_settings.js';
 import {
   showTimer,
@@ -47,11 +46,6 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-document.querySelector('#slider').addEventListener('click', () => {
-  switchDarkMode();
-  changeLightbulb();
-});
-
 function runTimer() {
   showTimer();
   renderTimer(settings.focusTime, settings.focusColor);
@@ -59,31 +53,3 @@ function runTimer() {
   const atStart = performance.now();
   startFocusTimer(atStart, settings.focusTime);
 }
-
-// navbar expand in mobile
-    const open = document.querySelector('#open-sidebar');
-    let hamburger = false;
-    open.addEventListener('click', ()=>{
-        if (!hamburger) {
-            document.querySelector("#sidebar").classList.toggle("hidden");
-            document.querySelector("#sidebar").style.height = "300px";
-            document.querySelector("#sidebar").style.width = "100%";
-            // document.querySelector("#sidebar").style.display = "flex";
-            document.querySelector("main").style.marginTop = "376px";
-            // box shadow
-            document.querySelector("nav").style.boxShadow = "none";
-            open.style.transform = "rotate(90deg)";
-            hamburger = true;
-        } else {
-            document.querySelector("#sidebar").classList.toggle("hidden");
-            document.querySelector("#sidebar").style.height = "0";
-            document.querySelector("#sidebar").style.width = "0";
-            // document.querySelector("#sidebar").style.display = "none";
-            document.querySelector("main").style.marginTop = "77px";
-            // box shadow
-            document.querySelector("nav").style.boxShadow = "0.5px 0.5px 6px black";
-            open.style.transform = "rotate(0deg)";
-            hamburger = false;
-        }
-    }
-    );
