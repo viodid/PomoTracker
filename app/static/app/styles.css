@@ -144,10 +144,12 @@ li {
 }
 
 ::-moz-selection { /* Code for Firefox */
+  color: var(--primary-color);
   background: var(--yellow-logo);
 }
 
 ::selection {
+  color: var(--primary-color);
   background: var(--yellow-logo);
 }
 
@@ -724,6 +726,7 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 
 .user-profile-img {
   width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   border: 2.5px solid var(--border-color);
@@ -1008,6 +1011,7 @@ text-align: center;
 
  .header-profile .user-profile-img {
    width: 50px;
+   height: 50px;
  }
 
  .header-profile .title {
