@@ -36,7 +36,6 @@ def profile(request, username):
                 'shortBreak': user.settings.shortBreak,
                 'longBreak': user.settings.longBreak,
                 'theme': user.settings.theme,
-                # 'focusColor': user.settings.focusColor,
                 'startSound': user.settings.startSound,
                 'stopSound': user.settings.stopSound,
                 'timezone': user.settings.timezone,
@@ -46,8 +45,7 @@ def profile(request, username):
                     'shortBreak': user.settings.shortBreak,
                     'longBreak': user.settings.longBreak,
                     'theme': user.settings.theme,
-                    # 'focusColor': user.settings.focusColor,
-                    # 'startSound': user.settings.startSound,
+                    'startSound': user.settings.startSound,
                     'stopSound': user.settings.stopSound,
                     'timezone': user.settings.timezone,
                 })
@@ -107,8 +105,6 @@ def saveSettings(form, user):
             settings.focusColor = '#9a1b18'
         elif form['theme'] == 'coral':
             settings.focusColor = '#FAD6A5'
-    #if form['focusColor']:
-    #settings.focusColor = form['focusColor']
     if form['startSound']:
         settings.startSound = form['startSound']
     if form['stopSound']:

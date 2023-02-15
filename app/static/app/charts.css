@@ -187,6 +187,9 @@ body.coral {
     .flex-third {
         display: none;
     }
+    .first-chart-container > div {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 1024px) and (min-width: 801px) {

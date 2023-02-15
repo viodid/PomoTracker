@@ -31,12 +31,12 @@ async  function drawTimeline1() {
 async function drawBarChart1() {
   const pomos = await pomosPerHour()
     .then((pomos) => {
-      var data = new google.visualization.DataTable();
+      const data = new google.visualization.DataTable();
       data.addColumn('string', 'Hour');
       data.addColumn('number', 'Count');
       data.addRows(pomos);
 
-      var options = {
+      const options = {
         colors: [focusColor],
         title: 'Pomodoros per Hour',
         titleTextStyle: {
@@ -47,12 +47,12 @@ async function drawBarChart1() {
         legend: { position: 'none' },
         fontName: 'Roboto',
         backgroundColor: {
-          fill:'transparent',
+          fill: 'transparent',
         },
-        bar: { groupWidth: "75%" },
+        bar: { groupWidth: '75%' },
         chartArea: {
-          width: "85%",
-          height: "75%"
+          width: '85%',
+          height: '75%'
         },
         hAxis: {
           title: 'Hour',
@@ -87,7 +87,7 @@ async function drawBarChart1() {
         },
       };
 
-      var chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-first'));
+      const chart = new google.visualization.ColumnChart(document.getElementById('bar-chart-first'));
       chart.draw(data, options);
     });
 }
@@ -114,7 +114,7 @@ function drawBarChart2() {
       backgroundColor: {
         fill:'transparent',
       },
-      bar: { groupWidth: "97%" },
+      bar: { groupWidth: "90%" },
       chartArea: {
         width: "85%",
         height: "75%"

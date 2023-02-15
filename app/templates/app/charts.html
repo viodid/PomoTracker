@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>
     <script src="{% static 'app/pomodoros.js' %}" type="module"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{% static 'app/charts.js' %}" type="module"></script>
@@ -22,7 +21,7 @@
 
 {% block body %}
     <main>
-        <div class="first-char-container">
+        <div class="first-chart-container">
             <div id="pie-chart" class="chart half pie"></div>
             <!--<div id="timeline-chart" class="chart"></div>-->
             <div id="bar-chart-first" class="chart"></div>
