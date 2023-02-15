@@ -143,6 +143,14 @@ li {
   background-color: #330000;
 }
 
+::-moz-selection { /* Code for Firefox */
+  background: var(--yellow-logo);
+}
+
+::selection {
+  background: var(--yellow-logo);
+}
+
 /* Navbar styles */
 .navbar-brand {
   margin: auto 0;
