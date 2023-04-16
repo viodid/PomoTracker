@@ -2,174 +2,64 @@
 {% load static %}
 
 {% block title %}
-    API Reference
+API Reference
 {% endblock %}
 
 {% block body %}
-    <main>
+<main>
 
-<h2>PomoTracker</h2>
+  <h2>PomoTracker</h2>
 
-        <p><a href="{% url 'token' %}">Click here to get your token.(Do not share with anyone)</a></p>
+  <p><a href="{% url 'token' %}">Click here to get your token.(Do not share with anyone)</a></p>
+  <h2>Endpoints</h2>
 
-<h3>GET /api/username/get</h3>
+  <h3>1. GET <code>/api/:username/:endpoint</code></h3>
+  <p>Retrieve all pomodoros or tag statistics for a specific user.</p>
+  <h4>Parameters</h4>
+  <ul>
+    <li><code>username</code>: The username of the user.</li>
+    <li><code>endpoint</code>: Can be either 'pomodoros' or 'tag'.</li>
+  </ul>
+  <h4>Responses</h4>
+  <ul>
+    <li><code>200 OK</code>: Returns a JSON array of all pomodoros or a JSON object containing tag statistics.</li>
+    <li><code>400 Bad Request</code>: Returned if the request method is not 'GET'.</li>
+    <li><code>401 Unauthorized</code>: Returned if the user does not exist.</li>
+  </ul>
 
-<p>Returns a list of current user's pomodoros.</p>
+  <h3>2. GET <code>/api/settings/:token</code></h3>
+  <p>Get the user settings for a given token.</p>
+  <h4>Parameters</h4>
+  <ul>
+    <li><code>token</code>: The user's token.</li>
+  </ul>
+  <h4>Responses</h4>
+  <ul>
+    <li><code>200 OK</code>: Returns a JSON object containing the user's settings.</li>
+    <li><code>400 Bad Request</code>: Returned if the request method is not 'GET'.</li>
+    <li><code>401 Unauthorized</code>: Returned if the token is invalid.</li>
+  </ul>
 
-<p>The list of pomodoros is ordered by descending creation date.
+  <h3>3. POST <code>/api/create/:token</code></h3>
+  <p>Create a new pomodoro for a user with a specific tag.</p>
+  <h4>Parameters</h4>
+  <ul>
+    <li><code>token</code>: The user's token.</li>
+  </ul>
+  <h4>Request Body</h4>
+  <ul>
+    <li><code>tag</code>: The tag to associate with the new pomodoro.</li>
+  </ul>
+  <h4>Responses</h4>
+  <ul>
+    <li><code>201 Created</code>: Returns a JSON object indicating the pomodoro was created successfully.</li>
+    <li><code>400 Bad Request</code>: Returned if the request method is not 'POST' or if there is a problem with the request data.</li>
+    <li><code>401 Unauthorized</code>: Returned if the token is invalid.</li>
+    <li><code>422 Unprocessable Entity</code>: Returned if the pomodoro would overlap with an existing one.</li>
+  </ul>
 
-<h4>Auth URI example</h4>
-
-<pre><code>https://pomotracker.app/api/username/get
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>200 Ok</code></li>
-<li><code>401 Unauthorized</code>, Invalid token</li>
-</ul>
-
-
-<h4>Response content</h4>
-
-<pre><code class="json">
-  [
-    {
-      "id": "514",
-      "user": "pomotracker_user",
-      "created_at": "2022-10-30T13:38:02.753"
-      "tag": "API_JAVA"
-    },
-    {
-      "id": "516",
-      "user": "pomotracker_user",
-      "created_at": "2022-10-30T14:08:02.753",
-      "tag": "API_JAVA"
-    },
-  ]
-</code></pre>
-
-
-<h3>POST /api/token/create</h3>
-
-<p>Creates a new pomodoro.</p>
-
-<h4>Auth URI example</h4>
-
-<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/create
-</code></pre>
-
-<h4>Request content</h4>
-
-<pre><code class="json">{
-  "body": {
-    "tag": "tag"
-  }
-}
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>201 Created</code></li>
-<li><code>401 Unauthorized</code>, Invalid token</li>
-<li><code>422 Unprocessable Entity</code>Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.</li>
-</ul>
-
-
-<h3>PUT /api/token/pomodoro_id</h3>
-
-<p>Updates one of current user's pomodoros.</p>
-
-<h4>Auth URI example</h4>
-
-<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/453
-</code></pre>
-
-<h4>Request content</h4>
-
-<pre><code class="json">{
-  "body": {
-    "tag": "tag"
-  }
-}
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>201 Ok</code></li>
-<li><code>401 Unauthorized</code>Invalid token or invalid pomodoro id</li>
-</ul>
-
-
-<h3>DELETE /api/token/pomodoro_id</h3>
-
-<p>Deletes one of current user's pomodoros.</p>
-
-<h4>Auth URI example</h4>
-
-<pre><code>https://pomotracker.app/api/QNhZ5wLeu_Qz0gLeQltYhqGsiac/453
-</code></pre>
-
-<h4>Response</h4>
-
-<ul>
-<li><code>201 Ok</code></li>
-<li><code>401 Unauthorized</code>Invalid token or invalid pomodoro id</li>
-</ul>
-
-
-
-<!--
-<h2>Leaderboards</h2>
-
-<h3>GET /api/leaderboard/:period</h3>
-
-<p>Returns the users leaderboard for the selected period.</p>
-
-<p>The <code>period</code> segment could be <code>daily</code>, <code>weekly</code>, <code>monthly</code>, and <code>overall</code>.</p>
-
-<p>The list of leaderboard items is ordered by descending score and it's paginated.
-Each page contains 25 records, by default the first page is retuned, use the
-<code>page</code> parameter to get any other page in the range [1, <code>total_pages</code>].</p>
-
-<h4>Request parameters</h4>
-
-<ul>
-<li><code>page</code> a positive integer value to select a page in the range
-[1, <code>total_pages</code>]</li>
-</ul>
-
-
-<h4>Response</h4>
-
-<ul>
-<li><code>200 Ok</code></li>
-</ul>
-
-
-<h4>Response content</h4>
-
-<pre><code class="json">{
-  "scores": [
-    {
-      "user": {
-        "id": "586c2be37c8402b5d1db406c",
-        "name": "Giovanni Cappellotto",
-        "image": "http://tomato.es/images/users/586c2be37c8402b5d1db406c.png"
-      },
-      "score": 2
-    }
-  ],
-  "pagination": {
-    "current_page": 1,
-    "total_pages": 1,
-    "total_count": 1
-  }
-}
-</code></pre>
--->
+  <h3>4. PATCH <code>/api/updateTags/:token/:tag_to_replace</code></h3>
+  <p>Update all pomodoros associated with a given tag for a user.</p>
+  <h4>Parameters</h4
 </main>
 {% endblock %}
