@@ -6,12 +6,12 @@ time with detailed graphs and statistics.
 
 Whether you're a student, a professional, or anyone in between, PomoTracker has everything you need to stay focused and on task.
 
-<details open>
-<summary>API reference</summary>
+<details close>
+<summary><h2>API reference</h2></summary>
 Django API for Pomodoro App
 
 This API allows you to manage pomodoros, tags, and user settings for a Pomodoro app built with Django.
-Endpoints
+```
 1. GET /api/:username/:endpoint
 
 Retrieve all pomodoros or tag statistics for a specific user.
@@ -109,4 +109,5 @@ Request Body (PUT)
   201 Created: Returns a JSON object indicating the settings were updated successfully.
   400 Bad Request: Returned if the request method is not 'PUT' or if there is a problem with the request data.
   `401 Unauthorized
+  ```
   </details>
