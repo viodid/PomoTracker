@@ -9,8 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="apple-mobile-web-app-title" content="PomoTracker">
     <meta name="application-name" content="PomoTracker">
-    <meta name="msapplication-TileColor" content="#2b5797">
-    <meta name="theme-color" content="#f1c232">
     <meta property="og:title" content="PomoTracker">
     <meta property="og:description" content="PomoTracker is a free and open source pomodoro timer app. Stay focused, be productive, track everything.">
     <meta property="og:image" content="{% static 'app/favicon/android-chrome-192x192.png' %}">
@@ -29,9 +27,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Roboto:wght@100;300&display=swap" rel="stylesheet" crossorigin="anonymous">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/favicon/android-chrome-192x192.png' %}">
-    <link rel="manifest" href="{% static 'app/favicon/site.webmanifest' %}">
-    <link rel="mask-icon" href="{% static 'app/favicon/safari-pinned-tab.svg' %}" color="#f1c232">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/app/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/app/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/app/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/app/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/static/app/favicon/safari-pinned-tab.svg" color="#f1c232">
+    <link rel="shortcut icon" href="/static/app/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#555555">
+    <meta name="msapplication-config" content="/static/app/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Styles -->
     <link rel="stylesheet" href="{% static 'app/styles.css' %}">
     {% block styles %}{% endblock %}
     <script src="{% static 'app/sidebar.js' %}"></script>

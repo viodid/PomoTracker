@@ -1005,18 +1005,18 @@ text-align: center;
   }
 
   /* Settings styles */
- .header-profile .right {
-   display: none;
- }
+  .header-profile .right {
+    display: none;
+  }
 
- .header-profile .user-profile-img {
-   width: 50px;
-   height: 50px;
- }
+  .header-profile .user-profile-img {
+    width: 50px;
+    height: 50px;
+  }
 
- .header-profile .title {
-   font-size: 3rem;
- }
+  .header-profile .title {
+    font-size: 3rem;
+  }
 
   .profile-container {
     flex-direction: column;
