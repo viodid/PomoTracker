@@ -141,9 +141,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Docker
-docker*
-postgres_docker/
 
 .es*
 .vscode/

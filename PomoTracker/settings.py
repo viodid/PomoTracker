@@ -9,12 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os.path
+import os
 from pathlib import Path
-import json
 
-with open('/etc/pomotracker.config/config.json') as config_file:
-    config = json.load(config_file)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config['SECRET_KEY']
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -132,14 +129,16 @@ WSGI_APPLICATION = 'PomoTracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+print(os.environ.get("DB_NAME"), os.environ.get("DB_USER"), os.environ.get("DB_PASSWORD"), os.environ.get("SECRET_KEY"))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config['DATABASES']['NAME'],
-        'USER': config['DATABASES']['USER'],
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
         'HOST': 'localhost',
         'PORT': 5432,
-        'PASSWORD': config['DATABASES']['PASSWORD'],
+        'PASSWORD': os.environ.get("DB_PASSWORD")
     }
 }
 
