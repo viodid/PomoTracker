@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 
@@ -129,7 +132,6 @@ WSGI_APPLICATION = 'PomoTracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-print(os.environ.get("DB_NAME"), os.environ.get("DB_USER"), os.environ.get("DB_PASSWORD"), os.environ.get("SECRET_KEY"))
 
 DATABASES = {
     'default': {
@@ -138,7 +140,7 @@ DATABASES = {
         'USER': os.environ.get("DB_USER"),
         'HOST': 'localhost',
         'PORT': 5432,
-        'PASSWORD': os.environ.get("DB_PASSWORD")
+        'PASSWORD': os.environ.get("USER_DB_PASSWORD")
     }
 }
 

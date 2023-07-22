@@ -10,7 +10,7 @@ from math import ceil
 
 class Pomodoro(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
-                             related_name='pomodoros')
+                            related_name='pomodoros')
     datetime = models.DateTimeField(default=timezone.now)
     tag = models.ForeignKey('Tag', on_delete=models.PROTECT,
                             related_name='pomodoros')
@@ -50,11 +50,11 @@ class SlicePomodoros:
         self.all = pomodoros.all()
         self.year = pomodoros.filter(datetime__year=datetime.now().year)
         self.month = pomodoros.filter(datetime__month=datetime.now().month,
-                                      datetime__year=datetime.now().year)
+                                    datetime__year=datetime.now().year)
         self.week = pomodoros.filter(datetime__week=datetime.now()
-                                     .isocalendar().week,
-                                     datetime__month=datetime.now().month,
-                                     datetime__year=datetime.now().year)
+                                    .isocalendar().week,
+                                    datetime__month=datetime.now().month,
+                                    datetime__year=datetime.now().year)
         self.day = pomodoros.filter(datetime__day=datetime.now().day,
                                     datetime__week=datetime.now()
                                     .isocalendar().week,
@@ -94,9 +94,9 @@ class UserSettings(models.Model):
     theme = models.CharField(max_length=16, default='default', choices=theme_choices)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
     startSound = models.CharField(max_length=16,
-                                  choices=sound_choices_start, default='#ding')
+                                choices=sound_choices_start, default='#ding')
     stopSound = models.CharField(max_length=16, choices=sound_choices_stop,
-                                 default='#whoosh')
+                                default='#whoosh')
     focusTime = models.PositiveSmallIntegerField(default=25)
     shortBreak = models.PositiveSmallIntegerField(default=5)
     longBreak = models.PositiveSmallIntegerField(default=15)

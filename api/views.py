@@ -79,7 +79,7 @@ def create(request, token):
     timezone = user.settings.timezone
 
     Pomodoro(user=user, tag=Tag.objects.get(tag=tag),
-             datetime=datetime.now(pytz.timezone(timezone))).save()
+            datetime=datetime.now(pytz.timezone(timezone))).save()
 
     if user.pomodoros.last().checkLastCreated():
         return JsonResponse({'message': 'Pomodoro created successfully'}, status=201)
@@ -91,7 +91,6 @@ def create(request, token):
 
 @csrf_exempt
 def updateTags(request, token, tag_to_replace):
-    print(request.method)
     if request.method != 'PATCH':
         return JsonResponse({"error": "PATCH request required."}, status=400)
 

@@ -12,6 +12,7 @@ pillow = "*"
 pipfile = "*"
 
 [dev-packages]
+python-dotenv = "*"
 
 [requires]
 python_version = "3.11"
