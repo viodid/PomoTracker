@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from django.conf import settings
 
 load_dotenv()
 
@@ -136,11 +137,11 @@ WSGI_APPLICATION = 'PomoTracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME"),
+        'NAME': os.environ.get("DB_NAME_TEST") if settings.DEBUG else os.environ.get("DB_NAME"),
         'USER': os.environ.get("DB_USER"),
-        'HOST': 'localhost',
-        'PORT': 5432,
-        'PASSWORD': os.environ.get("USER_DB_PASSWORD")
+        'HOST': os.environ.get("DB_HOST") if settings.DEBUG else os.environ.get("DB_HOST_PROD"),
+        'PORT': os.environ.get("DB_PORT"),
+        'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
 }
 
