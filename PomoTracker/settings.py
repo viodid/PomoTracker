@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from django.conf import settings
 
 load_dotenv()
 
@@ -25,17 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get('DJANGO_DEBUG', False)
+print('Debug: ', DEBUG)
+SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [
-    '0.0.0.0',
-    '192.168.1.105',
-    '127.0.0.1',
-    '212.71.244.133',
     'pomotracker.app'
 ]
 
@@ -133,13 +133,12 @@ WSGI_APPLICATION = 'PomoTracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME_TEST") if settings.DEBUG else os.environ.get("DB_NAME"),
+        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME"),
         'USER': os.environ.get("DB_USER"),
-        'HOST': os.environ.get("DB_HOST") if settings.DEBUG else os.environ.get("DB_HOST_PROD"),
+        'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST_PROD"),
         'PORT': os.environ.get("DB_PORT"),
         'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
