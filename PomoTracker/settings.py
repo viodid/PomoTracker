@@ -29,14 +29,15 @@ print('Debug: ', DEBUG)
 SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True if not DEBUG else False
 SECURE_HSTS_SECONDS = 60
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 
 ALLOWED_HOSTS = [
-    'pomotracker.app'
+    'pomotracker.app',
+    '127.0.0.1'
 ]
 
 
