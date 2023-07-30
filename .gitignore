@@ -152,7 +152,7 @@ app/templates/account/
 app/templates/openid/
 app/templates/tests/
 app/templates/socialaccount/
-/media/
+media/profile_pics/*
 /static/
 .idea/
 migrations/

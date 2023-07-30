@@ -1,16 +1,20 @@
+"""Views for the app."""
+import secrets
 from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
-import secrets
 
 from .models import User, SlicePomodoros, UserSettings, Rewards, Statistics
 from .forms import ProfileForm
 
+from . import helpers
+
 
 def index(request):
+    """Display the index page"""
     if request.user.is_authenticated:
         generateUserSettings(request)
         # temporary
@@ -25,6 +29,7 @@ def index(request):
 
 
 def profile(request, username):
+    """Display the profile page"""
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         if username == request.user.username:
@@ -50,7 +55,7 @@ def profile(request, username):
                     'timezone': user.settings.timezone,
                 })
                 if form.is_valid():
-                    saveSettings(form.cleaned_data, user)
+                    helpers.saveSettings(form.cleaned_data, user)
                     return render(request, 'app/profile.html', {
                         'message': 'Settings saved successfully',
                         'form': form,
@@ -85,37 +90,9 @@ def profile(request, username):
     return HttpResponseNotFound(request)
 
 
-def saveSettings(form, user):
-    settings = user.settings
-    if form['image']:
-        settings.image = form['image']
-    if form['shortBreak']:
-        settings.shortBreak = int(form['shortBreak'])
-    if form['longBreak']:
-        settings.longBreak = int(form['longBreak'])
-    if form['theme']:
-        settings.theme = form['theme']
-        if form['theme'] == 'forest':
-            settings.focusColor = '#EAE7B1'
-        elif form['theme'] == 'aquamarine':
-            settings.focusColor = '#6BAAAA'
-        elif form['theme'] == 'default' or form['theme'] == 'white':
-            settings.focusColor = '#f1c232'
-        elif form['theme'] == 'garnet':
-            settings.focusColor = '#9a1b18'
-        elif form['theme'] == 'coral':
-            settings.focusColor = '#FAD6A5'
-    if form['startSound']:
-        settings.startSound = form['startSound']
-    if form['stopSound']:
-        settings.stopSound = form['stopSound']
-    if form['timezone']:
-        settings.timezone = form['timezone']
-    settings.save()
-
-
 @login_required
 def pomodorosList(request):
+    """Display all pomodoros of the user"""
     user = User.objects.get(username=request.user.username)
     pomodoros = user.pomodoros.all().order_by('-datetime')
     paginator = Paginator(pomodoros, 50)
