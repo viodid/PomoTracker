@@ -4,9 +4,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Images and static content
-profile_pics/
-
 # C extensions
 *.so
 
@@ -152,9 +149,8 @@ app/templates/account/
 app/templates/openid/
 app/templates/tests/
 app/templates/socialaccount/
-media/profile_pics/*
-/static/
 .idea/
-migrations/
 script_log.txt
 update_version_txt.sh
+static/
+media/profile_pics/*

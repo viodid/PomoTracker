@@ -1,8 +1,10 @@
+"""Forms for the app."""
 from django import forms
 import pytz
 
 
 class ProfileForm(forms.Form):
+    """Form for editing user profile."""
     image = forms.ImageField(required=False, label='Change profile picture')
     shortBreak = forms.IntegerField(required=False, label='Short break time',
                                     min_value=1, max_value=60, initial=5)

@@ -89,14 +89,14 @@ class UserSettings(models.Model):
     )
 
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE,
-                                related_name='settings')
+                                    related_name='settings')
     token = models.CharField(max_length=27, null=True, unique=True)
     theme = models.CharField(max_length=16, default='default', choices=theme_choices)
-    image = models.ImageField(default='default.png', upload_to='profile_pics')
+    image = models.CharField(max_length=256, default='default.png')
     startSound = models.CharField(max_length=16,
-                                choices=sound_choices_start, default='#ding')
+                                    choices=sound_choices_start, default='#ding')
     stopSound = models.CharField(max_length=16, choices=sound_choices_stop,
-                                default='#whoosh')
+                                    default='#whoosh')
     focusTime = models.PositiveSmallIntegerField(default=25)
     shortBreak = models.PositiveSmallIntegerField(default=5)
     longBreak = models.PositiveSmallIntegerField(default=15)

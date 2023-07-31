@@ -1,9 +1,14 @@
 """Helper functions for the view's app"""
+
+import os
+import boto3
+
 def saveSettings(form, user):
     """Save user settings to the database"""
     settings = user.settings
     if form['image']:
-        delete_previous_image(settings)
+        print(form['image'])
+        #delete_previous_image_s3(form['image'])
         settings.image = form['image']
     if form['shortBreak']:
         settings.shortBreak = int(form['shortBreak'])
@@ -30,7 +35,24 @@ def saveSettings(form, user):
     settings.save()
 
 
-def delete_previous_image(settings):
-    """Delete previous image from the server"""
-    if settings.image.name != 'default.png':
-        settings.image.delete(save=False)
+def delete_previous_image_s3(image):
+    """Delete previous image from AWS S3"""
+    client = connect_s3()
+    client.delete_object(
+        Bucket=os.environ.get('AWS_STORAGE_BUCKET_NAME'),
+        Key=image
+    )
+
+
+
+def connect_s3():
+    """Connect to AWS S3"""
+    return boto3.client(
+        "s3",
+        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    )
+
+def downloadFile(client, bucket, object_name, file_name):
+    """Download a file from AWS S3"""
+    client.download_file(bucket, object_name, file_name)
