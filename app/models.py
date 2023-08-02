@@ -44,7 +44,7 @@ class Pomodoro(models.Model):
 
 
 class SlicePomodoros:
-
+    """Slice pomodoros by year, month, week and day"""
     def __init__(self, pomodoros, user):
         self.user = user
         self.all = pomodoros.all()

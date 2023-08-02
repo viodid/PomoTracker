@@ -35,7 +35,7 @@
                 {% if pomodoros.count > 0 %}
                     <li class="user-leaderboard">
                         <div class="left">
-                            <img src="{{ pomodoros.first.user.settings.image.url }}" alt="profile picture" class="user-profile-img">
+                            <img src="https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/{{ pomodoros.first.user.settings.image }}" alt="profile picture" class="user-profile-img">
                             <p><a href="{% url 'profile' username=pomodoros.first.user.username  %}">{{ pomodoros.first.user.username }}</a></p>
                             <div class="rewards-container">
                                 {% if pomodoros.first.user.rewards.gold %}
