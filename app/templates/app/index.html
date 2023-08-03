@@ -4,15 +4,15 @@
 {% load static %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'app/charts.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/charts.css' %}">
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'app/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
-    <script src="{% static 'app/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
-    <script src="{% static 'app/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
+    <script src="{% static 'app/js/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
+    <script src="{% static 'app/js/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
+    <script src="{% static 'app/js/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
     {% if user.is_authenticated %}
-        <script src="{% static 'app/charts_index.js' %}?{{ SITE_VERSION }}" type="module"></script>
+        <script src="{% static 'app/js/charts_index.js' %}?{{ SITE_VERSION }}" type="module"></script>
     {% endif %}
 {% endblock %}
 

@@ -5,6 +5,7 @@ import PomoTracker
 def global_settings(request):
     return {
         'SITE_NAME': 'PomoTracker',
+        'SITE_EMAIL': '@pomotracker.app',
         'SITE_URL': 'https://pomotracker.app',
         'SITE_DESCRIPTION': 'Pomodoro Tracker',
         'SITE_KEYWORDS': 'pomodoro, tracker, productivity, time management',

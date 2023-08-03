@@ -144,13 +144,8 @@ cython_debug/
 node_modules/
 *.json
 package*
-/templates/
-app/templates/account/
-app/templates/openid/
-app/templates/tests/
-app/templates/socialaccount/
 .idea/
 script_log.txt
 update_version_txt.sh
-static/
 media/profile_pics/*
+/static/
