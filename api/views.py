@@ -6,6 +6,7 @@ from app.models import Pomodoro, UserSettings, Tag, User, Statistics
 from datetime import datetime
 import pytz
 
+from django.views.decorators.cache import cache_page
 
 # GET request
 def getAll(request, username, endpoint):
@@ -30,6 +31,7 @@ def getAll(request, username, endpoint):
         return JsonResponse(tagDict, safe=False, status=200)
 
 
+@cache_page(60 * 30)
 def getSettings(request, token):
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
@@ -169,7 +171,7 @@ def updateDelete(request, token, pomodoro_id):
             pomodoro = Pomodoro.objects.get(id=pomodoro_id)
             if pomodoro.user != user:
                 return JsonResponse({'message':
-                                         f'Pomodoro does not belong to {user.username}'},
+                                    f'Pomodoro does not belong to {user.username}'},
                                     status=401)
             pomodoro.tag = tag
             pomodoro.save()

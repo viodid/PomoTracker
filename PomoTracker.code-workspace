@@ -3,14 +3,5 @@
 		{
 			"path": "."
 		}
-	],
-	"settings": {
-		"[python]": {
-			"editor.defaultFormatter": "ms-python.python"
-		},
-		"python.formatting.provider": "none",
-		"python.linting.pylintArgs": [
-			"--disable=C0103"
-		]
-	}
+	]
 }

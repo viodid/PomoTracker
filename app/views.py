@@ -6,11 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
 from .models import User, SlicePomodoros, UserSettings, Rewards, Statistics
 from .forms import ProfileForm
-
 from . import helpers
+
 
 
 def index(request):
@@ -140,6 +141,7 @@ def token(request):
     })
 
 
+@cache_page(60 * 15)
 def leaderboard(request, period):
     """Display the leaderboard page"""
     slice_pomodoro_users = []
