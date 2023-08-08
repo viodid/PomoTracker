@@ -8,8 +8,9 @@ import pytz
 
 from django.views.decorators.cache import cache_page
 
+
 # GET request
-@cache_page(60 * 30)
+@cache_page(60 * 25)
 def getAll(request, username, endpoint):
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
@@ -24,7 +25,7 @@ def getAll(request, username, endpoint):
 
     if endpoint == 'pomodoros':
         pomodoros = Pomodoro.objects.filter(user=user).order_by('-datetime')
-        return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
+        return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
                             safe=False, status=200)
 
     elif endpoint == 'tag':
@@ -32,7 +33,26 @@ def getAll(request, username, endpoint):
         return JsonResponse(tagDict, safe=False, status=200)
 
 
-@cache_page(60 * 30)
+@cache_page(60 * 25)
+def getAllDates(request, username):
+    """Get all user's pomodoros dates"""
+    if request.method != 'GET':
+        return JsonResponse({"error": "GET request required."}, status=400)
+
+    try:
+        user = User.objects.get(username=username)
+
+    except User.DoesNotExist:
+        return JsonResponse({
+            "error": "Username does not exist."
+        }, status=401)
+
+    pomodoros = Pomodoro.objects.filter(user=user)
+
+    return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
+                        safe=False, status=200)
+
+
 def getSettings(request, token):
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)

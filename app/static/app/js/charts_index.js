@@ -94,8 +94,7 @@ async function convertPomosToJSON(selectedYear) {
 
     for (let i = 0; i < pomos.length; i++) {
 
-      const pomo = pomos[i];
-      const date = pomo.created_at;
+      const date = pomos[i];
       const year = date.split('-')[0];
       const month = parseInt(date.split('-')[1] - 1);
       const day = parseInt(date.split('-')[2].split('T')[0]);
