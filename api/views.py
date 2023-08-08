@@ -9,6 +9,7 @@ import pytz
 from django.views.decorators.cache import cache_page
 
 # GET request
+@cache_page(60 * 30)
 def getAll(request, username, endpoint):
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)

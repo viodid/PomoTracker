@@ -121,9 +121,15 @@ body.coral {
   box-shadow: var(--box-shadow);
 }
 
-.buttons-index-graph span:hover, .buttons-index-graph span:active {
+.buttons-index-graph span:hover {
   cursor: pointer;
   background-color: var(--secondary-color);
+}
+
+.buttons-index-graph span:active {
+  background-color: var(--softest-color);
+  transform: translateY(2px);
+  box-shadow: none;
 }
 
 .days li:nth-child(odd) {
