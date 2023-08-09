@@ -186,7 +186,7 @@ class Statistics:
             pomodorosWithTag = pomodoros.filter(tag=tag)
             # Get the number of pomodoros with the tag
             num = pomodorosWithTag.count()
-            # Add the number of pomodoros with the tag to the dictionary if it
+            # Add the number of pomodoros with the tag to the dictionary if it is
             #  not 0
             if num != 0:
                 tagDict[tag.tag] = num

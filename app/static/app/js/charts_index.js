@@ -86,9 +86,13 @@ async function convertPomosToJSON(selectedYear) {
     December: {}
   };
 
-  const response = await fetch(`/api/${username}/get/pomodoros`)
+  toggleLoading(true);
+
+  const response = await fetch(`/api/${username}/alldates`)
 
   await response.json().then((pomos) => {
+
+    toggleLoading(false);
 
     const keys = Object.keys(output);
 
@@ -134,4 +138,14 @@ function isLeapYear(year) {
     return false;
   }
   return true;
+}
+
+function toggleLoading(show) {
+  if (show === true) {
+    document.querySelector('#loading-container').style.visibility = 'visible';
+    document.querySelector('#loading-container').style.opacity = '1';
+  } else {
+    document.querySelector('#loading-container').style.visibility = 'hidden';
+    document.querySelector('#loading-container').style.opacity = '0';
+  }
 }

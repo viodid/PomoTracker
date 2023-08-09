@@ -1,7 +1,7 @@
 import { focusColor, username, theme } from './user_settings.js';
 
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawTimeline1);
+//google.charts.setOnLoadCallback(drawTimeline1);
 google.charts.setOnLoadCallback(drawBarChart1);
 google.charts.setOnLoadCallback(drawBarChart2);
 google.charts.setOnLoadCallback(drawPieChart1);
@@ -14,9 +14,9 @@ if (path_username === 'charts') {
 async  function drawTimeline1() {
   const pomos = await aggregatedPomosByTag()
     .then((pomos) => {
-     const data = new google.visualization.DataTable();
-     data.addColumn({ type: 'string', id: 'Tag' });
-     data.addColumn({ type: 'date', id: 'Start' });
+      const data = new google.visualization.DataTable();
+      data.addColumn({ type: 'string', id: 'Tag' });
+      data.addColumn({ type: 'date', id: 'Start' });
       data.addColumn({ type: 'date', id: 'End' });
 
 
@@ -210,7 +210,7 @@ async function drawPieChart1() {
 
 async function aggregatedPomosByTag() {
   let aggregated = {};
-  const response = await fetch(`/api/${path_username}/get/tag`);
+  const response = await fetch(`/api/${path_username}/alltags`);
   await response.json().then((data) => {
       aggregated = data;
     });
@@ -221,7 +221,7 @@ async function aggregatedPomosByTag() {
 
 async function pomosPerHour() {
   let aggregated = {};
-  const response = await fetch(`/api/${path_username}/get/pomodoros`);
+  const response = await fetch(`/api/${path_username}/allpomodoros`);
   await response.json().then((pomos) => {
 
     const keys = Object.keys(pomos);
@@ -272,7 +272,7 @@ function fontColor() {
 
 async function pomosPerDay() {
   let aggregated = {};
-  const response = await fetch(`/api/${path_username}/get/pomodoros`);
+  const response = await fetch(`/api/${path_username}/allpomodoros`);
   await response.json().then((pomos) => {
     if (!pomos.length) {
       return [0];

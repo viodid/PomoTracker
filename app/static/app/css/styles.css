@@ -476,7 +476,7 @@ main .first {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 25px 0;
+  margin: 25px 0 0 94px;
 }
 
 .third-graph {
@@ -1039,7 +1039,7 @@ text-align: center;
   }
 }
 
-@media screen and (max-width: 1600px) and (min-width: 1000px) {
+@media screen and (max-width: 1721px) and (min-width: 1000px) {
 
   body {
     --padding: 50px;

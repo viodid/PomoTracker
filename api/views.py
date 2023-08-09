@@ -9,9 +9,9 @@ import pytz
 from django.views.decorators.cache import cache_page
 
 
-# GET request
 @cache_page(60 * 25)
-def getAll(request, username, endpoint):
+def getAllUserTags(request, username) -> JsonResponse:
+    """Get all user's tags"""
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
 
@@ -23,18 +23,12 @@ def getAll(request, username, endpoint):
             "error": "Username does not exist."
         }, status=401)
 
-    if endpoint == 'pomodoros':
-        pomodoros = Pomodoro.objects.filter(user=user).order_by('-datetime')
-        return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
-                            safe=False, status=200)
-
-    elif endpoint == 'tag':
-        tagDict = Statistics.aggregatePomodorosByTag(user)
-        return JsonResponse(tagDict, safe=False, status=200)
+    tagDict = Statistics.aggregatePomodorosByTag(user)
+    return JsonResponse(tagDict, safe=False, status=200)
 
 
 @cache_page(60 * 25)
-def getAllDates(request, username):
+def getAllUserPomosDates(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
@@ -50,6 +44,26 @@ def getAllDates(request, username):
     pomodoros = Pomodoro.objects.filter(user=user)
 
     return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
+                        safe=False, status=200)
+
+
+@cache_page(60 * 25)
+def getAllUserPomodoros(request, username) -> JsonResponse:
+    """Get all user's pomodoros dates"""
+    if request.method != 'GET':
+        return JsonResponse({"error": "GET request required."}, status=400)
+
+    try:
+        user = User.objects.get(username=username)
+
+    except User.DoesNotExist:
+        return JsonResponse({
+            "error": "Username does not exist."
+        }, status=401)
+
+    pomodoros = Pomodoro.objects.filter(user=user)
+
+    return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
                         safe=False, status=200)
 
 
