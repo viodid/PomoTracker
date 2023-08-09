@@ -27,7 +27,7 @@ def getAllUserTags(request, username) -> JsonResponse:
     return JsonResponse(tagDict, safe=False, status=200)
 
 
-@cache_page(60 * 25)
+#@cache_page(60 * 25)
 def getAllUserPomosDates(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
     if request.method != 'GET':

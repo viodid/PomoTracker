@@ -200,14 +200,12 @@ body.coral {
 }
 
 .loading-icon {
-  border: 8px solid #ccc;
-  border-top: 8px solid var(--yellow-logo);
-  border-left: 8px solid var(--yellow-logo);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
   animation: spin 1s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
   margin: 0 auto;
+}
+
+.loading-icon>img {
+  width: 50px;
 }
 
 @keyframes spin {
@@ -216,7 +214,7 @@ body.coral {
 }
 
 #loading-container>p {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 
@@ -244,12 +242,8 @@ body.coral {
         margin-top: 76px;
     }
 
-    .loading-icon {
+    .loading-icon>img {
         width: 30px;
-        height: 30px;
-        border: 4px solid #ccc;
-        border-top: 4px solid var(--yellow-logo);
-        border-left: 4px solid var(--yellow-logo);
     }
 }
 
@@ -267,12 +261,8 @@ body.coral {
         margin-top: 76px;
     }
 
-    .loading-icon {
-        width: 30px;
-        height: 30px;
-        border: 4px solid #ccc;
-        border-top: 4px solid var(--yellow-logo);
-        border-left: 4px solid var(--yellow-logo);
+    .loading-icon>img {
+        width: 40px;
     }
 }
 
