@@ -5,10 +5,13 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawBarChart1);
 google.charts.setOnLoadCallback(drawBarChart2);
 google.charts.setOnLoadCallback(drawPieChart1);
+
 let path_username = window.location.pathname.split('/')[1];
 if (path_username === 'charts') {
   path_username = username;
 }
+// Cache the data
+let cachedResponse = null;
 
 // Timeline tags
 async  function drawTimeline1() {
@@ -218,10 +221,12 @@ async function aggregatedPomosByTag() {
 }
 
 
-
+// TODO: Refactor this function
 async function pomosPerHour() {
   let aggregated = {};
-  const response = await fetch(`/api/${path_username}/allpomodoros`);
+  if (cachedResponse) {
+    // Use a cached data if available
+  const response = cachedResponse ? cachedResponse : getAllPomos();
   await response.json().then((pomos) => {
 
     const keys = Object.keys(pomos);
@@ -250,7 +255,6 @@ async function pomosPerHour() {
 function aggregateToChart(aggregated, date = false) {
   let output = [];
   const keys = Object.keys(aggregated);
-  console.log(keys);
   for (let i = 0; i < keys.length; i++) {
     if (date) {
       const date = new Date(keys[i]);
@@ -272,7 +276,8 @@ function fontColor() {
 
 async function pomosPerDay() {
   let aggregated = {};
-  const response = await fetch(`/api/${path_username}/allpomodoros`);
+  // call the api if response is not cached
+  const response = cachedResponse ? cachedResponse : getAllPomos();
   await response.json().then((pomos) => {
     if (!pomos.length) {
       return [0];
@@ -314,4 +319,16 @@ function parseDate(date) {
   let month = date.getMonth() + 1; // Month is 0-indexed
   let day = date.getDate();
   return `${year}-${month}-${day}`;
+}
+
+
+async function getAllPomos() {
+  fetch(`/api/${path_username}/allpomodoros`)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data);
+    cachedResponse = data;
+  });
 }

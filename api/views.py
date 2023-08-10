@@ -66,7 +66,7 @@ def getAllUserPomodoros(request, username) -> JsonResponse:
     return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
                         safe=False, status=200)
 
-
+@cache_page(60 * 25)
 def getSettings(request, token):
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)
