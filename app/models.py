@@ -171,6 +171,7 @@ class Statistics:
 
     @staticmethod
     def aggregatePomodorosByTag(user):
+        """Returns a dictionary of tags and the number of pomodoros with the tag"""
         # Get all pomodoros
         pomodoros = user.pomodoros.all()
         # Make sure there are pomodoros
@@ -194,6 +195,7 @@ class Statistics:
 
     @staticmethod
     def totalSumPomodoros(user, period):
+        """Returns the total sum of pomodoros within the period"""
         # Get all pomodoros within the period
         pomodoros = user.pomodoros.all()
         slicePomodoros = getattr(SlicePomodoros(pomodoros, user), period)

@@ -4,175 +4,180 @@
 {% load static %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'app/css/charts.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/charts.css' %}">
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'app/js/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
-    <script src="{% static 'app/js/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
-    <script src="{% static 'app/js/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
-    {% if user.is_authenticated %}
-        <script src="{% static 'app/js/charts_index.js' %}?{{ SITE_VERSION }}" type="module"></script>
-    {% endif %}
+<script src="{% static 'app/js/index.js' %}?{{ SITE_VERSION }}" type="module"></script>
+<script src="{% static 'app/js/timer.js' %}?{{ SITE_VERSION }}" type="module"></script>
+<script src="{% static 'app/js/timer_helpers.js' %}?{{ SITE_VERSION }}" type="module"></script>
+{% if user.is_authenticated %}
+<script src="{% static 'app/js/charts_index.js' %}?{{ SITE_VERSION }}" type="module"></script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
-    <main>
-        {% if not user.is_authenticated %}
-            <div class="intro-dialog">
-                <p>PomoTracker is a customizable pomodoro timer app.</p>
-                <p>Stay focused, be productive, track everything.</p>
+<main>
+    <audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/ding-idea-40142.mp3" id="ding"></audio>
+    <audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/whoosh-6316.mp3" id="whoosh"></audio>
+    <audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/blaublau.mp3" id="minion"></audio>
+    <audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/folks.mp3" id="folks"></audio>
+    {% if not user.is_authenticated %}
+    <div class="intro-dialog">
+        <p>PomoTracker is a customizable pomodoro timer app.</p>
+        <p>Stay focused, be productive, track everything.</p>
 
-            </div>
-        {% else %}
-            <div class="hidden" id="message-index">
-                <p><b class="colored">NEW THEME COLORS!</b></p>
-                <p>Go to your <a href="{% url 'profile' username=request.user.username %}" class="colored">settings</a>
-                and choose your favorite one!</p>
-            </div>
-            <div class="intro-dialog version-notes hidden">
-                <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
-                <p><b class="colored">Version 1.6.0</b> - MOBILE DISPLAY VERSION!</p>
-                <ul>
-                    <li>1.6.1: Now you can navigate and use Pomotracker in all kind of displays, included mobiles!</li>
-                </ul>
-                <br>
-                <p><b class="colored">Version 1.5.0</b> - THEME COLORS!</p>
-                <ul>
-                    <li>1.5.12: Link to leaderboard added to timer when break is up. Minor fixes.</li>
-                    <li>1.5.9: New tag table in settings. Update Pomodoro tags in bulk!</li>
-                    <li>1.5.6: Adjust in color schemes and edit tags in pomodoro page.</li>
-                    <li>1.5.1: Colors to enlight our life!</li>
-                </ul>
-                <br>
-                <p><b class="colored">Version 1.4.0</b> - Charts are comming!</p>
-                <ul>
-                    <li>1.4.12: Fixed a bug with the charts in profiles.</li>
-                    <li>1.4.8: Enhance leaderboard tabs with clear colors.</li>
-                    <li>1.4.6: Fixed bug updating profile image and minor bugs.</li>
-                    <li>1.4.5: Added charts for pomodoros per hour and per day</li>
-                    <li>1.4.4: Hide version notes by default. Add year buttons to the density chart.</li>
-                    <li>1.4.1: Density chart <i>"Github like"</i> in the main page!</li>
-                </ul>
-                <br>
-                <p><b class="colored">Version 1.3.0</b> - User Settings release</p> <ul>
-                <li>1.3.12: Enhance error messages. Minor bugs.</li>
-                <li>1.3.11: Fixing form user settings. Now <a href="{% url 'profile' username=request.user.username %}">
+    </div>
+    {% else %}
+    <div class="hidden" id="message-index">
+        <p><b class="colored">NEW THEME COLORS!</b></p>
+        <p>Go to your <a href="{% url 'profile' username=request.user.username %}" class="colored">settings</a>
+            and choose your favorite one!</p>
+    </div>
+    <div class="intro-dialog version-notes hidden">
+        <div aria-hidden="true" id="close-parent"><span id="toggle-notes" class="linkable">&times;</span></div>
+        <p><b class="colored">Version 1.6.0</b> - MOBILE DISPLAY VERSION!</p>
+        <ul>
+            <li>1.6.1: Now you can navigate and use Pomotracker in all kind of displays, included mobiles!</li>
+        </ul>
+        <br>
+        <p><b class="colored">Version 1.5.0</b> - THEME COLORS!</p>
+        <ul>
+            <li>1.5.12: Link to leaderboard added to timer when break is up. Minor fixes.</li>
+            <li>1.5.9: New tag table in settings. Update Pomodoro tags in bulk!</li>
+            <li>1.5.6: Adjust in color schemes and edit tags in pomodoro page.</li>
+            <li>1.5.1: Colors to enlight our life!</li>
+        </ul>
+        <br>
+        <p><b class="colored">Version 1.4.0</b> - Charts are comming!</p>
+        <ul>
+            <li>1.4.12: Fixed a bug with the charts in profiles.</li>
+            <li>1.4.8: Enhance leaderboard tabs with clear colors.</li>
+            <li>1.4.6: Fixed bug updating profile image and minor bugs.</li>
+            <li>1.4.5: Added charts for pomodoros per hour and per day</li>
+            <li>1.4.4: Hide version notes by default. Add year buttons to the density chart.</li>
+            <li>1.4.1: Density chart <i>"Github like"</i> in the main page!</li>
+        </ul>
+        <br>
+        <p><b class="colored">Version 1.3.0</b> - User Settings release</p>
+        <ul>
+            <li>1.3.12: Enhance error messages. Minor bugs.</li>
+            <li>1.3.11: Fixing form user settings. Now <a href="{% url 'profile' username=request.user.username %}">
                     <u>you can change the settings</u></a> without any errors.</li>
-                <li>1.3.10: Adding patch notes.</li>
-            </ul>
+            <li>1.3.10: Adding patch notes.</li>
+        </ul>
+    </div>
+    {% endif %}
+    <div class="first">
+        <span id="start" class="button">Start</span>
+        <p>or press space bar</p>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="second">
+        <div class="block-table" id="todays-index">
+            <div class="title cell">
+                <p class="left"><a href="{% url 'pomodoros' %}"><u>Today's pomodoros</u></a></p>
             </div>
-        {% endif %}
-        <div class="first">
-            <span id="start" class="button">Start</span>
-            <p>or press space bar</p>
+            {% for pomodoro in pomodoros.day %}
+            {% if forloop.last %}
+            <div class="cell last">
+                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.datetime | date:"h:i A" }}</a></span>
+                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.tag }}</a></span>
+            </div>
+            {% else %}
+            <div class="cell">
+                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.datetime | date:"h:i A"}}</a></span>
+                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.tag }}</a></span>
+            </div>
+            {% endif %}
+            {% empty %}
+            <div class="cell last">
+                <span class="left">No pomodoros to show</span>
+                <span class="left"></span>
+            </div>
+            {% endfor %}
         </div>
-        {% if user.is_authenticated %}
-            <div class="second">
-                <div class="block-table" id="todays-index">
-                    <div class="title cell">
-                        <p class="left"><a href="{% url 'pomodoros' %}"><u>Today's pomodoros</u></a></p>
-                    </div>
-                    {% for pomodoro in pomodoros.day %}
-                        {% if forloop.last %}
-                            <div class="cell last">
-                                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.datetime | date:"h:i A" }}</a></span>
-                                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.tag }}</a></span>
-                            </div>
-                        {% else %}
-                            <div class="cell">
-                                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.datetime | date:"h:i A"}}</a></span>
-                                <span class="left"><a href="{% url 'pomodoros' %}">{{ pomodoro.tag }}</a></span>
-                            </div>
-                        {% endif %}
-                    {% empty %}
-                        <div class="cell last">
-                            <span class="left">No pomodoros to show</span>
-                            <span class="left"></span>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="block-table">
-                    <div class="today cell">
-                        <span class="left">Today</span>
-                        <span class="right" id="today">{{ pomodoros.day.count }}</span>
-                    </div>
-                    <div class="week cell">
-                        <span class="left">This week</span>
-                        <span class="right">{{ pomodoros.week.count }}</span>
-                    </div>
-                    <div class="month cell">
-                        <span class="left">This month</span>
-                        <span class="right">{{ pomodoros.month.count }}</span>
-                    </div>
-                    <div class="year cell last">
-                        <span class="left">This year</span>
-                        <span class="right">{{ pomodoros.year.count }}</span>
-                    </div>
-                </div>
+        <div class="block-table">
+            <div class="today cell">
+                <span class="left">Today</span>
+                <span class="right" id="today">{{ pomodoros.day.count }}</span>
             </div>
-            <div class="flex-third">
-                <div id="loading-container">
-                    <div class="loading-icon">
-                        <img src="{% static 'app/images/coffeev2.png' %}" alt="coffee spinning">
-                    </div>
-                    <p>Loading...</p>
-                </div>
-                <div class="third-graph">
-                    <div class="graph">
-                        <ul class="months">
-                            <li>Jan</li>
-                            <li>Feb</li>
-                            <li>Mar</li>
-                            <li>Apr</li>
-                            <li>May</li>
-                            <li>Jun</li>
-                            <li>Jul</li>
-                            <li>Aug</li>
-                            <li>Sep</li>
-                            <li>Oct</li>
-                            <li>Nov</li>
-                            <li>Dec</li>
-                        </ul>
-                        <ul class="days">
-                            <li>Sun</li>
-                            <li>Mon</li>
-                            <li>Tue</li>
-                            <li>Wed</li>
-                            <li>Thu</li>
-                            <li>Fri</li>
-                            <li>Sat</li>
-                        </ul>
-                        <ul class="squares">
-                            <!-- added via javascript -->
-                        </ul>
-                    </div>
-                    <p class="tag-squares">Hover on cells to display more info</p>
-                </div>
-                <div class="buttons-index-graph">
-                    {% now "Y" as this_year %}
-                    <span data-year="{{ this_year }}">{{ this_year }}</span>
-                    <span data-year="{{ this_year|add:"-1" }}">{{ this_year|add:"-1" }}</span>
-                    <span data-year="{{ this_year|add:"-2" }}">{{ this_year|add:"-2" }}</span>
-                </div>
+            <div class="week cell">
+                <span class="left">This week</span>
+                <span class="right">{{ pomodoros.week.count }}</span>
             </div>
-        {% endif %}
-        {% if not user.is_authenticated %}
-            <div class="third">
-                <div class="text-center">
-                    <a href="{% provider_login_url 'google' %}" class="text-dark google">
-                        <img src="{% static 'app/images/google.png' %}" class="logo">
-                        <span>Sign in with Google</span>
-                    </a>
-                    <!--
+            <div class="month cell">
+                <span class="left">This month</span>
+                <span class="right">{{ pomodoros.month.count }}</span>
+            </div>
+            <div class="year cell last">
+                <span class="left">This year</span>
+                <span class="right">{{ pomodoros.year.count }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="flex-third">
+        <div id="loading-container">
+            <div class="loading-icon">
+                <img src="{% static 'app/images/coffeev2.png' %}" alt="coffee spinning">
+            </div>
+            <p>Loading...</p>
+        </div>
+        <div class="third-graph">
+            <div class="graph">
+                <ul class="months">
+                    <li>Jan</li>
+                    <li>Feb</li>
+                    <li>Mar</li>
+                    <li>Apr</li>
+                    <li>May</li>
+                    <li>Jun</li>
+                    <li>Jul</li>
+                    <li>Aug</li>
+                    <li>Sep</li>
+                    <li>Oct</li>
+                    <li>Nov</li>
+                    <li>Dec</li>
+                </ul>
+                <ul class="days">
+                    <li>Sun</li>
+                    <li>Mon</li>
+                    <li>Tue</li>
+                    <li>Wed</li>
+                    <li>Thu</li>
+                    <li>Fri</li>
+                    <li>Sat</li>
+                </ul>
+                <ul class="squares">
+                    <!-- added via javascript -->
+                </ul>
+            </div>
+            <p class="tag-squares">Hover on cells to display more info</p>
+        </div>
+        <div class="buttons-index-graph">
+            {% now "Y" as this_year %}
+            <span data-year="{{ this_year }}">{{ this_year }}</span>
+            <span data-year="{{ this_year|add:" -1" }}">{{ this_year|add:"-1" }}</span>
+            <span data-year="{{ this_year|add:" -2" }}">{{ this_year|add:"-2" }}</span>
+        </div>
+    </div>
+    {% endif %}
+    {% if not user.is_authenticated %}
+    <div class="third">
+        <div class="text-center">
+            <a href="{% provider_login_url 'google' %}" class="text-dark google">
+                <img src="{% static 'app/images/google.png' %}" class="logo">
+                <span>Sign in with Google</span>
+            </a>
+            <!--
                         <a href="" class="text-dark twitter">
                             <svg xmlns="http://www.w3.org/2000/svg" class="logo" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-twitter" width="30" height="30" viewBox="0 0 24 24" fill="#fefefe"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"/></svg>
                             <span>Sign in with Twitter</span>
                         </a>
                     -->
-                </div>
-                <p>Sign in to collect aggregate statistics, charts, and more.</p>
-            </div>
-        {% endif %}
-    </main>
+        </div>
+        <p>Sign in to collect aggregate statistics, charts, and more.</p>
+    </div>
+    {% endif %}
+</main>
 {% endblock %}

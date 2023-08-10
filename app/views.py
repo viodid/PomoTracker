@@ -105,8 +105,31 @@ def pomodorosList(request):
     })
 
 
+@cache_page(60 * 15)
+def leaderboard(request, period):
+    """Display the leaderboard page"""
+    slice_pomodoro_users = []
+    for user in User.objects.all():
+        pomodoros = SlicePomodoros(user.pomodoros, user)
+        slice_pomodoro_users.append(pomodoros)
+
+    period_pomos = sorted(slice_pomodoro_users, key=lambda pomos: getattr(pomos, period).count(), reverse=True)
+    pomos = [getattr(pomo, period) for pomo in period_pomos]
+    print(pomos)
+    paginator = Paginator(pomos, 50)
+    pageNumber = request.GET.get('page')
+    pageObj = paginator.get_page(pageNumber)
+
+    return render(request, 'app/leaderboard.html', {
+        'pomos': pageObj,
+        #'sumPomosCount': Statistics.totalSumPomodoros(user_request, period)
+    })
+
+
 @login_required
+@cache_page(60 * 3600)
 def charts(request):
+    """Display the charts page"""
     return render(request, 'app/charts.html')
 
 
@@ -141,27 +164,8 @@ def token(request):
     })
 
 
-@cache_page(60 * 15)
-def leaderboard(request, period):
-    """Display the leaderboard page"""
-    slice_pomodoro_users = []
-    for user in User.objects.all():
-        pomodoros = SlicePomodoros(user.pomodoros, user)
-        slice_pomodoro_users.append(pomodoros)
-
-    period_pomos = sorted(slice_pomodoro_users, key=lambda pomos: getattr(pomos, period).count(), reverse=True)
-    pomos = [getattr(pomo, period) for pomo in period_pomos]
-    paginator = Paginator(pomos, 50)
-    pageNumber = request.GET.get('page')
-    pageObj = paginator.get_page(pageNumber)
-
-    return render(request, 'app/leaderboard.html', {
-        'pomos': pageObj,
-        #'sumPomosCount': Statistics.totalSumPomodoros(user_request, period)
-    })
-
-
 def generateToken(request):
+    """Generate a token for the user if he doesn't have one"""
     user = User.objects.get(username=request.user.username)
     token = secrets.token_urlsafe(16)
     if not user.settings.token:

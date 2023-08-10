@@ -27,7 +27,7 @@ def getAllUserTags(request, username) -> JsonResponse:
     return JsonResponse(tagDict, safe=False, status=200)
 
 
-#@cache_page(60 * 25)
+@cache_page(60 * 25)
 def getAllUserPomosDates(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
     if request.method != 'GET':
@@ -46,7 +46,7 @@ def getAllUserPomosDates(request, username) -> JsonResponse:
     return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
                         safe=False, status=200)
 
-
+@csrf_exempt
 @cache_page(60 * 25)
 def getAllUserPomodoros(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
@@ -86,8 +86,8 @@ def getSettings(request, token):
 
 
 # POST request
-@csrf_exempt
 def create(request, token):
+    """Create a new pomodoro"""
     if request.method != 'POST':
         return JsonResponse({"error": "POST request required."}, status=400)
 
@@ -125,8 +125,7 @@ def create(request, token):
     return JsonResponse({'error': 'Must not overlap saved pomodoros, please wait 24 minutes and 59 seconds.'},
                         status=422)
 
-
-@csrf_exempt
+# PATCH request
 def updateTags(request, token, tag_to_replace):
     if request.method != 'PATCH':
         return JsonResponse({"error": "PATCH request required."}, status=400)
@@ -172,8 +171,7 @@ def updateTags(request, token, tag_to_replace):
     return JsonResponse({"message": "Tags updated successfully"},
                         status=201)
 
-
-@csrf_exempt
+# PUT, DELETE request
 def updateDelete(request, token, pomodoro_id):
     try:
         token = UserSettings.objects.get(token=token)
@@ -229,8 +227,7 @@ def updateDelete(request, token, pomodoro_id):
     return JsonResponse({"error": "PUT or DELETE method required."},
                         status=400)
 
-
-@csrf_exempt
+# PUT request
 def updateSettings(request, token):
     try:
         token = UserSettings.objects.get(token=token)
