@@ -1,17 +1,23 @@
 import { focusColor, username, theme } from './user_settings.js';
 
 google.charts.load('current', {'packages':['corechart']});
-//google.charts.setOnLoadCallback(drawTimeline1);
-google.charts.setOnLoadCallback(drawBarChart1);
-google.charts.setOnLoadCallback(drawBarChart2);
-google.charts.setOnLoadCallback(drawPieChart1);
+
+let cacheDataPomos = null;
+
+
+async function renderCharts() {
+  cacheDataPomos = await loadCacheData();
+  console.log(cacheDataPomos);
+  //google.charts.setOnLoadCallback(drawTimeline1);
+  google.charts.setOnLoadCallback(drawBarChart1);
+  //google.charts.setOnLoadCallback(drawBarChart2);
+  google.charts.setOnLoadCallback(drawPieChart1);
+}
 
 let path_username = window.location.pathname.split('/')[1];
 if (path_username === 'charts') {
   path_username = username;
 }
-// Cache the data
-let cachedResponse = null;
 
 // Timeline tags
 async  function drawTimeline1() {
@@ -221,34 +227,32 @@ async function aggregatedPomosByTag() {
 }
 
 
-// TODO: Refactor this function
+// TODO: Refactor this function, only works when response is cached in Redis
 async function pomosPerHour() {
   let aggregated = {};
-  if (cachedResponse) {
-    // Use a cached data if available
-  const response = cachedResponse ? cachedResponse : getAllPomos();
-  await response.json().then((pomos) => {
 
-    const keys = Object.keys(pomos);
+  console.log("cacheDataPomos, pomosPerHour: ", cacheDataPomos);
+  const pomos = cacheDataPomos;
 
-    // initialize the 24 hours
-    for (let i = 0; i < 24; i++) {
-      aggregated[i] = 0;
+  const keys = Object.keys(pomos);
+
+  // initialize the 24 hours
+  for (let i = 0; i < 24; i++) {
+    aggregated[i] = 0;
+  }
+
+  for (let i = 0; i < pomos.length; i++) {
+
+    const current = new Date();
+    const pomo = pomos[i];
+    const hour = parseInt(pomo["created_at"].split('T')[1].split(':')[0]);
+
+    if (aggregated[hour]) {
+      aggregated[hour] += 1;
+    } else {
+      aggregated[hour] = 1;
     }
-
-    for (let i = 0; i < pomos.length; i++) {
-
-      const current = new Date();
-      const pomo = pomos[i];
-      const hour = parseInt(pomo["created_at"].split('T')[1].split(':')[0]);
-
-      if (aggregated[hour]) {
-        aggregated[hour] += 1;
-      } else {
-        aggregated[hour] = 1;
-      }
-    }
-  });
+  }
   return aggregateToChart(aggregated);
 }
 
@@ -322,13 +326,16 @@ function parseDate(date) {
 }
 
 
-async function getAllPomos() {
+async function loadCacheData() {
   fetch(`/api/${path_username}/allpomodoros`)
   .then((response) => {
     return response.json();
   })
   .then((data) => {
-    console.log(data);
-    cachedResponse = data;
+    cacheDataPomos = data;
+    console.log('cacheDataPomos', cacheDataPomos);
   });
 }
+
+// Entry point
+  renderCharts();
