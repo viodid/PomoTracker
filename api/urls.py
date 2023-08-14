@@ -6,6 +6,7 @@ urlpatterns = [
     path('<str:username>/alltags', views.getAllUserTags),
     path('<str:username>/alldates', views.getAllUserPomosDates),
     path('<str:username>/allpomodoros', views.getAllUserPomodoros),
+    path('leaderboard', views.getAllPomodoros),
     path('<str:token>/getSettings', views.getSettings),
     path('<str:token>/create', views.create, name='create'),
     path('<str:token>/<int:pomodoro_id>', views.updateDelete),

@@ -52,15 +52,15 @@ class SlicePomodoros:
         self.month = pomodoros.filter(datetime__month=datetime.now().month,
                                     datetime__year=datetime.now().year)
         self.week = pomodoros.filter(datetime__week=datetime.now()
-                                    .isocalendar().week,
+                                        .isocalendar().week,
                                     datetime__month=datetime.now().month,
                                     datetime__year=datetime.now().year)
         self.day = pomodoros.filter(datetime__day=datetime.now().day,
                                     datetime__week=datetime.now()
-                                    .isocalendar().week,
+                                        .isocalendar().week,
                                     datetime__month=datetime.now().month,
                                     datetime__year=datetime
-                                    .now().year).order_by('datetime')
+                                        .now().year).order_by('datetime')
 
 
 class Tag(models.Model):
@@ -194,32 +194,38 @@ class Statistics:
         return dict(sorted(tagDict.items(), key=lambda x: x[1], reverse=True))
 
     @staticmethod
-    def totalSumPomodoros(user, period):
-        """Returns the total sum of pomodoros within the period"""
+    def totalSumPomodorosUser(user):
+        """Returns the total sum of pomodoros"""
         # Get all pomodoros within the period
         pomodoros = user.pomodoros.all()
-        slicePomodoros = getattr(SlicePomodoros(pomodoros, user), period)
         # Make sure there are pomodoros
-        if not slicePomodoros:
+        if not pomodoros:
             return 0
         # Store the total sum of pomodoros
         totalSum = {}
         # Loop through all pomodoros
-        for pomodoro in slicePomodoros:
+        for pomodoro in pomodoros:
             # Get the date of the pomodoro
-            date = pomodoro.datetime.date()
-            # Get the number of pomodoros on that date
-            num = slicePomodoros.filter(datetime__date=date).count()
-            numPrint = slicePomodoros.filter(datetime__date=date)
-            # print only if date is equal to 2023-01-18
-            if date == datetime(2023, 1, 17).date():
-                print(numPrint)
-                print(num)
-                print('----', date, '----')
-            if date not in totalSum:
-                totalSum[date] = num
-                # Sum the number of pomodoros on dates before if exists
-                if date - timedelta(days=1) in totalSum:
-                    totalSum[date] += totalSum[date - timedelta(days=1)]
+            date = str(pomodoro.datetime.date())
+            # Add the pomodoro to the total sum
+            try:
+                totalSum[date] += 1
+            except KeyError:
+                totalSum[date] = 1
+        return totalSum
 
+    @staticmethod
+    def totalSumPomodorosPerUser():
+        """Returns the total sum of pomodoros per user"""
+        # Get all users
+        users = get_user_model().objects.all()
+        # Store the total sum of pomodoros
+        totalSum = {}
+        # Loop through all users
+        for user in users:
+            # Get the total sum of pomodoros for the user
+            totalUser = Statistics.totalSumPomodorosUser(user)
+            # Only add the user if there are pomodoros
+            if totalUser:
+                totalSum[user.username] = totalUser
         return totalSum

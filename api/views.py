@@ -46,6 +46,7 @@ def getAllUserPomosDates(request, username) -> JsonResponse:
     return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
                         safe=False, status=200)
 
+
 @csrf_exempt
 @cache_page(60 * 25)
 def getAllUserPomodoros(request, username) -> JsonResponse:
@@ -65,6 +66,19 @@ def getAllUserPomodoros(request, username) -> JsonResponse:
 
     return JsonResponse([pomodoro.serialize() for pomodoro in pomodoros],
                         safe=False, status=200)
+
+
+@csrf_exempt
+@cache_page(60 * 25)
+def getAllPomodoros(request) -> JsonResponse:
+    """Get all pomodoros"""
+    if request.method != 'GET':
+        return JsonResponse({"error": "GET request required."}, status=400)
+
+    pomodoros = Statistics.totalSumPomodorosPerUser()
+
+    return JsonResponse(pomodoros, safe=False, status=200)
+
 
 @cache_page(60 * 25)
 def getSettings(request, token):
