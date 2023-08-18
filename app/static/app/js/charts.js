@@ -219,7 +219,6 @@ async function aggregatedPomosByTag() {
 }
 
 
-// TODO: Refactor this function, only works when response is cached in Redis
 function pomosPerHour() {
   let aggregated = {};
 
