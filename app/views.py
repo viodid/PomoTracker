@@ -105,25 +105,10 @@ def pomodorosList(request):
     })
 
 
-@cache_page(60 * 15)
-def leaderboard(request, period):
+#@cache_page(60 * 15)
+def leaderboard(request):
     """Display the leaderboard page"""
-    slice_pomodoro_users = []
-    for user in User.objects.all():
-        pomodoros = SlicePomodoros(user.pomodoros, user)
-        slice_pomodoro_users.append(pomodoros)
-
-    period_pomos = sorted(slice_pomodoro_users, key=lambda pomos: getattr(pomos, period).count(), reverse=True)
-    pomos = [getattr(pomo, period) for pomo in period_pomos]
-    print(pomos)
-    paginator = Paginator(pomos, 50)
-    pageNumber = request.GET.get('page')
-    pageObj = paginator.get_page(pageNumber)
-
-    return render(request, 'app/leaderboard.html', {
-        'pomos': pageObj,
-        #'sumPomosCount': Statistics.totalSumPomodoros(user_request, period)
-    })
+    return render(request, 'app/leaderboard.html')
 
 
 @login_required

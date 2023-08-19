@@ -27,7 +27,7 @@ def getAllUserTags(request, username) -> JsonResponse:
     return JsonResponse(tagDict, safe=False, status=200)
 
 
-@cache_page(60 * 25)
+#@cache_page(60 * 25)
 def getAllUserPomosDates(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
     if request.method != 'GET':
@@ -48,7 +48,7 @@ def getAllUserPomosDates(request, username) -> JsonResponse:
 
 
 @csrf_exempt
-@cache_page(60 * 25)
+#@cache_page(60 * 25)
 def getAllUserPomodoros(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
     if request.method != 'GET':
@@ -69,7 +69,7 @@ def getAllUserPomodoros(request, username) -> JsonResponse:
 
 
 @csrf_exempt
-@cache_page(60 * 25)
+#@cache_page(60 * 25)
 def getAllPomodoros(request) -> JsonResponse:
     """Get all pomodoros"""
     if request.method != 'GET':
@@ -80,7 +80,7 @@ def getAllPomodoros(request) -> JsonResponse:
     return JsonResponse(pomodoros, safe=False, status=200)
 
 
-@cache_page(60 * 25)
+#@cache_page(60 * 25)
 def getSettings(request, token):
     if request.method != 'GET':
         return JsonResponse({"error": "GET request required."}, status=400)

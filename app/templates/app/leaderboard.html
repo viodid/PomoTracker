@@ -2,57 +2,55 @@
 {% load static %}
 
 {% block title %}
-    Leaderboards
+Leaderboards
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'app/js/leaderboard.js' %}" type="module"></script>
+<script src="{% static 'app/js/leaderboard.js' %}" type="module"></script>
 {% endblock %}
 
 {% block body %}
 <main>
-<div class="leaderboard-main-container">
-    <div class="leaderboard-container">
-        <ul class="header">
-            <li>
-                <a href="{% url 'leaderboard' period='day' %}" id="day-leaderboard">Day</a>
-            </li>
-            <li>
-                <a href="{% url 'leaderboard' period='week' %}" id="week-leaderboard">Week</a>
-            </li>
-            <li>
-                <a href="{% url 'leaderboard' period='month' %}" id="month-leaderboard">Month&#127942;</a>
-            </li>
-            <li>
-                <a href="{% url 'leaderboard' period='year' %}" id="year-leaderboard">Year</a>
-            </li>
-            <li>
-                <a href="{% url 'leaderboard' period='all' %}" id="all-leaderboard">Total</a>
-            </li>
-        </ul>
+    <div class="leaderboard-main-container">
+        <div class="leaderboard-container planSwitch">
+            <input type="radio" name="plan" id="day">
+            <label for="day">Day</label>
+            <input type="radio" name="plan" id="week">
+            <label for="week">Week</label>
+            <input type="radio" name="plan" id="month">
+            <label for="month">Month&#127942;</label>
+            <input type="radio" name="plan" id="year">
+            <label for="year">Year</label>
+            <input type="radio" name="plan" id="total">
+            <label for="total">Total</label>
+            <div class="indicator"></div>
         <ol class="leaderboard-user-container">
+            <!--
             {% for pomodoros in pomos %}
-                {% if pomodoros.count > 0 %}
-                    <li class="user-leaderboard">
-                        <div class="left">
-                            <img src="https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/{{ pomodoros.first.user.settings.image }}" alt="profile picture" class="user-profile-img">
-                            <p><a href="{% url 'profile' username=pomodoros.first.user.username  %}">{{ pomodoros.first.user.username }}</a></p>
-                            <div class="rewards-container">
-                                {% if pomodoros.first.user.rewards.gold %}
-                                    <span class="rewards">&#129351;{{ pomodoros.first.user.rewards.gold }}</span>
-                                {% endif %}
-                                {% if pomodoros.first.user.rewards.silver %}
-                                    <span class="rewards">&#129352;{{ pomodoros.first.user.rewards.silver }}</span>
-                                {% endif %}
-                                {% if pomodoros.first.user.rewards.bronze %}
-                                    <span class="rewards">&#129353;{{ pomodoros.first.user.rewards.bronze }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <p class="right">{{ pomodoros.count }}</p>
-                    </li>
-                {% endif %}
+            {% if pomodoros.count > 0 %}
+            <li class="user-leaderboard">
+                <div class="left">
+                    <img src="https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/{{ pomodoros.first.user.settings.image }}"
+                        alt="profile picture" class="user-profile-img">
+                    <p><a href="{% url 'profile' username=pomodoros.first.user.username  %}">
+                            {{pomodoros.first.user.username }}</a></p>
+                    <div class="rewards-container">
+                        {% if pomodoros.first.user.rewards.gold %}
+                        <span class="rewards">&#129351;{{ pomodoros.first.user.rewards.gold }}</span>
+                        {% endif %}
+                        {% if pomodoros.first.user.rewards.silver %}
+                        <span class="rewards">&#129352;{{ pomodoros.first.user.rewards.silver }}</span>
+                        {% endif %}
+                        {% if pomodoros.first.user.rewards.bronze %}
+                        <span class="rewards">&#129353;{{ pomodoros.first.user.rewards.bronze }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="right">{{ pomodoros.count }}</p>
+            </li>
+            {% endif %}
             {% endfor %}
+            -->
         </ol>
     </div>
     <div class="leaderboard-container explanation">
@@ -63,18 +61,19 @@
         <br>
         <p>The rewards are visible for everyone.</p>
     </div>
-</div>
-<span class="step-links step-links-leaderboard">
-  {% if pomos.has_previous %}
-      <a href="?page=1">&laquo;</a>
-      <a href="?page={{ pomos.previous_page_number }}">previous</a>
-  {% endif %}
-        <span class="current">|  Page {{ pomos.number }} of {{ pomos.paginator.num_pages }}  |</span>
-        {% if pomos.has_next %}
-            <a href="?page={{ pomos.next_page_number }}">next</a>
-            <a href="?page={{ pomos.paginator.num_pages }}">&raquo;</a>
+    <!-- Pagination
+    <span class="step-links step-links-leaderboard">
+        {% if pomos.has_previous %}
+        <a href="?page=1">&laquo;</a>
+        <a href="?page={{ pomos.previous_page_number }}">previous</a>
         {% endif %}
-</span>
-{{ sumPomosCount }}
+        <span class="current">| Page {{ pomos.number }} of {{ pomos.paginator.num_pages }} |</span>
+        {% if pomos.has_next %}
+        <a href="?page={{ pomos.next_page_number }}">next</a>
+        <a href="?page={{ pomos.paginator.num_pages }}">&raquo;</a>
+        {% endif %}
+    </span>
+    -->
+    </div>
 </main>
 {% endblock %}

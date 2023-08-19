@@ -115,7 +115,8 @@ class UserSettings(models.Model):
             'shortBreak': self.shortBreak,
             'focusColor': self.focusColor,
             'breakColor': self.breakColor,
-            'token': self.token
+            'token': self.token,
+            'image': self.image,
         }
 
     def __str__(self):
@@ -126,21 +127,28 @@ class UserSettings(models.Model):
 
 
 class Rewards(models.Model):
+    """Model for rewards"""
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE,
                                 related_name='rewards')
     gold = models.PositiveSmallIntegerField(default=0)
     silver = models.PositiveSmallIntegerField(default=0)
     bronze = models.PositiveSmallIntegerField(default=0)
-    ranks = ArrayField(ArrayField(models.IntegerField()), default=list)
+    ranks = ArrayField(models.PositiveIntegerField(), default=list)
 
     def getAverageRank(self):
+        """Returns the average rank"""
         if len(self.ranks) <= 1:
             return 'No rank'
-        average = 0
-        for i, rank in enumerate(self.ranks):
-            if i != 0:
-                average += self.ranks[i]
-        return ceil(average / (len(self.ranks) - 1))
+        return round(sum(self.ranks) / len(self.ranks), ndigits=2)
+
+    def getRewards(self):
+        """Returns the rewards as a dictionary"""
+        return {
+            'gold': self.gold,
+            'silver': self.silver,
+            'bronze': self.bronze,
+            'rank': self.getAverageRank()
+        }
 
     def __str__(self):
         return f'''{self.user.username}, {self.gold},
@@ -227,5 +235,5 @@ class Statistics:
             totalUser = Statistics.totalSumPomodorosUser(user)
             # Only add the user if there are pomodoros
             if totalUser:
-                totalSum[user.username] = totalUser
+                totalSum[user.username] = {'pomos': totalUser, 'image': user.settings.image, 'rewards': user.rewards.getRewards()}
         return totalSum

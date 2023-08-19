@@ -598,6 +598,71 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 }
 
 /* Leaderboard */
+
+.planSwitch,
+.planSwitch * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.planSwitch {
+  display: block;
+  max-width: 50em;
+  height: 2.5em;
+  position: relative;
+}
+.planSwitch input {
+  display: none;
+}
+.planSwitch label {
+  width: 20%;
+  float: left;
+  text-align: center;
+  line-height: 2.5em;
+  color: var(--text-color);
+  position: relative;
+  z-index: 500;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+.planSwitch input:checked + label {
+  color: #fff;
+  text-shadow: rgba(0,0,0,.1) 0px -1px 2px;
+}
+.indicator {
+  display: block;
+  width: 20%;
+  height: 2.5em;
+  box-shadow: inset var(--yellow-logo) 0 0 .5em;
+  border: 1px solid var(--yellow-logo);
+  border-radius: var(--border-radius);
+  position: absolute;
+  top: 0;
+  left: 40%;
+  z-index: 250;
+  transition: left .2s ease-in-out;
+}
+.planSwitch input:first-of-type:checked ~ .indicator {
+  left: 0;
+}
+.planSwitch input:nth-of-type(2):checked ~ .indicator {
+  left: 20%;
+}
+.planSwitch input:nth-of-type(3):checked ~ .indicator {
+  left: 40%;
+}
+.planSwitch input:nth-of-type(4):checked ~ .indicator {
+  left: 60%;
+}
+.planSwitch input:nth-of-type(5):checked ~ .indicator {
+  left: 80%;
+}
+
 .leaderboard-main-container {
   display: flex;
   flex-wrap: wrap;
