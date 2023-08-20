@@ -1061,6 +1061,14 @@ text-align: center;
     margin-bottom: 50px;
   }
 
+  .block-table .left {
+    margin: 12px 20px 12px 15px;
+  }
+
+  .block-table .right {
+    margin: 9px 10px 9px 70px;
+  }
+
   .pomodoros {
     margin: 30px 0;
   }
@@ -1110,6 +1118,15 @@ text-align: center;
 
   footer .block {
     margin: 20px 0;
+  }
+
+  /* Accounts styles */
+  .account-form {
+    width: 100%;
+  }
+
+  .account-form input {
+    width: 90%;
   }
 }
 

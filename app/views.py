@@ -105,7 +105,7 @@ def pomodorosList(request):
     })
 
 
-#@cache_page(60 * 15)
+@cache_page(60 * 15)
 def leaderboard(request):
     """Display the leaderboard page"""
     return render(request, 'app/leaderboard.html')

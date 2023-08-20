@@ -118,6 +118,7 @@ function displayItemDelay(user, delay, selectedPeriod, data) {
   }, delay * 1000);
 }
 
+
 function deleteLeaderboard() {
   const leaderboardContainer = document.querySelector('.leaderboard-user-container');
   while (leaderboardContainer.firstChild) {

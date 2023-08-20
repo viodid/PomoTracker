@@ -198,9 +198,10 @@ async function drawPieChart1() {
         },
         is3D: true,
         sliceVisibilityThreshold: 0.01,
+        pieSliceText: 'label',
         tooltip: {
           showColorCode: true,
-          ignoreBounds: false,
+          ignoreBounds: true,
         },
       }
 
