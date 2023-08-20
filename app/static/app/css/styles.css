@@ -612,8 +612,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 }
 .planSwitch {
   display: block;
-  max-width: 50em;
-  height: 2.5em;
   position: relative;
 }
 .planSwitch input {
@@ -674,8 +672,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 .leaderboard-container {
   width: 47%;
   margin: 40px 0 20px 0;
-  background-color: var(--primary-color);
-  box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
 }
 
@@ -686,6 +682,8 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 
 .explanation {
   padding: 30px;
+  background: var(--primary-color);
+  box-shadow: var(--box-shadow);
 }
 
 .leaderboard-container .title {
@@ -693,13 +691,12 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   margin-bottom: 5px;
 }
 
-.leaderboard-container .header {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 2px solid var(--border-color);
-  border-top-left-radius: var(--border-radius);
-  border-top-right-radius: var(--border-radius);
-  background-color: var(--softest-color);
+.leaderboard-container-header {
+    background-color: var(--primary-color);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    width: 100%;
+    height: 48px;
 }
 
 .leaderboard-container li {
@@ -718,6 +715,7 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 }
 
 .leaderboard-user-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 1px;
@@ -738,7 +736,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 0.5s, transform 0.5s;
-  z-index: -1;
 }
 
 .user-leaderboard .left {
@@ -1070,10 +1067,15 @@ text-align: center;
 
   .leaderboard-main-container {
     flex-direction: column;
+    font-size: inherit;
   }
 
   .leaderboard-container {
     width: 100%;
+  }
+
+  .leaderboard-container-header {
+    height: 40px;
   }
 
   /* Settings styles */
