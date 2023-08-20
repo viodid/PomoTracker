@@ -1,22 +1,5 @@
 import { theme } from './user_settings.js';
 
-let selectedPeriod = 'year';
-
-// Add event listener to the period buttons
-const radioInputs = document.querySelectorAll('input[type="radio"][name="plan"]');
-radioInputs.forEach(radioInput => {
-    radioInput.addEventListener('change', function() {
-        if (this.checked) {
-            console.log("Radio option selected:", this.id);
-            selectedPeriod = this.id;
-        }
-    });
-});
-
-// TODO:
-// 1. Change JSON access to the new format i.e data[user]['rewards']
-// 2. Add event listener to the period buttons
-
 // Fetch the leaderboard data
 const data = fetch('/api/leaderboard').
   then((response) => {
@@ -24,8 +7,38 @@ const data = fetch('/api/leaderboard').
     return response.json();
   }
 ).then((data) => {
-  console.log(data)
-  for (const user of Object.keys(data)) {
+  return data;
+});
+
+// Add event listener to the period buttons
+const radioInputs = document.querySelectorAll('input[type="radio"][name="plan"]');
+radioInputs.forEach(radioInput => {
+    radioInput.addEventListener('change', function() {
+        if (this.checked) {
+            console.log("Radio option selected:", this.id);
+            let selectedPeriod = this.id;
+            displayLeaderboard(selectedPeriod, data);
+
+        }
+    });
+});
+
+
+function displayLeaderboard(selectedPeriod, data) {
+  deleteLeaderboard();
+  data.then((data) => {
+    console.log(data);
+    for (const user of Object.keys(data)) {
+      const delay = Object.keys(data).indexOf(user) * 0.1;
+      displayItemDelay(user, delay, selectedPeriod, data);
+      }
+    }
+  );
+}
+
+
+function displayItemDelay(user, delay, selectedPeriod, data) {
+  setTimeout(() => {
     const rewards = data[user]['rewards'];
     const image = data[user]['image'];
     const count = getCountPeriod(data[user]['pomos'], selectedPeriod);
@@ -80,40 +93,52 @@ const data = fetch('/api/leaderboard').
 
       // Append the created elements to the desired container on your page
       // For example:
-      const leaderboardContainer = document.querySelector('.leaderboard-container');
+      const leaderboardContainer = document.querySelector('.leaderboard-user-container');
       leaderboardContainer.appendChild(userLeaderboard);
+
+      // Set a delay to animate the leaderboard
+      setTimeout(() => {
+        userLeaderboard.style.opacity = 1;
+        userLeaderboard.style.transform = 'translateY(0)';
+      }, 100);
     }
+  }, delay * 1000);
+}
+
+function deleteLeaderboard() {
+  const leaderboardContainer = document.querySelector('.leaderboard-user-container');
+  while (leaderboardContainer.firstChild) {
+    leaderboardContainer.removeChild(leaderboardContainer.firstChild);
   }
-});
+}
+
 
 function getCountPeriod(pomodoros, period) {
   const currentDate = new Date();
-    const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+  const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
-    const startDate = new Date(today); // Default to today
-    if (period === 'week') {
-        startDate.setDate(today.getDate() - today.getDay()); // Start of the week (Sunday)
-    } else if (period === 'month') {
-        startDate.setDate(1); // Start of the month
-    } else if (period === 'year') {
-        startDate.setMonth(0, 1); // Start of the year
+  const startDate = new Date(today); // Default to today
+  if (period === 'week') {
+    startDate.setDate(today.getDate() - today.getDay()); // Start of the week (Sunday)
+  } else if (period === 'month') {
+    startDate.setDate(1); // Start of the month
+  } else if (period === 'year') {
+    startDate.setMonth(0, 1); // Start of the year
+  }
+
+  const endDate = new Date(today);
+  if (period === 'all') {
+    endDate.setFullYear(2100, 0, 1); // Far future date to include all data
+  }
+
+  let totalPomodoros = 0;
+  for (const date in pomodoros) {
+    if (pomodoros.hasOwnProperty(date)) {
+      const currentDate = new Date(date);
+      if (currentDate >= startDate && currentDate < endDate) {
+        totalPomodoros += pomodoros[date];
+      }
     }
-
-    const endDate = new Date(today);
-    if (period === 'all') {
-        endDate.setFullYear(2100, 0, 1); // Far future date to include all data
-    }
-
-    let totalPomodoros = 0;
-    for (const date in pomodoros) {
-        if (pomodoros.hasOwnProperty(date)) {
-            const currentDate = new Date(date);
-            if (currentDate >= startDate && currentDate < endDate) {
-                totalPomodoros += pomodoros[date];
-            }
-        }
-    }
-    console.log(totalPomodoros);
-
-    return totalPomodoros;
+  }
+  return totalPomodoros;
 }

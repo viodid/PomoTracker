@@ -317,7 +317,9 @@ function parseDate(date) {
 
 
 async function loadCacheData() {
-  google.charts.setOnLoadCallback(drawPieChart1);
+  if (document.getElementById('pie-chart')) {
+    google.charts.setOnLoadCallback(drawPieChart1);
+  }
   fetch(`/api/${path_username}/allpomodoros`)
   .then((response) => {
     return response.json();

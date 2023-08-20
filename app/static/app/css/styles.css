@@ -720,18 +720,25 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 .leaderboard-user-container {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 1px;
+  border-radius: var(--border-radius);
 }
 
 .leaderboard-user-container li {
   padding: 12px 20px;
-  border-bottom: 1px solid var(--border-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--secondary-color);
 }
 
 .user-leaderboard {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s, transform 0.5s;
+  z-index: -1;
 }
 
 .user-leaderboard .left {
