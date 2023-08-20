@@ -2,110 +2,112 @@
 {% load static %}
 
 {% block title %}
-    {{ userProfile.username }}
+{{ userProfile.username }}
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'app/css/charts.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/charts.css' %}">
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'app/js/profile.js' %}" type="module"></script>
-    {% if not display %}
-        <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="{% static 'app/js/charts.js' %}" type="module"></script>
-    {% endif %}
+<script src="{% static 'app/js/profile.js' %}" type="module"></script>
+{% if not display %}
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="{% static 'app/js/charts.js' %}" type="module"></script>
+{% endif %}
 {% endblock %}
 
 {% block content %}
 {% endblock %}
 
 {% block body %}
-    <main>
-        <div class="user-profile">
-            <div class="header-profile">
-                <div class="left">
-                    <img src="https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/{{ userProfile.settings.image }}" alt="Profile image" class="user-profile-img">
-                    <p class="title">{{ userProfile.username }}</p>
-                    {% if userProfile.rewards.gold %}
-                        <span class="rewards">&#129351;{{ userProfile.rewards.gold }}</span>
-                    {% endif %}
-                    {% if userProfile.rewards.silver %}
-                        <span class="rewards">&#129352;{{ userProfile.rewards.silver }}</span>
-                    {% endif %}
-                    {% if userProfile.rewards.bronze %}
-                        <span class="rewards">&#129353;{{ userProfile.rewards.bronze }}</span>
-                    {% endif %}
-                </div>
-                <div class="right">
-                    <p title="Average Rank, i.e: (month's position / number of months) " id="first"><span>&#128310;</span>{{ userProfile.rewards.getAverageRank }}</p>
-                    <p title="Average Pomodoros per day"><span>&#128310;</span>{{ averagePomos }}</p>
-                </div>
+<main>
+    <div class="user-profile">
+        <div class="header-profile">
+            <div class="left">
+                <img src="https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/{{ userProfile.settings.image }}"
+                    alt="Profile image" class="user-profile-img">
+                <p class="title">{{ userProfile.username }}</p>
+                {% if userProfile.rewards.gold %}
+                <span class="rewards">&#129351;{{ userProfile.rewards.gold }}</span>
+                {% endif %}
+                {% if userProfile.rewards.silver %}
+                <span class="rewards">&#129352;{{ userProfile.rewards.silver }}</span>
+                {% endif %}
+                {% if userProfile.rewards.bronze %}
+                <span class="rewards">&#129353;{{ userProfile.rewards.bronze }}</span>
+                {% endif %}
             </div>
-            {% if display %}
-                <div class="profile-container">
-                    <div class="settings-profile">
-                        <h2>{{ userProfile.username | title }} Settings</h2>
-                        <form method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ form }}
-                            <button type="submit">Save</button>
-                        </form>
-                    </div>
-                    <div class="block-table pomodoros" id="tags-settings">
-                        <ul class="title">
-                            <li>Tag</li>
-                            <li>Total</li>
-                            <li>Action</li>
-                        </ul>
-                        <div class="body">
-                            {% for tag in page_obj %}
-                                {% if forloop.last %}
-                                    <div class="cell last" id="tag">
-                                        <input type="text" id="tag-id" style="display: none;" value="{{ tag.0 }}">
-                                        <span class="center" id="tag-display">{{ tag.0 }}</span>
-                                        <input type="text" class="text-input" id="text-input"
-                                               placeholder="New tag" style="display: none;" autocomplete="on">
-                                        <span class="center">{{ tag.1 }}</span>
-                                        <div class="center">
-                                            <span id="edit-tag" class="highlight" style="display: initial">Edit</span>
-                                            <span id="save-tag" class="highlight" style="display: none">Save</span>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="cell" id="tag">
-                                        <input type="text" id="tag-id" style="display: none;" value="{{ tag.0 }}">
-                                        <span class="center" id="tag-display">{{ tag.0 }}</span>
-                                        <input type="text" class="text-input" id="text-input"
-                                               placeholder="New tag" style="display: none;" autocomplete="on">
-                                        <span class="center">{{ tag.1 }}</span>
-                                        <div class="center">
-                                            <span id="edit-tag" class="highlight" style="display: initial">Edit</span>
-                                            <span id="save-tag" class="highlight" style="display: none">Save</span>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+            <div class="right">
+                <p title="Average Rank, i.e: (month's position / number of months) " id="first"><span>&#128310;</span>{{
+                    userProfile.rewards.getAverageRank }}</p>
+                <p title="Average Pomodoros per day"><span>&#128310;</span>{{ averagePomos }}</p>
+            </div>
+        </div>
+        {% if display %}
+        <div class="profile-container">
+            <div class="settings-profile">
+                <h2>{{ userProfile.username | title }} Settings</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+            <div class="block-table pomodoros" id="tags-settings">
+                <ul class="title">
+                    <li>Tag</li>
+                    <li>Total</li>
+                    <li>Action</li>
+                </ul>
+                <div class="body">
+                    {% for tag in page_obj %}
+                    {% if forloop.last %}
+                    <div class="cell last" id="tag">
+                        <input type="text" id="tag-id" style="display: none;" value="{{ tag.0 }}">
+                        <span class="center" id="tag-display">{{ tag.0 }}</span>
+                        <input type="text" class="text-input" id="text-input" placeholder="New tag"
+                            style="display: none;" autocomplete="on">
+                        <span class="center">{{ tag.1 }}</span>
+                        <div class="center">
+                            <span id="edit-tag" class="highlight" style="display: initial">Edit</span>
+                            <span id="save-tag" class="highlight" style="display: none">Save</span>
                         </div>
                     </div>
-                </div>
-                <span class="step-links">
-                      {% if page_obj.has_previous %}
-                          <a href="?page=1">&laquo;</a>
-                          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                      {% endif %}
-                    <span class="current">|  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}  |</span>
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                    {% else %}
+                    <div class="cell" id="tag">
+                        <input type="text" id="tag-id" style="display: none;" value="{{ tag.0 }}">
+                        <span class="center" id="tag-display">{{ tag.0 }}</span>
+                        <input type="text" class="text-input" id="text-input" placeholder="New tag"
+                            style="display: none;" autocomplete="on">
+                        <span class="center">{{ tag.1 }}</span>
+                        <div class="center">
+                            <span id="edit-tag" class="highlight" style="display: initial">Edit</span>
+                            <span id="save-tag" class="highlight" style="display: none">Save</span>
+                        </div>
+                    </div>
                     {% endif %}
-                </span>
-                {% else %}
-                <div class="first-char-container">
-                    <div id="bar-chart-first" class="chart"></div>
-                    <div id="bar-chart-second" class="chart"></div>
+                    {% endfor %}
                 </div>
-            {% endif %}
+            </div>
         </div>
-    </main>
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo;</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">| Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        </span>
+        {% else %}
+        <div class="first-char-container">
+            <div id="bar-chart-first" class="chart"></div>
+            <div id="bar-chart-second" class="chart"></div>
+        </div>
+        {% endif %}
+    </div>
+</main>
 {% endblock %}

@@ -13,10 +13,11 @@ radioInputs.forEach(radioInput => {
     });
 });
 
-// Fetch the leaderboard data
 // TODO:
 // 1. Change JSON access to the new format i.e data[user]['rewards']
 // 2. Add event listener to the period buttons
+
+// Fetch the leaderboard data
 const data = fetch('/api/leaderboard').
   then((response) => {
     if (response.status !== 200) return null;
@@ -25,7 +26,8 @@ const data = fetch('/api/leaderboard').
 ).then((data) => {
   console.log(data)
   for (const user of Object.keys(data)) {
-    console.log(data[user]);
+    const rewards = data[user]['rewards'];
+    const image = data[user]['image'];
     const count = getCountPeriod(data[user]['pomos'], selectedPeriod);
     if (count > 0) {
       const userLeaderboard = document.createElement('li');
@@ -35,7 +37,7 @@ const data = fetch('/api/leaderboard').
       leftContainer.classList.add('left');
 
       const profileImg = document.createElement('img');
-      profileImg.src = `https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/${user.image}`;
+      profileImg.src = `https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/${image}`;
       profileImg.alt = 'profile picture';
       profileImg.classList.add('user-profile-img');
       leftContainer.appendChild(profileImg);
@@ -49,22 +51,22 @@ const data = fetch('/api/leaderboard').
 
       const rewardsContainer = document.createElement('div');
       rewardsContainer.classList.add('rewards-container');
-      if (user.rewards.gold) {
+      if (rewards.gold) {
         const goldSpan = document.createElement('span');
         goldSpan.classList.add('rewards');
-        goldSpan.textContent = `🥇${user.rewards.gold}`;
+        goldSpan.textContent = `🥇${rewards.gold}`;
         rewardsContainer.appendChild(goldSpan);
       }
-      if (user.rewards.silver) {
+      if (rewards.silver) {
         const silverSpan = document.createElement('span');
         silverSpan.classList.add('rewards');
-        silverSpan.textContent = `🥈${user.rewards.silver}`;
+        silverSpan.textContent = `🥈${rewards.silver}`;
         rewardsContainer.appendChild(silverSpan);
       }
-      if (user.rewards.bronze) {
+      if (rewards.bronze) {
         const bronzeSpan = document.createElement('span');
         bronzeSpan.classList.add('rewards');
-        bronzeSpan.textContent = `🥉${user.rewards.bronze}`;
+        bronzeSpan.textContent = `🥉${rewards.bronze}`;
         rewardsContainer.appendChild(bronzeSpan);
       }
       leftContainer.appendChild(rewardsContainer);
