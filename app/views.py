@@ -105,23 +105,24 @@ def pomodorosList(request):
     })
 
 
-@cache_page(60 * 15)
+@cache_page(60 * 25)
 def leaderboard(request):
     """Display the leaderboard page"""
     return render(request, 'app/leaderboard.html')
 
 
 @login_required
-@cache_page(60 * 3600)
 def charts(request):
     """Display the charts page"""
     return render(request, 'app/charts.html')
 
 
+@cache_page(60 * 2500)
 def privacy(request):
     return render(request, 'app/privacy.html')
 
 
+@cache_page(60 * 2500)
 def terms(request):
     return render(request, 'app/terms.html')
 
@@ -131,6 +132,7 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 
+@cache_page(60 * 2500)
 def apiReference(request):
     return render(request, 'app/api.html')
 

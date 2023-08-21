@@ -48,7 +48,7 @@ def getAllUserPomosDates(request, username) -> JsonResponse:
 
 
 @csrf_exempt
-@cache_page(60 * 25)
+#@cache_page(60 * 25)
 def getAllUserPomodoros(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
     if request.method != 'GET':

@@ -16,10 +16,12 @@ class Pomodoro(models.Model):
                             related_name='pomodoros')
 
     def serialize(self):
+        timezone.activate(self.user.settings.timezone)
+        print(timezone.localtime(self.datetime))
         return {
             'id': self.id,
             'user': self.user.username,
-            'created_at': self.datetime,
+            'created_at': timezone.localtime(self.datetime),
             'tag': self.tag.tag
         }
 

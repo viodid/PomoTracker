@@ -79,11 +79,11 @@
                 <p class="left"><a href="{% url 'pomodoros' %}">Today's pomodoros</a></p>
                 <p class="right" style="border-radius: 8px;background: var(--text-color);color: var(--primary-color);">
                 <a href="{% url 'profile' username=pomodoros.user %}">
-                    Current timezone: {{pomodoros.user.settings.timezone}}</a></p>
+                    Current timezone: {{ user.settings.timezone }}</a></p>
             </div>
 
             {% load tz %}
-            {% timezone pomodoros.user.settings.timezone %}
+            {% timezone user.settings.timezone %}
 
             {% for pomodoro in pomodoros.day %}
             {% if forloop.last %}

@@ -273,16 +273,18 @@ function pomosPerDay() {
   let aggregated = {};
 
   const pomos = cacheDataPomos;
+  console.log(pomos);
 
   if (!pomos.length) {
     return [0];
   }
 
   const keys = Object.keys(pomos);
-  let firstDate = new Date();
-  firstDate = parseDate(firstDate);
-  let lastDate = new Date(pomos[pomos.length - 1]["created_at"]);
-  lastDate = parseDate(lastDate);
+  let firstDate = pomos[0]["created_at"];
+  firstDate = formatDate(firstDate);
+  let lastDate = pomos[pomos.length - 1]["created_at"];
+  lastDate = formatDate(lastDate);
+  console.log(lastDate, pomos[pomos.length - 1]["created_at"]);
 
   // initialize the days
   while (firstDate > lastDate) {
@@ -313,6 +315,17 @@ function parseDate(date) {
   const year = date.getFullYear();
   let month = date.getMonth() + 1; // Month is 0-indexed
   let day = date.getDate();
+  return `${year}-${month}-${day}`;
+}
+
+function formatDate(inputDate) {
+  const parts = inputDate.split('T')[0].split('-');
+  const year = parts[0];
+  const month = parts[1];
+  const day = parts[2];
+
+  console.log(year, month, day);
+
   return `${year}-${month}-${day}`;
 }
 
