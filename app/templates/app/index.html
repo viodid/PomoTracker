@@ -74,6 +74,8 @@
     </div>
     {% if user.is_authenticated %}
     <div class="second">
+        {% load tz %}
+        {% timezone user.settings.timezone %}
         <div class="block-table" id="todays-index">
             <div class="title cell">
                 <p class="left"><a href="{% url 'pomodoros' %}">Today's pomodoros</a></p>
@@ -81,10 +83,6 @@
                 <a href="{% url 'profile' username=pomodoros.user %}">
                     Current timezone: {{ user.settings.timezone }}</a></p>
             </div>
-
-            {% load tz %}
-            {% timezone user.settings.timezone %}
-
             {% for pomodoro in pomodoros.day %}
             {% if forloop.last %}
             <div class="cell last">
@@ -103,7 +101,6 @@
                 <span class="left"></span>
             </div>
             {% endfor %}
-            {% endtimezone %}
         </div>
         <div class="block-table">
             <div class="today cell">
@@ -123,6 +120,7 @@
                 <span class="right">{{ pomodoros.year.count }}</span>
             </div>
         </div>
+        {% endtimezone %}
     </div>
     <div class="flex-third">
         <div id="loading-container">

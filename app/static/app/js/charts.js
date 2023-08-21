@@ -234,7 +234,6 @@ function pomosPerHour() {
 
   for (let i = 0; i < pomos.length; i++) {
 
-    const current = new Date();
     const pomo = pomos[i];
     const hour = parseInt(pomo["created_at"].split('T')[1].split(':')[0]);
 
