@@ -269,37 +269,15 @@ function fontColor() {
   }
 }
 
+
 function pomosPerDay() {
   let aggregated = {};
-
   const pomos = cacheDataPomos;
-  console.log(pomos);
-
-  if (!pomos.length) {
-    return [0];
-  }
-
-  const keys = Object.keys(pomos);
-  let firstDate = pomos[0]["created_at"];
-  firstDate = formatDate(firstDate);
-  let lastDate = pomos[pomos.length - 1]["created_at"];
-  lastDate = formatDate(lastDate);
-  console.log(lastDate, pomos[pomos.length - 1]["created_at"]);
-
-  // initialize the days
-  while (firstDate > lastDate) {
-    aggregated[firstDate] = 0;
-    firstDate = new Date(firstDate);
-    firstDate.setDate(firstDate.getDate() - 1);
-    firstDate = parseDate(firstDate);
-  }
 
 
   for (let i = 0; i < pomos.length; i++) {
-
-    let date = new Date(Date.parse(pomos[i]["created_at"]));
-    date = parseDate(date);
-    const pomo = pomos[i];
+    let date = new Date(convertDateString(pomos[i]["created_at"]));
+    date = parseDate(date); // Format the date to "YYYY-MM-DD"
 
     if (aggregated[date]) {
       aggregated[date] += 1;
@@ -311,20 +289,22 @@ function pomosPerDay() {
   return aggregateToChart(aggregated, true);
 }
 
-function parseDate(date) {
-  const year = date.getFullYear();
-  let month = date.getMonth() + 1; // Month is 0-indexed
-  let day = date.getDate();
-  return `${year}-${month}-${day}`;
+
+function convertDateString(dateString) {
+  // Split the date string into parts
+  const parts = dateString.split(/[-T:+]/);
+
+  // Create a new Date object using the parts
+  const date = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]));
+
+  return date;
 }
 
-function formatDate(inputDate) {
-  const parts = inputDate.split('T')[0].split('-');
-  const year = parts[0];
-  const month = parts[1];
-  const day = parts[2];
-
-  console.log(year, month, day);
+function parseDate(inputDate) {
+  const date = new Date(inputDate);
+  const year = date.getUTCFullYear();
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+  const day = date.getUTCDate().toString().padStart(2, '0');
 
   return `${year}-${month}-${day}`;
 }

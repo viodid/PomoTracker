@@ -31,8 +31,9 @@ class ProfileForm(forms.Form):
     stopSound = forms.ChoiceField(required=False, label='Break sound',
                                     choices=[('#whoosh', 'Whoosh'),
                                     ('#minion', 'Minion')])
+
     timezone = forms.ChoiceField(
-        choices=[(tz, tz) for tz in pytz.all_timezones],
+        choices = [(tz, tz) for tz in pytz.common_timezones],
         required=False,
         label='Timezone',
         initial='UTC',
