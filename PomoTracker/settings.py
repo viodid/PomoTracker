@@ -16,7 +16,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 print('Base dir: ', BASE_DIR)
@@ -29,7 +28,7 @@ print('Debug: ', DEBUG)
 SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True if not DEBUG else False
+SECURE_SSL_REDIRECT = False if DEBUG else True
 SECURE_HSTS_SECONDS = 60
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
@@ -37,8 +36,8 @@ SECURE_HSTS_PRELOAD = True
 
 ALLOWED_HOSTS = [
     'pomotracker.app',
-    '127.0.0.1',
-    '192.168.1.133'
+    #'127.0.0.1',
+    #'192.168.1.133'
 ]
 
 
@@ -139,9 +138,9 @@ WSGI_APPLICATION = 'PomoTracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME"),
+        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_PRO"),
         'USER': os.environ.get("DB_USER"),
-        'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST_PROD"),
+        'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST_PRO"),
         'PORT': os.environ.get("DB_PORT"),
         'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
