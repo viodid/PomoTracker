@@ -20,7 +20,6 @@ toogleNotes.forEach((btn) => {
 });
 
 document.querySelector('#start').addEventListener('click', () => {
-  console.log(settings);
   runTimer();
 });
 

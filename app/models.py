@@ -17,7 +17,6 @@ class Pomodoro(models.Model):
 
     def serialize(self):
         timezone.activate(self.user.settings.timezone)
-        print(timezone.localtime(self.datetime))
         return {
             'id': self.id,
             'user': self.user.username,

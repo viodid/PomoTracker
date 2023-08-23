@@ -151,8 +151,6 @@ function getCountPeriod(pomodoros, period) {
 
   endDate.setDate(today.getDate() + 1);
 
-  console.log('startDate', startDate, 'endDate', endDate);
-
   let totalPomodoros = 0;
   for (const date in pomodoros) {
     if (pomodoros.hasOwnProperty(date)) {
