@@ -37,7 +37,7 @@ print('Debug: ', DEBUG, '\nDJANGO_SECURE_SSL_REDIRECT: ', SECURE_SSL_REDIRECT)
 ALLOWED_HOSTS = [
     'pomotracker.app',
     '127.0.0.1',
-    #'192.168.1.133'
+    '192.168.1.133'
 ]
 
 

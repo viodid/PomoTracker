@@ -748,12 +748,23 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   margin-bottom: 0;
 }
 
-.user-leaderboard .left p {
-  margin-right: 5px;
+.user-leaderboard .right {
+  display: flex;
+  align-items: center;
+}
+
+.user-leaderboard .right img {
+  margin-right: 7px;
+  width: 28px;
+}
+
+.user-leaderboard .right span {
+  min-width: 40px;
+  text-align: right;
 }
 
 .rewards {
-  font-size: 0.7em;
+  font-size: 15px;
 }
 
 .step-links-leaderboard {
@@ -1086,6 +1097,14 @@ text-align: center;
     height: 40px;
   }
 
+  .user-leaderboard .left img {
+    margin-right: 10px;
+  }
+
+  .user-leaderboard .right span {
+    min-width: inherit;
+    text-align: center;
+  }
   /* Settings styles */
   .header-profile .right {
     display: none;

@@ -1,5 +1,7 @@
 import { theme } from './user_settings.js';
 
+const ptImgGlobal = 'https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/pt_sticker.png';
+
 // Fetch the leaderboard data
 const data = fetch('/api/leaderboard').
   then((response) => {
@@ -95,21 +97,35 @@ function displayItemDelay(user, delay, selectedPeriod, data) {
         bronzeSpan.textContent = `🥉${rewards.bronze}`;
         rewardsContainer.appendChild(bronzeSpan);
       }
-      leftContainer.appendChild(rewardsContainer);
 
+      const rankContainer = document.createElement('div');
+      rankContainer.classList.add('rank-container');
+      const rankSpan = document.createElement('span');
+      rankSpan.textContent = `#${rewards.rank}`;
+      rankSpan.title = 'PomoTracker Rank';
+      rankContainer.appendChild(rankSpan);
+
+      leftContainer.appendChild(rankContainer);
+      leftContainer.appendChild(rewardsContainer);
       userLeaderboard.appendChild(leftContainer);
 
-      const rightParagraph = document.createElement('p');
+      const rightParagraph = document.createElement('div');
       rightParagraph.classList.add('right');
-      rightParagraph.textContent = count;
+      rightParagraph.title = 'Total Count';
+      const countSpan = document.createElement('span');
+      countSpan.textContent = count;
+      const ptImg = document.createElement('img');
+      ptImg.src = ptImgGlobal;
+      ptImg.alt = 'rank';
+      rightParagraph.appendChild(ptImg);
+      rightParagraph.appendChild(countSpan);
       userLeaderboard.appendChild(rightParagraph);
 
-      // Append the created elements to the desired container on your page
-      // For example:
+
       const leaderboardContainer = document.querySelector('.leaderboard-user-container');
       leaderboardContainer.appendChild(userLeaderboard);
 
-      // Set a delay to animate the leaderboard
+      // Delay to animate the leaderboard
       setTimeout(() => {
         userLeaderboard.style.opacity = 1;
         userLeaderboard.style.transform = 'translateY(0)';
