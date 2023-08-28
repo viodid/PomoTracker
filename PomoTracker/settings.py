@@ -35,7 +35,7 @@ print('Debug: ', DEBUG, '\nDJANGO_SECURE_SSL_REDIRECT: ', SECURE_SSL_REDIRECT)
 
 
 ALLOWED_HOSTS = [
-    'pomotracker.app',
+    '.pomotracker.app',
     '127.0.0.1',
     '192.168.1.133'
 ]
@@ -143,7 +143,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_PRO"),
         'USER': os.environ.get("DB_USER"),
-        'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST_PRO"),
+        'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST"), # TODO: change to DB_HOST_PRO
         'PORT': os.environ.get("DB_PORT"),
         'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
@@ -192,10 +192,18 @@ USE_I18N = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = 'static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+# STATIC_URL is the base URL prefix for generating URLs to your static
+# files in your templates and code.
+# STATIC_ROOT is the absolute filesystem path where collected static files
+# are stored for production serving.
+
+STATIC_ROOT = "/var/www/pomotracker/staticfiles/"
+STATIC_URL = '/static/'
+
+# https://docs.djangoproject.com/en/4.2/ref/settings/#media-root
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = 'media/'
 
 
 # Default primary key field type
