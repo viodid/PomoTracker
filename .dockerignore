@@ -1,0 +1,6 @@
+.deepsource.toml
+.git*
+Dockerfile
+Pipfile*
+*workspace
+dd

@@ -1,6 +1,6 @@
 import { theme } from './user_settings.js';
 
-const ptImgGlobal = 'https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/pt_sticker.png';
+const ptImgGlobal = 'https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/default.png';
 
 // Fetch the leaderboard data
 const data = fetch('/api/leaderboard').

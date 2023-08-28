@@ -13,9 +13,9 @@ pipfile = "*"
 gunicorn = "*"
 boto3 = "*"
 redis = "*"
+python-dotenv = "*"
 
 [dev-packages]
-python-dotenv = "*"
 
 [requires]
 python_version = "3.11"

@@ -748,19 +748,23 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   margin-bottom: 0;
 }
 
+.user-leaderboard .left .rank-container {
+  color: var(--yellow-logo);
+}
+
 .user-leaderboard .right {
   display: flex;
   align-items: center;
 }
 
 .user-leaderboard .right img {
-  margin-right: 7px;
-  width: 28px;
+  margin-right: 9px;
+  width: 27px;
 }
 
 .user-leaderboard .right span {
   min-width: 40px;
-  text-align: right;
+  text-align: left;
 }
 
 .rewards {
@@ -1099,6 +1103,10 @@ text-align: center;
 
   .user-leaderboard .left img {
     margin-right: 10px;
+  }
+
+  .user-leaderboard .left .rank-container {
+    display: none;
   }
 
   .user-leaderboard .right span {
