@@ -1,47 +1,3 @@
-# # Use an official Python image as the base
-# FROM python:3.11-bullseye
-
-# # Set environment variables for Python
-# ENV PYTHONDONTWRITEBYTECODE 1
-# ENV PYTHONUNBUFFERED 1
-
-# # Create and set the working directory
-# WORKDIR /app
-
-# # Copy and install Python dependencies
-# COPY requirements.txt /app/
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# # Copy the rest of the application code
-# COPY . /app/
-
-# # Collect static files and set the owner to www-data
-# RUN python manage.py collectstatic --noinput
-
-# # Migrate the database
-# RUN python manage.py migrate
-
-# # Install NGINX
-# RUN apt-get update && apt-get install -y nginx
-
-# # Copy the custom NGINX configuration
-# COPY config/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# # Create the Nginx log folder
-# RUN mkdir -p /var/log/nginx/pomotracker && \
-#     touch /var/log/nginx/pomotracker/access.log && \
-#     touch /var/log/nginx/pomotracker/error.log && \
-#     chown -R www-data /var/log/nginx/pomotracker && \
-#     chown -R www-data /var/lib/nginx && \
-#     chown -R www-data /var/www/pomotracker && \
-#     chown www-data /etc/nginx/conf.d/default.conf
-
-# # Start Gunicorn and NGINX in the foreground
-# CMD gunicorn PomoTracker.wsgi:application --bind 0.0.0.0:8000
-
-
-
-
 ###########
 # BUILDER #
 ###########
@@ -86,8 +42,8 @@ RUN addgroup --system app && adduser --system --group app
 
 # create the appropriate directories
 ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
+ENV APP_HOME=/home/app/pomotracker
+RUN mkdir $APP_HOME && mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
 # install dependencies
@@ -101,7 +57,7 @@ RUN pip install --no-cache /wheels/*
 COPY . $APP_HOME
 
 # Migrate the database
-RUN python manage.py migrate
+RUN python manage.py migrate --noinput && python manage.py collectstatic --noinput --clear
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME

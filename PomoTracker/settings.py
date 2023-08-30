@@ -193,9 +193,8 @@ USE_I18N = True
 # STATIC_ROOT is the absolute filesystem path where collected static files
 # are stored for production serving.
 
-#STATIC_ROOT = "/var/www/pomotracker/staticfiles/"
-STATIC_ROOT = BASE_DIR / 'static'
-STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#media-root
 

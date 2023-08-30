@@ -11,11 +11,13 @@ services:
 
   app:
     build: .
-    command: gunicorn PomoTracker.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn PomoTracker.wsgi:application --bind 0.0.0.0:80 --timeout 600 --workers 3
     env_file:
       - ./PomoTracker/.env
+    volumes:
+      - static_volume:/home/app/pomotracker/staticfiles
     expose:
-      - 8000
+      - 80
     networks:
       - pomotracker-network
     depends_on:
@@ -25,6 +27,8 @@ services:
     build: ./config/nginx
     ports:
       - 1337:80
+    volumes:
+      - static_volume:/home/app/pomotracker/staticfiles
     depends_on:
       - app
     networks:
@@ -33,3 +37,6 @@ services:
 networks:
   pomotracker-network:
     driver: bridge
+
+volumes:
+  static_volume:
