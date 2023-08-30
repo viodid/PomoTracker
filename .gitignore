@@ -141,6 +141,7 @@ cython_debug/
 
 .es*
 .vscode/
+*workspace
 node_modules/
 *.json
 package*

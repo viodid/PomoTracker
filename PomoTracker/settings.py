@@ -23,22 +23,18 @@ print('Base dir: ', BASE_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-DEBUG = os.environ.get('DJANGO_DEBUG', False)
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', False)
-SECURE_HSTS_SECONDS = 60
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_PRELOAD = False
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-print('Debug: ', DEBUG, '\nDJANGO_SECURE_SSL_REDIRECT: ', SECURE_SSL_REDIRECT)
-
-
-ALLOWED_HOSTS = [
-    '.pomotracker.app',
-    '127.0.0.1',
-    '192.168.1.133'
-]
+SECURE_HSTS_SECONDS = 3600
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+DEBUG_PROPAGATE_EXCEPTIONS=bool(os.environ.get("DJANGO_DEBUG_PROPAGATE_EXCEPTIONS", False))
+SERVER_EMAIL="webmaster@pomotracker.app"
+print('DEBUG: ', DEBUG, '\nDJANGO_SECURE_SSL_REDIRECT: ', SECURE_SSL_REDIRECT, '\nDEBUG_PROPAGATE_EXCEPTIONS: ', DEBUG_PROPAGATE_EXCEPTIONS)
 
 
 # Application definition
@@ -197,8 +193,9 @@ USE_I18N = True
 # STATIC_ROOT is the absolute filesystem path where collected static files
 # are stored for production serving.
 
-STATIC_ROOT = "/var/www/pomotracker/staticfiles/"
-STATIC_URL = '/static/'
+#STATIC_ROOT = "/var/www/pomotracker/staticfiles/"
+STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = 'static/'
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#media-root
 
