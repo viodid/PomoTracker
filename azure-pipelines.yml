@@ -1,0 +1,64 @@
+trigger:
+  - master
+
+variables:
+  - group: "calart-vargroup"
+
+pool: mycomputeragent
+
+
+stages:
+  - stage: Build
+    displayName: Build docker images and push to docker hub
+    jobs:
+      - job: Build
+        steps:
+          - task: CmdLine@2
+            displayName: 'Set tag'
+            inputs:
+              script: |
+                shortcommit=$(echo $(Build.SourceVersion) | cut -c1-7 )
+                echo "##vso[task.setvariable variable=tag;]$shortcommit"
+
+          - task: Docker@2
+            displayName: Docker login
+            inputs:
+              containerRegistry: 'dockerhub-viodid'
+              command: 'login'
+
+          - task: Docker@2
+            displayName: Docker build
+            inputs:
+              containerRegistry: 'dockerhub-viodid'
+              repository: 'viodid/calat33'
+              command: 'build'
+              Dockerfile: '**/Dockerfile'
+              tags: |
+                $(TAG)
+                latest
+              arguments: '--build-arg EMAIL_SENDER=$(EMAIL_SENDER) --build-arg EMAIL_PASSWORD=$(EMAIL_PASSWORD)'
+
+          - task: Docker@2
+            displayName: Docker push
+            inputs:
+              containerRegistry: 'dockerhub-viodid'
+              repository: 'viodid/calat33'
+              command: 'push'
+              tags: |
+                $(TAG)
+                latest
+
+  - stage: Deploy
+    displayName: Deploy to VM via ssh
+    jobs:
+      - job: Deploy
+        steps:
+          - task: SSH@0
+            inputs:
+              sshEndpoint: 'ssh-service-connection'
+              runOptions: 'commands'
+              commands: |
+                bash /home/azuredevops/rm_img_docker.sh viodid/calat33 latest calart.org
+                docker pull viodid/calat33:latest
+                docker run -d -p 8888:8888 --name calart.org viodid/calat33:latest
+
