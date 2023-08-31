@@ -210,22 +210,10 @@ async function drawPieChart1() {
   });
 }
 
-async function aggregatedPomosByTag() {
-  let aggregated = {};
-  const response = await fetch(`/api/${path_username}/alltags`);
-  await response.json().then((data) => {
-      aggregated = data;
-    });
-  return aggregateToChart(aggregated);
-}
-
-
 function pomosPerHour() {
   let aggregated = {};
 
   const pomos = cacheDataPomos;
-
-  const keys = Object.keys(pomos);
 
   // initialize the 24 hours
   for (let i = 0; i < 24; i++) {
@@ -234,8 +222,7 @@ function pomosPerHour() {
 
   for (let i = 0; i < pomos.length; i++) {
 
-    const pomo = pomos[i];
-    const hour = parseInt(pomo["created_at"].split('T')[1].split(':')[0]);
+    const hour = parseInt(getHour(pomos[i]["created_at"]));
 
     if (aggregated[hour]) {
       aggregated[hour] += 1;
@@ -244,6 +231,49 @@ function pomosPerHour() {
     }
   }
   return aggregateToChart(aggregated);
+}
+
+function getHour(dateString) {
+  const date = new Date(dateString);
+  return `${date.getHours()}:${date.getMinutes()}`
+}
+
+function pomosPerDay() {
+  let aggregated = {};
+  const pomos = cacheDataPomos;
+
+
+  for (let i = 0; i < pomos.length; i++) {
+    const date = new Date(getDate(pomos[i]["created_at"]));
+    console.log(date);
+
+    if (aggregated[date]) {
+      aggregated[date] += 1;
+    } else {
+      aggregated[date] = 1;
+    }
+  }
+  return aggregateToChart(aggregated, true);
+}
+
+function getDate(dateString) {
+  const date = new Date(dateString);
+  // Format the date to "YYYY-MM-DD"
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+async function loadCacheData() {
+  if (document.getElementById('pie-chart')) {
+    google.charts.setOnLoadCallback(drawPieChart1);
+  }
+  fetch(`/api/${path_username}/allpomodoros`)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    cacheDataPomos = data;
+    renderCharts(data);
+  });
 }
 
 function aggregateToChart(aggregated, date = false) {
@@ -260,67 +290,21 @@ function aggregateToChart(aggregated, date = false) {
   return output;
 }
 
+async function aggregatedPomosByTag() {
+  let aggregated = {};
+  const response = await fetch(`/api/${path_username}/alltags`);
+  await response.json().then((data) => {
+      aggregated = data;
+    });
+  return aggregateToChart(aggregated);
+}
+
 function fontColor() {
   if (theme === 'white') {
     return '#121212';
   } else {
     return '#efefef';
   }
-}
-
-
-function pomosPerDay() {
-  let aggregated = {};
-  const pomos = cacheDataPomos;
-
-
-  for (let i = 0; i < pomos.length; i++) {
-    let date = new Date(convertDateString(pomos[i]["created_at"]));
-    date = parseDate(date); // Format the date to "YYYY-MM-DD"
-
-    if (aggregated[date]) {
-      aggregated[date] += 1;
-    } else {
-      aggregated[date] = 1;
-    }
-  }
-
-  return aggregateToChart(aggregated, true);
-}
-
-
-function convertDateString(dateString) {
-  // Split the date string into parts
-  const parts = dateString.split(/[-T:+]/);
-
-  // Create a new Date object using the parts
-  const date = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]));
-
-  return date;
-}
-
-function parseDate(inputDate) {
-  const date = new Date(inputDate);
-  const year = date.getUTCFullYear();
-  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-  const day = date.getUTCDate().toString().padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-}
-
-
-async function loadCacheData() {
-  if (document.getElementById('pie-chart')) {
-    google.charts.setOnLoadCallback(drawPieChart1);
-  }
-  fetch(`/api/${path_username}/allpomodoros`)
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    cacheDataPomos = data;
-    renderCharts(data);
-  });
 }
 
 loadCacheData();

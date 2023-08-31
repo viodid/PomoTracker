@@ -56,14 +56,7 @@ def profile(request, username):
                 })
                 if form.is_valid():
                     helpers.saveSettings(form.cleaned_data, user)
-                    return render(request, 'app/profile.html', {
-                        'message': 'Settings saved successfully',
-                        'form': form,
-                        'display': True,
-                        'userProfile': user,
-                        'averagePomos': Statistics.getAveragePomodoros(user),
-                        'page_obj': page_obj,
-                    })
+                    return HttpResponseRedirect(reverse("index"))
                 else:
                     return render(request, 'app/profile.html', {
                         'message': 'Invalid form',

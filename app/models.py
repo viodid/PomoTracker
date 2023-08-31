@@ -160,6 +160,7 @@ class Statistics:
 
     @staticmethod
     def getAveragePomodoros(user):
+        """Returns the total average pomodoros"""
         # Get all pomodoros
         pomodoros = user.pomodoros.all()
         # Make sure there are pomodoros
