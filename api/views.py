@@ -41,7 +41,7 @@ def getAllUserPomosDates(request, username) -> JsonResponse:
             "error": "Username does not exist."
         }, status=401)
 
-    pomodoros = Pomodoro.objects.filter(user=user)
+    pomodoros = user.pomodoros.all()
 
     return JsonResponse([pomodoro.serialize()["created_at"] for pomodoro in pomodoros],
                         safe=False, status=200)

@@ -25,8 +25,8 @@ print('Base dir: ', BASE_DIR)
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
 SECURE_HSTS_PRELOAD = False
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
-SITE_ID = 1
+# Allauth settings
+SITE_ID = 2
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_SESSION_REMEMBER = True
@@ -69,13 +70,13 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
 SOCIALACCOUNT_AUTO_SIGNUP = True
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'
 
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
-            'profile',
             'email',
         ],
         'AUTH_PARAMS': {
