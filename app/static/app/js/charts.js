@@ -245,8 +245,6 @@ function pomosPerDay() {
 
   for (let i = 0; i < pomos.length; i++) {
     const date = new Date(getDate(pomos[i]["created_at"]));
-    console.log(date);
-
     if (aggregated[date]) {
       aggregated[date] += 1;
     } else {

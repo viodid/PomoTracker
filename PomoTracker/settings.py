@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from socket import gethostname, gethostbyname 
 
 load_dotenv()
 
@@ -25,16 +26,22 @@ print('Base dir: ', BASE_DIR)
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
-SECURE_SSL_REDIRECT = False
-SECURE_HSTS_PRELOAD = False
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 3600
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-DEBUG_PROPAGATE_EXCEPTIONS=bool(os.environ.get("DJANGO_DEBUG_PROPAGATE_EXCEPTIONS", False))
-SERVER_EMAIL="webmaster@pomotracker.app"
-print('DEBUG: ', DEBUG, '\nDJANGO_SECURE_SSL_REDIRECT: ', SECURE_SSL_REDIRECT, '\nDEBUG_PROPAGATE_EXCEPTIONS: ', DEBUG_PROPAGATE_EXCEPTIONS)
+CSRF_COOKIE_SECURE              = True
+SESSION_COOKIE_SECURE           = True
+SECURE_SSL_REDIRECT             = False
+SECURE_HSTS_PRELOAD             = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
+SECURE_HSTS_SECONDS             = 3600
+DEBUG_PROPAGATE_EXCEPTIONS      = True
+SERVER_EMAIL                    = "webmaster@pomotracker.app"
+#ALLOWED_HOSTS                   = [gethostname(), gethostbyname(gethostname())] #os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS                   = ['*']
+
+
+
+print('DEBUG: ', DEBUG, '\nDJANGO_SECURE_SSL_REDIRECT: ', SECURE_SSL_REDIRECT,
+        '\nDEBUG_PROPAGATE_EXCEPTIONS: ', DEBUG_PROPAGATE_EXCEPTIONS,
+        'ALLOWED_HOSTS' , ALLOWED_HOSTS)
 
 
 # Application definition
@@ -73,15 +80,16 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'
 
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
+            'profile',
             'email',
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-        }
+        },
+        'OAUTH_PKCE_ENABLED': True,
     }
 }
 
@@ -138,13 +146,15 @@ CONN_MAX_AGE = 0
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_PRO"),
+        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_TEST"), # ESTA LINEA ME HA COSTADO 3 DIAS DEBUGGEANDO
         'USER': os.environ.get("DB_USER"),
         'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST"), # TODO: change to DB_HOST_PRO
         'PORT': os.environ.get("DB_PORT"),
         'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
 }
+
+print('DATABASE_HOST: ',DATABASES['default']['HOST'])
 
 CACHES = {
     "default": {
