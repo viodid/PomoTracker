@@ -10,10 +10,10 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'app/js/profile.js' %}" type="module"></script>
+<script src="{% static 'app/js/profile.js' %}?{{ SITE_VERSION }}" type="module"></script>
 {% if not display %}
 <script src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="{% static 'app/js/charts.js' %}" type="module"></script>
+<script src="{% static 'app/js/charts.js' %}?{{ SITE_VERSION }}" type="module"></script>
 {% endif %}
 {% endblock %}
 

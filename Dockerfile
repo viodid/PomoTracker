@@ -47,7 +47,7 @@ RUN mkdir $APP_HOME && mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends netcat
+RUN apt-get update
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
@@ -56,8 +56,8 @@ RUN pip install --no-cache /wheels/*
 # copy project
 COPY . $APP_HOME
 
-# Migrate the database
-RUN python manage.py migrate --noinput && python manage.py collectstatic --noinput --clear
+# collect static files
+RUN python manage.py collectstatic --noinput
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME

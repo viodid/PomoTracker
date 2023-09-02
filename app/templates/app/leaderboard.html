@@ -5,7 +5,7 @@
 Leaderboards
 {% endblock %}
 {% block script %}
-<script src="{% static 'app/js/leaderboard.js' %}" type="module"></script>
+<script src="{% static 'app/js/leaderboard.js' %}?{{ SITE_VERSION }}" type="module"></script>
 {% endblock %}
 {% block body %}
 <main>
