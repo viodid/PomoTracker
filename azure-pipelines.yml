@@ -6,7 +6,7 @@ variables:
   - name: FIRST_IMAGE_NAME
     value: pomotracker
   - name: SECOND_IMAGE_NAME
-    value: pomotracker-nginx
+    value: pomotrackernginx
 
 pool: mycomputeragent
 
@@ -17,12 +17,6 @@ stages:
     jobs:
       - job: Build
         steps:
-          - task: Docker@2
-            displayName: Login to docker hub
-            inputs:
-              containerRegistry: '$(CR_SERVICE_CONNECTION)'
-              command: 'login'
-
           - task: Docker@2
             displayName: Build and push pomotracker docker image
             inputs:
