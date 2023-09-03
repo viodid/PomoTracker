@@ -20,7 +20,7 @@ stages:
               containerregistrytype: 'Container Registry'
               dockerRegistryEndpoint: 'docker-registry'
               dockerComposeFile: '**/docker-compose.yml'
-              dockerComposePath: '**'
+              dockerComposePath: './docker-compose.yml'
               action: 'Build services'
 
           - task: DockerCompose@0
