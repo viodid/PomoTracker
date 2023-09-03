@@ -29,16 +29,16 @@ stages:
               dockerComposeFile: '**/docker-compose.yml'
               action: 'Push services'
 
-  - stage: Deploy
-    displayName: Deploy to VM via ssh
-    jobs:
-      - job: Deploy
-        steps:
-          - task: SSH@0
-            inputs:
-              sshEndpoint: 'ssh-service-connection'
-              runOptions: 'commands'
-              commands: |
-                bash /home/azuredevops/rm_img_docker.sh viodid/calat33 latest calart.org
-                docker pull viodid/calat33:latest
-                docker run -d -p 8888:8888 --name calart.org viodid/calat33:latest
+  # - stage: Deploy
+  #   displayName: Deploy to VM via ssh
+  #   jobs:
+  #     - job: Deploy
+  #       steps:
+  #         - task: SSH@0
+  #           inputs:
+  #             sshEndpoint: 'ssh-service-connection'
+  #             runOptions: 'commands'
+  #             commands: |
+  #               bash /home/azuredevops/rm_img_docker.sh viodid/calat33 latest calart.org
+  #               docker pull viodid/calat33:latest
+  #               docker run -d -p 8888:8888 --name calart.org viodid/calat33:latest
