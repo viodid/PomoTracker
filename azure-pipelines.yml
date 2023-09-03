@@ -19,15 +19,14 @@ stages:
             inputs:
               containerregistrytype: 'Container Registry'
               dockerRegistryEndpoint: 'docker-registry'
-              dockerComposeFile: '**/docker-compose.yml'
-              dockerComposePath: './docker-compose.yml'
+              dockerComposeFile: './docker-compose.yml'
               action: 'Build services'
 
           - task: DockerCompose@0
             inputs:
               containerregistrytype: 'Container Registry'
               dockerRegistryEndpoint: 'docker-registry'
-              dockerComposeFile: '**/docker-compose.yml'
+              dockerComposeFile: './docker-compose.yml'
               action: 'Push services'
 
   # - stage: Deploy
