@@ -18,9 +18,15 @@ stages:
       - job: Build
         steps:
           - task: Docker@2
+            displayName: Login to docker hub
+            inputs:
+              containerRegistry: '$(CR_SERVICE_CONNECTION)'
+              command: 'login'
+
+          - task: Docker@2
             displayName: Build and push pomotracker docker image
             inputs:
-              containerRegistry: 'docker-registry'
+              containerRegistry: '$(CR_SERVICE_CONNECTION)'
               repository: '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: '**/Dockerfile'
@@ -31,7 +37,7 @@ stages:
           - task: Docker@2
             displayName: Build and push pomotracker-nginx docker image
             inputs:
-              containerRegistry: 'docker-registry'
+              containerRegistry: '$(CR_SERVICE_CONNECTION)'
               repository: '$(DOCKER_REPO)/$(SECOND_IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: '**/nginx/Dockerfile'
