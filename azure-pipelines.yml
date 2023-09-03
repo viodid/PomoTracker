@@ -32,7 +32,7 @@ stages:
             displayName: Build and push pomotracker-nginx docker image
             inputs:
               containerRegistry: '$(CR_SERVICE_CONNECTION)'
-              repository: 'viodid/pomotrackernginx'
+              repository: '$(DOCKER_REPO)/$(SECOND_IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: '**/nginx/Dockerfile'
               tags: |
