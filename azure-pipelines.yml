@@ -15,19 +15,25 @@ stages:
     jobs:
       - job: Build
         steps:
-          - task: DockerCompose@0
+          - task: Docker@2
             inputs:
-              containerregistrytype: 'Container Registry'
-              dockerRegistryEndpoint: 'docker-registry'
-              dockerComposeFile: './docker-compose.yml'
-              action: 'Build services'
+              containerRegistry: 'docker-registry'
+              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
+              command: 'buildAndPush'
+              Dockerfile: 'PomoTracker/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                $(TAG)
 
-          - task: DockerCompose@0
+          - task: Docker@2
             inputs:
-              containerregistrytype: 'Container Registry'
-              dockerRegistryEndpoint: 'docker-registry'
-              dockerComposeFile: './docker-compose.yml'
-              action: 'Push services'
+              containerRegistry: 'docker-registry'
+              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
+              command: 'buildAndPush'
+              Dockerfile: 'PomoTracker/config/nginx/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                $(TAG)
 
   # - stage: Deploy
   #   displayName: Deploy to VM via ssh
