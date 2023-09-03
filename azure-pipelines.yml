@@ -62,4 +62,5 @@ stages:
               runOptions: 'commands'
               commands: |
                 docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down
+                bash /home/azuredevops/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
                 docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d
