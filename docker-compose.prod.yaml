@@ -1,0 +1,42 @@
+# https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+version: '3.8'
+
+services:
+  redis:
+    image: redis:alpine
+    expose:
+      - 6379
+    networks:
+      - pomotracker-network
+
+  app:
+    image: viodid/pomotracker:latest
+    command: gunicorn PomoTracker.wsgi:application --bind 0.0.0.0:80 --timeout 600 --workers 3
+    env_file:
+      - ./PomoTracker/.env
+    volumes:
+      - static_volume:/home/app/pomotracker/staticfiles
+    expose:
+      - 80
+    networks:
+      - pomotracker-network
+    depends_on:
+      - redis
+
+  nginx:
+    image: viodid/pomotracker-nginx:latest
+    ports:
+      - 1337:80
+    volumes:
+      - static_volume:/home/app/pomotracker/staticfiles
+    depends_on:
+      - app
+    networks:
+      - pomotracker-network
+
+networks:
+  pomotracker-network:
+    driver: bridge
+
+volumes:
+  static_volume:

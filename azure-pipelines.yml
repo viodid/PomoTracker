@@ -6,7 +6,7 @@ variables:
   - name: FIRST_IMAGE_NAME
     value: pomotracker
   - name: SECOND_IMAGE_NAME
-    value: pomotrackernginx
+    value: pomotracker-nginx
 
 pool: mycomputeragent
 
@@ -43,19 +43,21 @@ stages:
     displayName: Deploy to VM via ssh
     jobs:
       - job: Deploy
+        displayName: Copy docker-compose file over ssh
         steps:
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'ssh-service-connection'
-              contents: 'docker-compose.yml'
+              contents: 'docker-compose.prod.yml'
               targetFolder: '/home/azuredevops/pomotracker_build_files'
               readyTimeout: '20000'
               failOnEmptySource: true
 
           - task: SSH@0
+            displayName: Run docker-compose up
             inputs:
               sshEndpoint: 'ssh-service-connection'
               runOptions: 'commands'
               commands: |
-                bash /home/azuredevops/rm_img_docker.sh '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)' latest pomotracker.app
-                docker pull '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME):latest'
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d
