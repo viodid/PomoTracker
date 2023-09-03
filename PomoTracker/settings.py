@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 ]
 
 # Allauth settings
-SITE_ID                         = 2
+SITE_ID                         = 1
 ACCOUNT_EMAIL_REQUIRED          = False
 ACCOUNT_EMAIL_VERIFICATION      = False
 ACCOUNT_SESSION_REMEMBER        = True
@@ -147,9 +147,9 @@ CONN_MAX_AGE = 0
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_TEST"), # ESTA LINEA ME HA COSTADO 3 DIAS DEBUGGEANDO
+        'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_PROD"), # ESTA LINEA ME HA COSTADO 3 DIAS DEBUGGEANDO
         'USER': os.environ.get("DB_USER"),
-        'HOST': os.environ.get("DB_HOST_PUBLIC") if DEBUG else os.environ.get("DB_HOST_PRIVATE"), # TODO: change to DB_HOST_PRO
+        'HOST': os.environ.get("DB_HOST_PUBLIC") if DEBUG else os.environ.get("DB_HOST_PRIVATE"),
         'PORT': os.environ.get("DB_PORT"),
         'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
