@@ -13,9 +13,9 @@ pool: mycomputeragent
 
 stages:
   - stage: Build
-    displayName: Build docker images and push to docker hub
     jobs:
       - job: Build
+        displayName: Build docker images and push to docker hub
         steps:
           - task: Docker@2
             displayName: Build and push pomotracker docker image
@@ -40,15 +40,15 @@ stages:
                 latest
 
   - stage: Deploy
-    displayName: Deploy to VM via ssh
     jobs:
       - job: Deploy
-        displayName: Copy docker-compose file over ssh
+        displayName: Deploy to VM via ssh
         steps:
           - task: CopyFilesOverSSH@0
+            displayName: Copy docker-compose file over ssh
             inputs:
               sshEndpoint: 'ssh-service-connection'
-              contents: 'docker-compose.prod.yml'
+              contents: 'docker-compose.prod.yaml'
               targetFolder: '/home/azuredevops/pomotracker_build_files'
               readyTimeout: '20000'
               failOnEmptySource: true
