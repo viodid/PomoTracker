@@ -27,8 +27,8 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 SECRET_KEY = 'django-instance-secret-key' if DEBUG else os.environ.get("SECRET_KEY")
 CSRF_COOKIE_SECURE              = True
 SESSION_COOKIE_SECURE           = True
-SECURE_SSL_REDIRECT             = False
-SECURE_HSTS_PRELOAD             = False
+SECURE_SSL_REDIRECT             = True
+SECURE_HSTS_PRELOAD             = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
 SECURE_HSTS_SECONDS             = 3600
 DEBUG_PROPAGATE_EXCEPTIONS      = True
@@ -149,7 +149,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get("DB_NAME_TEST") if DEBUG else os.environ.get("DB_NAME_TEST"), # ESTA LINEA ME HA COSTADO 3 DIAS DEBUGGEANDO
         'USER': os.environ.get("DB_USER"),
-        'HOST': os.environ.get("DB_HOST") if DEBUG else os.environ.get("DB_HOST"), # TODO: change to DB_HOST_PRO
+        'HOST': os.environ.get("DB_HOST_PUBLIC") if DEBUG else os.environ.get("DB_HOST_PRIVATE"), # TODO: change to DB_HOST_PRO
         'PORT': os.environ.get("DB_PORT"),
         'PASSWORD': os.environ.get("DB_USER_PASSWORD")
     }
