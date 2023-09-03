@@ -57,8 +57,7 @@ RUN pip install --no-cache /wheels/*
 COPY . $APP_HOME
 
 # collect static files
-RUN python manage.py collectstatic --noinput && \
-    rm -rf ${APP_HOME}/staticfiles/app && \
+RUN rm -rf ${APP_HOME}/staticfiles/app && \
     cp -r ${APP_HOME}/app/static/app ${APP_HOME}/staticfiles/
 
 
