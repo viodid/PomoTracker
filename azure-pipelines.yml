@@ -3,8 +3,10 @@ trigger:
 
 variables:
   - group: "common"
-  - name: IMAGE_NAME
+  - name: FIRST_IMAGE_NAME
     value: pomotracker
+  - name: SECOND_IMAGE_NAME
+    value: pomotracker-nginx
 
 pool: mycomputeragent
 
@@ -18,7 +20,7 @@ stages:
           - task: Docker@2
             inputs:
               containerRegistry: 'docker-registry'
-              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
+              repository: '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: 'PomoTracker/Dockerfile'
               tags: |
@@ -28,7 +30,7 @@ stages:
           - task: Docker@2
             inputs:
               containerRegistry: 'docker-registry'
-              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
+              repository: '$(DOCKER_REPO)/$(SECOND_IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: 'PomoTracker/config/nginx/Dockerfile'
               tags: |
