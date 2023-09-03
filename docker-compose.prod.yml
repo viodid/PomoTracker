@@ -13,7 +13,7 @@ services:
     image: viodid/pomotracker:latest
     command: gunicorn PomoTracker.wsgi:application --bind 0.0.0.0:80 --timeout 600 --workers 3
     env_file:
-      - ./PomoTracker/.env
+      - /home/azuredevops/pomotracker_build_files/.env
     volumes:
       - static_volume:/home/app/pomotracker/staticfiles
     expose:

@@ -8,7 +8,7 @@ variables:
   - name: SECOND_IMAGE_NAME
     value: pomotracker-nginx
   - name: DOCKER_COMPOSE_FILE
-    value: docker-compose.prod.yaml
+    value: docker-compose.prod.yml
 
 pool: mycomputeragent
 
@@ -61,5 +61,5 @@ stages:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               runOptions: 'commands'
               commands: |
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yaml down
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yaml up -d
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d
