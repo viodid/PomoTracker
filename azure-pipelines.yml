@@ -7,6 +7,8 @@ variables:
     value: pomotracker
   - name: SECOND_IMAGE_NAME
     value: pomotracker-nginx
+  - name: DOCKER_COMPOSE_FILE
+    value: docker-compose.prod.yaml
 
 pool: mycomputeragent
 
@@ -47,8 +49,8 @@ stages:
           - task: CopyFilesOverSSH@0
             displayName: Copy docker-compose file over ssh
             inputs:
-              sshEndpoint: 'ssh-service-connection'
-              contents: 'docker-compose.prod.yaml'
+              sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
+              contents: '$(DOCKER_COMPOSE_FILE)'
               targetFolder: '/home/azuredevops/pomotracker_build_files'
               readyTimeout: '20000'
               failOnEmptySource: true
@@ -56,8 +58,8 @@ stages:
           - task: SSH@0
             displayName: Run docker-compose up
             inputs:
-              sshEndpoint: 'ssh-service-connection'
+              sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               runOptions: 'commands'
               commands: |
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yaml down
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yaml up -d
