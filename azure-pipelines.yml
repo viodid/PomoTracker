@@ -1,5 +1,5 @@
 trigger:
-  - dev
+  - main
 
 variables:
   - group: "common"
@@ -15,33 +15,19 @@ stages:
     jobs:
       - job: Build
         steps:
-
-          - task: Docker@2
-            displayName: Docker login
+          - task: DockerCompose@0
             inputs:
-              containerRegistry: '$(CONTAINER_REGISTRY)'
-              command: 'login'
+              containerregistrytype: 'Container Registry'
+              dockerRegistryEndpoint: 'docker-registry'
+              dockerComposeFile: '**/docker-compose.yml'
+              action: 'Build services'
 
-          - task: Docker@2
-            displayName: Docker build
+          - task: DockerCompose@0
             inputs:
-              containerRegistry: '$(CONTAINER_REGISTRY)'
-              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
-              command: 'build'
-              Dockerfile: '**/Dockerfile'
-              tags: |
-                $(DOCKER_TAG)
-                latest
-
-          - task: Docker@2
-            displayName: Docker push
-            inputs:
-              containerRegistry: '$(CONTAINER_REGISTRY)'
-              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
-              command: 'push'
-              tags: |
-                $(TAG)
-                latest
+              containerregistrytype: 'Container Registry'
+              dockerRegistryEndpoint: 'docker-registry'
+              dockerComposeFile: '**/docker-compose.yml'
+              action: 'Push services'
 
   - stage: Deploy
     displayName: Deploy to VM via ssh
@@ -56,4 +42,3 @@ stages:
                 bash /home/azuredevops/rm_img_docker.sh viodid/calat33 latest calart.org
                 docker pull viodid/calat33:latest
                 docker run -d -p 8888:8888 --name calart.org viodid/calat33:latest
-
