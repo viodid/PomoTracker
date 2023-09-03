@@ -17,25 +17,25 @@ stages:
     jobs:
       - job: Build
         steps:
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'docker-registry'
-              repository: '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)'
-              command: 'buildAndPush'
-              Dockerfile: '**/Dockerfile'
-              tags: |
-                $(Build.BuildId)
-                $(TAG)
+          # - task: Docker@2
+          #   inputs:
+          #     containerRegistry: 'docker-registry'
+          #     repository: '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)'
+          #     command: 'buildAndPush'
+          #     Dockerfile: '**/Dockerfile'
+          #     tags: |
+          #       $(Build.BuildId)
+          #       latest
 
           - task: Docker@2
             inputs:
               containerRegistry: 'docker-registry'
               repository: '$(DOCKER_REPO)/$(SECOND_IMAGE_NAME)'
               command: 'buildAndPush'
-              Dockerfile: '**/config/nginx/Dockerfile'
+              Dockerfile: '**/nginx/Dockerfile'
               tags: |
                 $(Build.BuildId)
-                $(TAG)
+                latest
 
   - stage: Deploy
     displayName: Deploy to VM via ssh
