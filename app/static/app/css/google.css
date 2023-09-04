@@ -3,26 +3,18 @@
 }
 
 form{
-    border: 1px solid #E1E8ED;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     border-radius: 10px;
-    padding: 50px;
     width: 70%;
+    height: 200px;
     margin: 0 auto;
-    color: grey;
+    color: #dedbd7;
     text-align: center;
     font-family: sans-serif;
     font-size: 16px;
     margin-top: 150px;
-}
-
-a{
-    text-decoration: none;
-    color: #1a73e8!important;
-}
-
-
-input{
-    margin-bottom: 10px;
 }
 
 ::-webkit-input-placeholder{
@@ -39,7 +31,7 @@ input[type="password"]{
 
 input[type="text"]:focus,
 input[type="password"]:focus{
-    border: 1px solid #1a73e8;
+    border: 1px solid #f1c232;
     outline: none;
 }
 
@@ -50,16 +42,21 @@ input[type="password"]:focus{
 
 input[type="submit"]{
     width: 100%;
-    background: #1a73e8;
+    background: #f1c232;
     padding: 10px;
-    color: white;
+    color: #181a1b;
     font-size: 16px;
     border-radius: 5px;
     border: none;
 }
 
+input[type="submit"]:hover {
+    background-color: #c69e25;
+    cursor: pointer;
+}
+
 input[type="submit"]:active {
-    background-color: #0c3f65;
+    background-color: #9a7d27;
 }
 
 a:visited {

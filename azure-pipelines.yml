@@ -61,6 +61,6 @@ stages:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               runOptions: 'commands'
               commands: |
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down &>/dev/null ; echo $?
                 bash /home/azuredevops/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d
+                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d &>/dev/null ; echo $?

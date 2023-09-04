@@ -1,29 +1,174 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{% block head_title %}{% endblock %}</title>
-    {% block extra_head %}
-    {% endblock %}
-    <link rel="stylesheet" href="{% block styles %}{% endblock %}">
+    <meta charset="UTF-8">
+    <title>{% block title %}Pomodoro Timer Online{% endblock %} | PomoTracker</title>
+    <meta name="description" content="PomoTracker is a free and open source pomodoro timer app. Stay focused, be productive, track everything.">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-title" content="PomoTracker">
+    <meta name="application-name" content="PomoTracker">
+    <meta property="og:title" content="PomoTracker">
+    <meta property="og:description" content="PomoTracker is a free and open source pomodoro timer app. Stay focused, be productive, track everything.">
+    <meta property="og:image" content="{% static 'app/favicon/android-chrome-192x192.png' %}">
+    <meta property="og:url" content="https://pomotracker.app">
+    <meta property="og:site_name" content="PomoTracker">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@pomotracker">
+    <meta name="twitter:creator" content="@pomotracker">
+    <meta name="twitter:title" content="PomoTracker">
+    <meta name="twitter:description" content="PomoTracker is a free and open source pomodoro timer app. Stay focused, be productive, track everything.">
+    <meta name="twitter:image" content="{% static 'app/favicon/android-chrome-192x192.png' %}">
+    <meta name="twitter:image:alt" content="PomoTracker Logo">
+    <meta name="twitter:domain" content="pomotracker.app">
+    <link rel="canonical" href="https://pomotracker.app">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Roboto:wght@100;300&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/app/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/app/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/app/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/app/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/static/app/favicon/safari-pinned-tab.svg" color="#f1c232">
+    <link rel="shortcut icon" href="/static/app/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#555555">
+    <meta name="msapplication-config" content="/static/app/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'app/css/styles.css' %}">
+    {% block styles %}{% endblock %}
+    <script src="{% static 'app/js/sidebar.js' %}"></script>
+    <!--<script src="{% static 'app/theme_toggle_script.js' %}" type="module"></script>-->
+    {% block script %}{% endblock %}
 </head>
-<body>
-{% block body %}
-    {% if messages %}
-        <div>
-            <strong>Messages:</strong>
-            <ul>
-                {% for message in messages %}
-                    <li>{{message}}</li>
-                {% endfor %}
-            </ul>
-        </div>
+<input type="text" id="token" style="display: none;" value="{{ user.settings.token }}">
+<body class="{{ user.settings.theme }}">
+{% if message %}
+    <div class="message-banner {{ message_class }}">
+        {{ message }}
+    </div>
+{% endif %}
+<div id="overlay">
+    <svg viewBox="0 0 100 100">
+        <circle class="bg" cx="50" cy="50" r="40"></circle>
+        <circle class="meter" cx="50" cy="50" r="40"></circle>
+    </svg>
+    <div class="fill-data">
+        <p class="leaderboard-timer-link" style="visibility: hidden"><a href="{% url 'leaderboard' %}" target="_blank">Leaderboard</a></p>
+        <p class="timer" id="timer"><span id="minute">01</span>:<span id="second">01</span></p>
+        <p class="focus">Focus</p>
+        <input type="text" class="text-input" id="text-input" placeholder="Tag your Pomodoro" style="display: none" autocomplete="on">
+        <span class="button" id="cancel">Cancel</span>
+        <span class="button" id="save" style="display: none">Save</span>
+        <p class="last-text">or press ESC</p>
+    </div>
+</div>
+<nav class="navbar" id="navbar">
+    <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'app/images/pomotracker_logo.png' %}" alt="PomoTracker Logo"></a>
+    <div>
+        <ul id="topnav" class="topnav">
+        <!--
+            {% if user.settings.white_theme %}
+                <li id="lightbulb" style="display: none" class="not-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
+                        <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
+                    </svg>
+                </li>
+                <li id="moon" style="display: block;" class="not-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
+                        <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
+                    </svg>
+                </li>
+            {% else %}
+                <li id="lightbulb" style="display: block" class="not-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         version="1.1" id="mdi-lightbulb-on" width="60" height="60" viewBox="0 0 24 24" fill="#ebebeb">
+                        <path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z"/>
+                    </svg>
+                </li>
+                <li id="moon" style="display: none;" class="not-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         version="1.1" id="mdi-moon-waxing-crescent" width="40" height="40" viewBox="0 0 24 24" fill="#3c3c3c">
+                        <path d="M12 2A9.91 9.91 0 0 0 9 2.46A10 10 0 0 1 9 21.54A10 10 0 1 0 12 2Z"/>
+                    </svg>
+                </li>
+            {% endif %}
+            <li class="show">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round" id="slider"></span>
+                </label>
+            </li>
+            -->
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'charts' %}">Charts</a></li>
+            {% endif %}
+            <li><a href="{% url 'leaderboard' %}">Leaderboards</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a></li>
+                <li class="last-navbar"><a id="user-logged" href="{% url 'logout' %}">Sign Out</a></li>
+            {% else %}
+                <li><a id="user-logged" href="/accounts/login">Sign In</a></li>
+                <li class="last-navbar"><a href="{% url 'account_signup' %}">Sign Up</a></li>
+            {% endif %}
+            <li class="icon show" id="open-sidebar">
+                {% if user.is_authenticated and user.settings.theme == 'white' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-menu"
+                        width="60" height="60" viewBox="0 0 24 24" fill="#121212">
+                        <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+                    </svg>
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-menu"
+                        width="60" height="60" viewBox="0 0 24 24" fill="#efefef">
+                        <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+                    </svg>
+                    {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="sidebar" class="hidden">
+    {% if user.is_authenticated %}
+        <a href="{% url 'charts' %}">Charts</a>
     {% endif %}
-
-    {% block content %}
-    {% endblock %}
-{% endblock %}
-{% block extra_body %}
-{% endblock %}
+    <a href="{% url 'leaderboard' %}">Leaderboards</a>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' username=request.user.username %}">{{ request.user.username }}</a>
+        <a id="user-logged" href="{% url 'logout' %}">Sign Out</a>
+    {% else %}
+        <a id="user-logged" href="/accounts/login">Sign In</a>
+        <a href="{% url 'account_signup' %}">Sign Up</a>
+    {% endif %}
+</div>
+{% block content %}{% endblock %}
+<footer>
+    <div class="block 1">
+        <div class="top">
+            <div class="left">
+                <p><a href="https://www.buymeacoffee.com/davidyunta"><u>This app will always be free, please consider supporting the project:</u></a></p>
+                <p><a href="{% url 'api' %}">API Reference</a></p>
+                <p><a href="" class="disabled">Statistics</a></p>
+            </div>
+            <a href="https://www.buymeacoffee.com/davidyunta" target="_blank">
+                <img src="{% static 'app/images/coffee.jpg' %}" alt="Buy me a coffee">
+            </a>
+        </div>
+        <div class="bottom">
+            <p>This application is not affiliated, associated or endorsed by the Pomodoro Technique® or Francesco Cirillo.</p>
+            <p>The Pomodoro Technique® and Pomodoro™ are registered trademarks by Francesco Cirillo.</p>
+        </div>
+    </div>
+    <div class="block 2">
+        <p><a href="{% url 'privacy' %}">Privacy policy</a></p>
+        <p><a href="{% url 'terms' %}">Terms and conditions</a></p>
+        <p><a href="mailto:contact@pomotracker.app">contact@pomotracker.app</a></p>
+        <p><a href="https://github.com/viodid/PomoTracker">PomoTracker</a> - <a href="https://github.com/viodid/PomoTracker/releases">
+            v{{ SITE_VERSION }}</a></p>
+            <!-- <span id="toggle-notes" class="linkable">v{{ SITE_VERSION }}</span></p>a -->
+    </div>
+</footer>
 </body>
 </html>
