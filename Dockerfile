@@ -58,7 +58,7 @@ COPY . $APP_HOME
 
 # collect static files
 RUN rm -rf ${APP_HOME}/staticfiles/app && \
-    cp -r ${APP_HOME}/app/static/app ${APP_HOME}/staticfiles/
+    cp -r ${APP_HOME}/app/static/* ${APP_HOME}/staticfiles/
 
 
 # chown all the files to the app user
