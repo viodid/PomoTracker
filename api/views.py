@@ -47,7 +47,6 @@ def getAllUserPomosDates(request, username) -> JsonResponse:
                         safe=False, status=200)
 
 
-@csrf_exempt
 @cache_page(60 * 25)
 def getAllUserPomodoros(request, username) -> JsonResponse:
     """Get all user's pomodoros dates"""
@@ -68,7 +67,6 @@ def getAllUserPomodoros(request, username) -> JsonResponse:
                         safe=False, status=200)
 
 
-@csrf_exempt
 @cache_page(60 * 25)
 def getAllPomodoros(request) -> JsonResponse:
     """Get all pomodoros"""
@@ -100,6 +98,7 @@ def getSettings(request, token):
 
 
 # POST request
+@csrf_exempt
 def create(request, token):
     """Create a new pomodoro"""
     if request.method != 'POST':
@@ -140,6 +139,7 @@ def create(request, token):
                         status=422)
 
 # PATCH request
+@csrf_exempt
 def updateTags(request, token, tag_to_replace):
     if request.method != 'PATCH':
         return JsonResponse({"error": "PATCH request required."}, status=400)
@@ -186,6 +186,7 @@ def updateTags(request, token, tag_to_replace):
                         status=201)
 
 # PUT, DELETE request
+@csrf_exempt
 def updateDelete(request, token, pomodoro_id):
     try:
         token = UserSettings.objects.get(token=token)
@@ -242,6 +243,7 @@ def updateDelete(request, token, pomodoro_id):
                         status=400)
 
 # PUT request
+@csrf_exempt
 def updateSettings(request, token):
     try:
         token = UserSettings.objects.get(token=token)
