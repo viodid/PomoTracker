@@ -79,7 +79,7 @@ ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
 SOCIALACCOUNT_AUTO_SIGNUP       = True
 LOGIN_REDIRECT_URL              = '/'
 LOGOUT_REDIRECT_URL             = '/'
-ACCOUNT_SIGNUP_REDIRECT_URL     = '/'
+ACCOUNT_SIGNUP_REDIRECT_URL     = 'https://pomotracker.app'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
