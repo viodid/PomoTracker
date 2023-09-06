@@ -1,113 +1,148 @@
-# PomoTracker
+
+![Logo](https://pomotracker.s3.eu-central-1.amazonaws.com/pomotracker_logo_sticker.png)
+
+
+# Pomodoro Timer App WIP
+
 PomoTracker is a powerful and flexible pomodoro timer app that helps users boost their productivity and manage their time more effectively.
 
-With PomoTracker, users can create custom timers tailored to their specific needs, save them for future use, and track their progress over
-time with detailed graphs and statistics.
+With PomoTracker, users can create custom timers tailored to their specific needs, save them for future use, and track their progress over time with detailed graphs and statistics.
 
 Whether you're a student, a professional, or anyone in between, PomoTracker has everything you need to stay focused and on task.
 
-<details close>
-<summary><h2>API reference</h2></summary>
-Django API for Pomodoro App
 
-This API allows you to manage pomodoros, tags, and user settings for a Pomodoro app built with Django.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://link-to-project
 ```
-1. GET /api/:username/:endpoint
 
-Retrieve all pomodoros or tag statistics for a specific user.
-Parameters
+Go to the project directory
 
-username: The username of the user.
-endpoint: Can be either 'pomodoros' or 'tag'.
+```bash
+  cd my-project
+```
 
-Responses
+Install dependencies
 
-200 OK: Returns a JSON array of all pomodoros or a JSON object containing tag statistics.
-400 Bad Request: Returned if the request method is not 'GET'.
-401 Unauthorized: Returned if the user does not exist.
+```bash
+  npm install
+```
 
-2. GET /api/settings/:token
+Start the server
 
-Get the user settings for a given token.
-Parameters
+```bash
+  npm run start
+```
 
-token: The user's token.
 
-Responses
+## API Reference
 
-200 OK: Returns a JSON object containing the user's settings.
-400 Bad Request: Returned if the request method is not 'GET'.
-401 Unauthorized: Returned if the token is invalid.
+#### Get all items
 
-3. POST /api/create/:token
+```http
+  GET /api/items
+```
 
-Create a new pomodoro for a user with a specific tag.
-Parameters
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
 
-token: The user's token.
+#### Get item
 
-Request Body
+```http
+  GET /api/items/${id}
+```
 
-tag: The tag to associate with the new pomodoro.
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
 
-Responses
+#### add(num1, num2)
 
-201 Created: Returns a JSON object indicating the pomodoro was created successfully.
-400 Bad Request: Returned if the request method is not 'POST' or if there is a problem with the request data.
-401 Unauthorized: Returned if the token is invalid.
-422 Unprocessable Entity: Returned if the pomodoro would overlap with an existing one.
+Takes two numbers and returns the sum.
 
-4. PATCH /api/updateTags/:token/:tag_to_replace
 
-Update all pomodoros associated with a given tag for a user.
-Parameters
 
-token: The user's token.
-tag_to_replace: The tag to be replaced.
+## Tech Stack
 
-Request Body
+**Client:** React, Redux, TailwindCSS
 
-tag: The new tag to associate with the pomodoros.
+**Server:** Node, Express
 
-Responses
 
-201 Created: Returns a JSON object indicating the tags were updated successfully.
-400 Bad Request: Returned if the request method is not 'PATCH' or if there is a problem with the request data.
-401 Unauthorized: Returned if the token is invalid or if the tag does not belong to the user.
+## Feedback
 
-5. PUT or DELETE /api/updateDelete/:token/:pomodoro_id
+If you have any feedback, please reach out to me at webmaster@pomotracker.app
 
-Update or delete a specific pomodoro.
-Parameters
 
-token: The user's token.
-pomodoro_id: The ID of the pomodoro to update or delete.
+## Acknowledgements
 
-Request Body (PUT)
+ - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
+ - [Awesome README](https://github.com/matiassingers/awesome-readme)
+ - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
 
-  tag: The new tag to associate with the pomodoro.
 
-  Responses
+## Contributing
 
-  201 Created: Returns a JSON object indicating the pomodoro was updated or deleted successfully.
-  400 Bad Request: Returned if the request method is not 'PUT' or 'DELETE', or if there is a problem with the request data.
-  401 Unauthorized: Returned if the token is invalid, the pomodoro does not belong to the user, or the pomodoro ID is invalid.
+Contributions are always welcome!
 
-  6. PUT /api/updateSettings/:token
+See `contributing.md` for ways to get started.
 
-  Update a user's settings.
-  Parameters
+Please adhere to this project's `code of conduct`.
 
-  token: The user's token.
 
-  Request Body
+## Demo
 
-  white_theme: The new theme setting for the user.
+Insert gif or link to demo
 
-  Responses
 
-  201 Created: Returns a JSON object indicating the settings were updated successfully.
-  400 Bad Request: Returned if the request method is not 'PUT' or if there is a problem with the request data.
-  `401 Unauthorized
-  ```
-  </details>
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`API_KEY`
+
+`ANOTHER_API_KEY`
+
+
+## Features
+
+- Light/dark mode toggle
+- Live previews
+- Fullscreen mode
+- Cross platform
+
+
+## Lessons Learned
+
+What did you learn while building this project? What challenges did you face and how did you overcome them?
+
+
+## Optimizations
+
+What optimizations did you make in your code? E.g. refactors, performance improvements, accessibility
+
+
+## Roadmap
+
+- Additional browser support
+
+- Add more integrations
+
+
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+
+## Support
+
+For support, email fake@fake.com or join our Slack channel.
+
