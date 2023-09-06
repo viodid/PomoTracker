@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 ]
 
 # Allauth settings
-SITE_ID                         = 1
+SITE_ID                         = 1 if not DEBUG else 2
 ACCOUNT_EMAIL_REQUIRED          = False
 ACCOUNT_EMAIL_VERIFICATION      = False
 ACCOUNT_SESSION_REMEMBER        = True
