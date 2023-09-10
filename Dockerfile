@@ -2,7 +2,6 @@
 # BUILDER #
 ###########
 
-# pull official base image
 FROM python:3.11.4-slim-buster as builder
 
 # set work directory
@@ -31,7 +30,6 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 # FINAL #
 #########
 
-# pull official base image
 FROM python:3.11.4-slim-buster
 
 # create directory for the app user
@@ -57,7 +55,8 @@ RUN pip install --no-cache /wheels/*
 COPY . $APP_HOME
 
 # collect static files
-RUN rm -rf ${APP_HOME}/staticfiles/app && \
+RUN python manage.py migrate && \
+    rm -rf ${APP_HOME}/staticfiles/app && \
     cp -r ${APP_HOME}/app/static/* ${APP_HOME}/staticfiles/
 
 
