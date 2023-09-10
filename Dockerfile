@@ -54,9 +54,8 @@ RUN pip install --no-cache /wheels/*
 # copy project
 COPY . $APP_HOME
 
-# collect static files
-RUN python manage.py migrate && \
-    rm -rf ${APP_HOME}/staticfiles/app && \
+# migrate db changes ORM and collect static files
+RUN rm -rf ${APP_HOME}/staticfiles/app && \
     cp -r ${APP_HOME}/app/static/* ${APP_HOME}/staticfiles/
 
 

@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(verbose=True)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,7 +79,7 @@ ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
 SOCIALACCOUNT_AUTO_SIGNUP       = True
 LOGIN_REDIRECT_URL              = '/'
 LOGOUT_REDIRECT_URL             = '/'
-ACCOUNT_SIGNUP_REDIRECT_URL     = 'https://pomotracker.app'
+ACCOUNT_SIGNUP_REDIRECT_URL     = '/'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
