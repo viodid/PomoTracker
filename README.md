@@ -1,6 +1,68 @@
 
 ![Logo](https://pomotracker.s3.eu-central-1.amazonaws.com/pomotracker_logo_sticker.png)
 
+# Distinctiveness and Complexity:
+
+**PomoTracker: A Pomodoro Technique Study Timer Tracker**
+
+PomoTracker is a unique and complex project that offers a comprehensive solution for users looking to improve their productivity using the Pomodoro Technique. Here's why PomoTracker satisfies the distinctiveness and complexity requirements:
+
+Pomodoro Technique Integration: PomoTracker is centered around the Pomodoro Technique, a time management method that promotes focused work and breaks. It allows users to customize their work and break intervals, making it flexible for different productivity preferences.
+
+Data Collection and Statistics: PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused. This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
+
+Community Engagement: PomoTracker fosters a sense of community by implementing a user league and leaderboard system. Users can compete with each other based on their Pomodoro sessions. The leaderboard displays information such as total Pomodoros completed, average Pomodoros, and rewards for top performers. This gamification element adds a unique and engaging aspect to the application.
+
+2. Contents of Each File:
+
+Here's an overview of the project's file structure:
+
+api: Contains files related to the API, including views, migrations, and tests.
+app: Houses files specific to the application, including forms, helpers, and templates.
+config: Contains configuration files for Gunicorn, Nginx, and Redis.
+templates: Contains HTML templates for different parts of the application.
+docker-compose files: Configuration files for Docker Compose for development and production environments.
+Dockerfile: Defines the Docker image for the application.
+LICENSE: The project's license information.
+manage.py: Django management script.
+Pipfile and Pipfile.lock: Dependency management files for Pipenv.
+PomoTracker: Django project configuration files.
+README.md: Main project README file.
+requirements.txt: List of Python dependencies.
+templates: Contains HTML templates for the account and social account sections.
+version.txt: Version information for the project.
+
+3. How to Run Your Application Locally:
+Using Docker:
+
+Install Docker Compose if you haven't already. You can find installation instructions here.
+
+In the project's root folder, run the following command to build and start the containers:
+
+css
+
+docker-compose -f docker-compose.yml up --build
+
+Using a Virtual Environment (Pipenv or Virtualenv):
+
+Install the necessary dependencies: Pipenv.
+
+In the project's root folder, activate the virtual environment:
+
+pipenv shell
+
+Start the Django development server:
+
+python manage.py runserver 0.0.0.0:1337
+
+Make sure to set the required environment variables, configure a PostgreSQL database, and set up a Redis server as specified in the documentation.
+
+Access the application in your web browser at http://localhost:1337. Ensure that port 1337 is not used by any other program.
+4. Additional Information:
+
+Please provide any additional information, such as environment variable details, database setup instructions, and Redis configuration, to help users set up and run the application smoothly. Additionally, if there are any known issues or limitations, consider including them in the documentation.
+
+Feel free to share any more details or questions you have about specific sections or any other information you'd like to include in the documentation.
 
 # Pomodoro Timer App WIP
 
@@ -20,19 +82,23 @@ Whether you're a student, a professional, or anyone in between, PomoTracker has 
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/viodid/PomoTracker.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd PomoTracker
 ```
 
-Install dependencies
-
+Execute Virtual Env
+- With pipenv
 ```bash
-  npm install
+  pipenv shell
+```
+- With venv
+```bash
+  pipenv shell
 ```
 
 Start the server
