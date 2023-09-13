@@ -5,15 +5,29 @@
 
 **PomoTracker: A Pomodoro Technique Study Timer Tracker**
 
-PomoTracker is a unique and complex project that offers a comprehensive solution for users looking to improve their productivity using the Pomodoro Technique. Here's why PomoTracker satisfies the distinctiveness and complexity requirements:
+PomoTracker is a unique and complex project that offers a comprehensive solution for users looking to improve their productivity using the Pomodoro Technique. Here's why PomoTracker satisfies the distinctiveness and complexity requirements.
 
-Pomodoro Technique Integration: PomoTracker is centered around the Pomodoro Technique, a time management method that promotes focused work and breaks. It allows users to customize their work and break intervals, making it flexible for different productivity preferences.
+- **Data Collection and Statistics:** PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused. This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
+<div align="center">
+  <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/charts_santi.png" style="border-radius:10px;" alt="User profile's graphs">
+  <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/contributor_graph.png" style="border-radius:10px;" alt="contributor graph">
+</div>
+<br>
 
-Data Collection and Statistics: PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused. This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
+- **Community Engagement:** PomoTracker fosters a sense of community by implementing a user league and leaderboard system. Users can compete with each other based on their Pomodoro sessions. The leaderboard displays information such as total Pomodoros completed, average Pomodoros, and rewards for top performers. This gamification element adds a unique and engaging aspect to the application.
+<div align="center">
+  <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/leaderboard.png" style="border-radius:10px;" alt="leaderboard users">
+</div>
+<br>
 
-Community Engagement: PomoTracker fosters a sense of community by implementing a user league and leaderboard system. Users can compete with each other based on their Pomodoro sessions. The leaderboard displays information such as total Pomodoros completed, average Pomodoros, and rewards for top performers. This gamification element adds a unique and engaging aspect to the application.
+-  **Pomodoro Technique Integration:** PomoTracker is centered around the Pomodoro Technique, a time management method that promotes focused work and breaks. It allows users to customize their work and break intervals, making it flexible for different productivity preferences.
+<div align="center">
+  <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/timer.gif" style="border-radius:10px;" alt="timer">
+</div>
+<br>
 
-2. Contents of Each File:
+
+**Contents of Each File:**
 
 Here's an overview of the project's file structure:
 
