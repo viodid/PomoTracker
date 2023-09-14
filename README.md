@@ -13,8 +13,6 @@ With PomoTracker, users can create custom timers tailored to their specific need
 Here's why PomoTracker satisfies the distinctiveness and complexity requirements.
 
 
-
-
 - **Data Collection and Statistics:** PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused. This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
 <div align="center">
   <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/charts_santi.png" style="border-radius:10px;" alt="User profile's graphs">
