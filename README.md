@@ -1,11 +1,19 @@
 
 ![Logo](https://pomotracker.s3.eu-central-1.amazonaws.com/pomotracker_logo_sticker.png)
 
-# Distinctiveness and Complexity:
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+## Distinctiveness and Complexity
 
-**PomoTracker: A Pomodoro Technique Study Timer Tracker**
+#### PomoTracker: A Pomodoro Technique Study Timer Tracker
 
-PomoTracker is a unique and complex project that offers a comprehensive solution for users looking to improve their productivity using the Pomodoro Technique. Here's why PomoTracker satisfies the distinctiveness and complexity requirements.
+PomoTracker is a powerful and flexible pomodoro timer app that helps users boost their productivity and manage their time more effectively.
+
+With PomoTracker, users can create custom timers tailored to their specific needs, save them for future use, and track their progress over time with detailed graphs and statistics.
+
+Here's why PomoTracker satisfies the distinctiveness and complexity requirements.
+
+
+
 
 - **Data Collection and Statistics:** PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused. This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
 <div align="center">
@@ -26,100 +34,205 @@ PomoTracker is a unique and complex project that offers a comprehensive solution
 </div>
 <br>
 
-
-**Contents of Each File:**
-
-Here's an overview of the project's file structure:
-
-api: Contains files related to the API, including views, migrations, and tests.
-app: Houses files specific to the application, including forms, helpers, and templates.
-config: Contains configuration files for Gunicorn, Nginx, and Redis.
-templates: Contains HTML templates for different parts of the application.
-docker-compose files: Configuration files for Docker Compose for development and production environments.
-Dockerfile: Defines the Docker image for the application.
-LICENSE: The project's license information.
-manage.py: Django management script.
-Pipfile and Pipfile.lock: Dependency management files for Pipenv.
-PomoTracker: Django project configuration files.
-README.md: Main project README file.
-requirements.txt: List of Python dependencies.
-templates: Contains HTML templates for the account and social account sections.
-version.txt: Version information for the project.
-
-3. How to Run Your Application Locally:
-Using Docker:
-
-Install Docker Compose if you haven't already. You can find installation instructions here.
-
-In the project's root folder, run the following command to build and start the containers:
-
-css
-
-docker-compose -f docker-compose.yml up --build
-
-Using a Virtual Environment (Pipenv or Virtualenv):
-
-Install the necessary dependencies: Pipenv.
-
-In the project's root folder, activate the virtual environment:
-
-pipenv shell
-
-Start the Django development server:
-
-python manage.py runserver 0.0.0.0:1337
-
-Make sure to set the required environment variables, configure a PostgreSQL database, and set up a Redis server as specified in the documentation.
-
-Access the application in your web browser at http://localhost:1337. Ensure that port 1337 is not used by any other program.
-4. Additional Information:
-
-Please provide any additional information, such as environment variable details, database setup instructions, and Redis configuration, to help users set up and run the application smoothly. Additionally, if there are any known issues or limitations, consider including them in the documentation.
-
-Feel free to share any more details or questions you have about specific sections or any other information you'd like to include in the documentation.
-
-# Pomodoro Timer App WIP
-
-PomoTracker is a powerful and flexible pomodoro timer app that helps users boost their productivity and manage their time more effectively.
-
-With PomoTracker, users can create custom timers tailored to their specific needs, save them for future use, and track their progress over time with detailed graphs and statistics.
-
-Whether you're a student, a professional, or anyone in between, PomoTracker has everything you need to stay focused and on task.
+- **Yet another pomodoro app?**
+Before PomoTracker came to be, I was an avid user of a website called "tomato.es". As the app I cherished was hosted on Heroku, our journey together encountered a bump in the road when Heroku decided to discontinue their free product plans, starting from November 28th, 2022 (Source: <a href="https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq">Heroku FAQ</a>). Suddenly, many of us found ourselves in a bit of a pickle, as we were used to the convenience and vibrant community that "tomato.es" provided. What I loved most about "tomato.es" were its nifty charts and a leaderboard that kept us motivated with daily, monthly, and yearly rankings. It was simple, but it worked like a charm. To my surprise, I couldn't find any other alternatives that offered the same cozy features I had grown to love. And so, PomoTracker was born, my way of giving back and creating a Pomodoro app that's even more awesome and feature-packed.
 
 
+## Contents of Each File
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+PomoTracker is organized into two main apps, each serving distinct purposes:
+
+**Main App (Web Application):**
+
+- **app:** This directory houses the main app for the web application. It includes the following key components:
+  - **Views:** Contains Django views responsible for rendering the web pages.
+  - **Models:** Defines the data models used within the application.
+  - **Static Files:** Includes static assets such as CSS, JavaScript, and image files.
+  - **Templates:** Contains HTML templates for rendering web pages.
+
+**API App (Client-Side Rendering and Future iOS Integration):**
+- **api:** This directory contains the API app, designed to serve as the backend for client-side rendering (CSR) and future integration with an iOS app. Key components within this app include:
+  - **Views:** Includes views responsible for handling API requests and responses.
+
+This clear separation of the main web application and the API app allows for flexibility and future expansion, making it easier to integrate with various client platforms, including web-based CSR and iOS applications.
 
 
 ## Run Locally
 
-Clone the project
+Clone the project and navigate to the project directory:
 
 ```bash
-  git clone https://github.com/viodid/PomoTracker.git
+  git clone https://github.com/viodid/PomoTracker.git && cd PomoTracker
 ```
 
-Go to the project directory
+There are two ways to run the application:
 
-```bash
-  cd PomoTracker
-```
+1. **Using Docker:**
 
-Execute Virtual Env
-- With pipenv
-```bash
-  pipenv shell
-```
-- With venv
-```bash
-  pipenv shell
-```
+  - Install Docker Compose if you haven't already. You can find installation instructions <a href="https://docs.docker.com/compose/install/">here</a>.
+  - In the project's root folder, run the following command to build and start the containers:
+  ```bash
+    docker-compose -f docker-compose.yml up --build
+  ```
 
-Start the server
+2. **Using a Virtual Environment (Pipenv or Virtualenv):**
 
-```bash
-  npm run start
-```
+  - Install pipenv if you haven't already. You can find installation instructions <a href="https://pipenv.pypa.io/en/latest/installation/#make-sure-you-have-python-and-pip">here</a>.
+  - In the root folder, run `pipenv shell` to install the project's dependencies:
+  - Start the Django development server:
+  ```Bash
+    python manage.py runserver 0.0.0.0:1337
+  ```
+> [!IMPORTANT]
+> Make sure to set the required environment variables, configure a PostgreSQL database, and set up a Redis server as specified in the documentation. (Only required using the virtual environment method.)
+
+Access the application in your web browser at http://localhost:1337. Ensure that port 1337 is not used by any other program.
+
+# PomoTracker API Documentation
+
+This documentation provides detailed information about the PomoTracker API, which is used for managing Pomodoro sessions and user settings. Below are the available API endpoints, their descriptions, and expected input/output formats.
+
+## Get All User Tags
+
+**Endpoint**: `GET /api/user/{username}/tags`
+
+**Description**: Retrieve all tags associated with a specific user.
+
+**Parameters**:
+
+- `username` (path parameter) - Username of the user. *(Required)*
+
+**Responses**:
+
+- `200 OK` - Successful response with a list of user tags.
+
+## Get All User Pomodoros Dates
+
+**Endpoint**: `GET /api/user/{username}/pomodoros/dates`
+
+**Description**: Retrieve dates on which a user has completed Pomodoro sessions.
+
+**Parameters**:
+
+- `username` (path parameter) - Username of the user. *(Required)*
+
+**Responses**:
+
+- `200 OK` - Successful response with a list of dates.
+
+## Get All User Pomodoros
+
+**Endpoint**: `GET /api/user/{username}/pomodoros`
+
+**Description**: Retrieve details of all Pomodoro sessions associated with a specific user.
+
+**Parameters**:
+
+- `username` (path parameter) - Username of the user. *(Required)*
+
+**Responses**:
+
+- `200 OK` - Successful response with a list of Pomodoro sessions.
+
+## Get All Pomodoros
+
+**Endpoint**: `GET /api/pomodoros`
+
+**Description**: Retrieve details of all Pomodoro sessions across all users.
+
+**Responses**:
+
+- `200 OK` - Successful response with a list of all Pomodoro sessions.
+
+## Get User Settings
+
+**Endpoint**: `GET /api/settings/{token}`
+
+**Description**: Retrieve user-specific settings, including theme preferences.
+
+**Parameters**:
+
+- `token` (path parameter) - User's API token. *(Required)*
+
+**Responses**:
+
+- `200 OK` - Successful response with user settings.
+
+## Update User Settings
+
+**Endpoint**: `PUT /api/settings/{token}`
+
+**Description**: Update user-specific settings, including theme preferences.
+
+**Parameters**:
+
+- `token` (path parameter) - User's API token. *(Required)*
+
+**Responses**:
+
+- `201 Created` - Settings updated successfully.
+
+## Create a New Pomodoro
+
+**Endpoint**: `POST /api/pomodoros/{token}`
+
+**Description**: Create a new Pomodoro session for a user.
+
+**Parameters**:
+
+- `token` (path parameter) - User's API token. *(Required)*
+
+**Responses**:
+
+- `201 Created` - Pomodoro created successfully.
+
+## Update Tags
+
+**Endpoint**: `PATCH /api/pomodoros/{token}/tags/{tag_to_replace}`
+
+**Description**: Update tags associated with a user's Pomodoro sessions.
+
+**Parameters**:
+
+- `token` (path parameter) - User's API token. *(Required)*
+- `tag_to_replace` (path parameter) - Tag to replace. *(Required)*
+
+**Responses**:
+
+- `201 Created` - Tags updated successfully.
+
+## Update a Pomodoro
+
+**Endpoint**: `PUT /api/pomodoros/{token}/{pomodoro_id}`
+
+**Description**: Update details of a specific Pomodoro session.
+
+**Parameters**:
+
+- `token` (path parameter) - User's API token. *(Required)*
+- `pomodoro_id` (path parameter) - ID of the Pomodoro to update. *(Required)*
+
+**Responses**:
+
+- `201 Created` - Pomodoro updated successfully.
+
+## Delete a Pomodoro
+
+**Endpoint**: `DELETE /api/pomodoros/{token}/{pomodoro_id}`
+
+**Description**: Delete a specific Pomodoro session.
+
+**Parameters**:
+
+- `token` (path parameter) - User's API token. *(Required)*
+- `pomodoro_id` (path parameter) - ID of the Pomodoro to delete. *(Required)*
+
+**Responses**:
+
+- `201 Created` - Pomodoro removed successfully.
+
+
+
 
 
 ## API Reference

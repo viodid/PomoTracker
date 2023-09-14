@@ -18,8 +18,8 @@ body.forest {
   /* color levels charts */
   --level-1: #727055;;
   --level-2: #959473;;
-  --level-3: #bebb8f;;
-  --level-4: #EAE7B1;;
+  --level-3: #c8c596;;
+  --level-4: #f4f1c0;;
 }
 
 body.aquamarine {
@@ -27,7 +27,7 @@ body.aquamarine {
     --level-1: #076363;
     --level-2: #0b8787;
     --level-3: #0fb2b2;
-    --level-4: #17dcdc;
+    --level-4: #00ffff;
 }
 
 body.garnet {
