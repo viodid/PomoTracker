@@ -8,58 +8,433 @@ API Reference
 {% block body %}
 <main>
 
-  <h2>PomoTracker</h2>
+  <p style="font-size: 20px; margin-top: 30px;"><a href="{% url 'token' %}">Click here to get your token.</a></p>
 
-  <p><a href="{% url 'token' %}">Click here to get your token.(Do not share with anyone)</a></p>
-  <h2>Endpoints</h2>
+  <h2 style="margin:20px 0">Get All User Tags</h2>
+  <p><strong>Endpoint</strong>: <code>GET /api/user/{username}/tags</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>username</code></td>
+      <td><code>string</code></td>
+      <td>Username of the user. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>200 OK</code></td>
+      <td>Successful response with a list of user tags.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>GET</code>.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided username does not exist.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to retrieve all tags associated with a specific user. It
+    requires a <code>GET</code> request with the <code>username</code> parameter in the URL. If the request is
+    successful, it returns a list of user tags in the response body.</p>
 
-  <h3>1. GET <code>/api/:username/:endpoint</code></h3>
-  <p>Retrieve all pomodoros or tag statistics for a specific user.</p>
-  <h4>Parameters</h4>
-  <ul>
-    <li><code>username</code>: The username of the user.</li>
-    <li><code>endpoint</code>: Can be either 'pomodoros' or 'tag'.</li>
-  </ul>
-  <h4>Responses</h4>
-  <ul>
-    <li><code>200 OK</code>: Returns a JSON array of all pomodoros or a JSON object containing tag statistics.</li>
-    <li><code>400 Bad Request</code>: Returned if the request method is not 'GET'.</li>
-    <li><code>401 Unauthorized</code>: Returned if the user does not exist.</li>
-  </ul>
+  <h2 style="margin: 20px 0;">Get All User Pomodoros Dates</h2>
+  <p><strong>Endpoint</strong>: <code>GET /api/user/{username}/pomodoros/dates</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>username</code></td>
+      <td><code>string</code></td>
+      <td>Username of the user. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>200 OK</code></td>
+      <td>Successful response with a list of pomodoro creation dates.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>GET</code>.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided username does not exist.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to retrieve the creation dates of all pomodoros associated
+    with a specific user. It requires a <code>GET</code> request with the <code>username</code> parameter in the URL. If
+    the request is successful, it returns a list of pomodoro creation dates in the response body.</p>
 
-  <h3>2. GET <code>/api/settings/:token</code></h3>
-  <p>Get the user settings for a given token.</p>
-  <h4>Parameters</h4>
-  <ul>
-    <li><code>token</code>: The user's token.</li>
-  </ul>
-  <h4>Responses</h4>
-  <ul>
-    <li><code>200 OK</code>: Returns a JSON object containing the user's settings.</li>
-    <li><code>400 Bad Request</code>: Returned if the request method is not 'GET'.</li>
-    <li><code>401 Unauthorized</code>: Returned if the token is invalid.</li>
-  </ul>
 
-  <h3>3. POST <code>/api/create/:token</code></h3>
-  <p>Create a new pomodoro for a user with a specific tag.</p>
-  <h4>Parameters</h4>
-  <ul>
-    <li><code>token</code>: The user's token.</li>
-  </ul>
-  <h4>Request Body</h4>
-  <ul>
-    <li><code>tag</code>: The tag to associate with the new pomodoro.</li>
-  </ul>
-  <h4>Responses</h4>
-  <ul>
-    <li><code>201 Created</code>: Returns a JSON object indicating the pomodoro was created successfully.</li>
-    <li><code>400 Bad Request</code>: Returned if the request method is not 'POST' or if there is a problem with the request data.</li>
-    <li><code>401 Unauthorized</code>: Returned if the token is invalid.</li>
-    <li><code>422 Unprocessable Entity</code>: Returned if the pomodoro would overlap with an existing one.</li>
-  </ul>
+  <h2 style="margin:20px 0">Get All User Pomodoros</h2>
+  <p><strong>Endpoint</strong>: <code>GET /api/user/{username}/pomodoros</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>username</code></td>
+      <td><code>string</code></td>
+      <td>Username of the user. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>200 OK</code></td>
+      <td>Successful response with a list of user's pomodoros.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>GET</code>.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided username does not exist.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to retrieve all pomodoros associated with a specific user.
+    It requires a <code>GET</code> request with the <code>username</code> parameter in the URL. If the request is
+    successful, it returns a list of user's pomodoros in the response body.</p>
 
-  <h3>4. PATCH <code>/api/updateTags/:token/:tag_to_replace</code></h3>
-  <p>Update all pomodoros associated with a given tag for a user.</p>
-  <h4>Parameters</h4
+
+  <h2 style="margin:20px 0">Get All Pomodoros</h2>
+  <p><strong>Endpoint</strong>: <code>GET /api/pomodoros</code></p>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>200 OK</code></td>
+      <td>Successful response with the total sum of pomodoros for all users.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>GET</code>.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to retrieve the total sum of all pomodoros for all users. It
+    requires a <code>GET</code> request. If the request is successful, it returns the total sum of pomodoros in the
+    response body.</p>
+
+
+  <h2 style="margin:20px 0">Get User Settings</h2>
+  <p><strong>Endpoint</strong>: <code>GET /api/settings/{token}</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>User settings token. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>200 OK</code></td>
+      <td>Successful response with the user's settings.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>GET</code>.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided token is invalid.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to retrieve the settings of a specific user by providing
+    their user settings token in the URL. It requires a <code>GET</code> request. If the request is successful, it
+    returns the user's settings in the response body.</p>
+
+
+  <h2 style="margin:20px 0">Create a New Pomodoro</h2>
+  <p><strong>Endpoint</strong>: <code>POST /api/pomodoros/create/{token}</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>User settings token. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Request Body</strong>:</p>
+  <p>The request body must be a JSON object with the following fields:</p>
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>tag</code></td>
+      <td><code>string</code></td>
+      <td>The tag for the new pomodoro. (e.g., "work") <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>201 Created</code></td>
+      <td>Successful response indicating that the pomodoro has been created.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>POST</code> or if the request body is missing or invalid.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided token is invalid.</td>
+    </tr>
+    <tr>
+      <td><code>422 Unprocessable Entity</code></td>
+      <td>Returned if the pomodoro creation failed, typically due to overlapping with existing pomodoros.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to create a new pomodoro for a user by providing their user
+    settings token in the URL and specifying the pomodoro details in the request body. It requires a <code>POST</code>
+    request with a valid token and a JSON object containing the pomodoro's tag. The tag is converted to uppercase and
+    spaces are replaced with underscores. If the pomodoro creation is successful, it returns a <code>201 Created</code>
+    response; otherwise, it returns an appropriate error response. If the pomodoro creation fails due to overlapping
+    with existing pomodoros, it returns a <code>422 Unprocessable Entity</code> response with an error message.</p>
+
+
+  <h2 style="margin:20px 0">Update Pomodoro Tags</h2>
+  <p><strong>Endpoint</strong>: <code>PATCH /api/pomodoros/tags/update/ {token}/{tag_to_replace}</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>User settings token. <strong>(Required)</strong></td>
+    </tr>
+    <tr>
+      <td><code>tag_to_replace</code></td>
+      <td><code>string</code></td>
+      <td>The tag to be replaced. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Request Body</strong>:</p>
+  <p>The request body must be a JSON object with the following field:</p>
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>tag</code></td>
+      <td><code>string</code></td>
+      <td>The new tag to replace the existing one. (e.g., "work") <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>201 Created</code></td>
+      <td>Successful response indicating that the tags have been updated successfully.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>PATCH</code> or if the request body is missing or invalid.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided token is invalid.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to update the tags of all pomodoros associated with a
+    specific tag. To use this endpoint, send a <code>PATCH</code> request with the user's settings token in the URL and
+    specify the tag to be replaced in the URL as well. Provide the new tag in the request body, which will replace the
+    existing tag in all relevant pomodoros. The tag values are converted to uppercase, and spaces are replaced with
+    underscores. If the update is successful, it returns a <code>201 Created</code> response; otherwise, it returns an
+    appropriate error response. If the provided token is invalid, it returns a <code>401 Unauthorized</code> response.
+  </p>
+
+
+  <h2 style="margin: 20px 0;">Update or Delete a Pomodoro</h2>
+  <p><strong>Endpoint</strong>: <code>PUT /api/pomodoros/{token}/{pomodoro_id}</code></p>
+  <p><strong>Endpoint</strong>: <code>DELETE /api/pomodoros/{token}/{pomodoro_id}</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>User settings token. <strong>(Required)</strong></td>
+    </tr>
+    <tr>
+      <td><code>pomodoro_id</code></td>
+      <td><code>integer</code></td>
+      <td>The ID of the pomodoro to update or delete. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Request Body (PUT)</strong>:</p>
+  <p>The request body must be a JSON object with the following field:</p>
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>tag</code></td>
+      <td><code>string</code></td>
+      <td>The new tag to update the pomodoro. (e.g., "work") <strong>(Required for PUT)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>201 Created</code></td>
+      <td>Returned when a pomodoro is successfully updated or deleted.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>PUT</code> or <code>DELETE</code> or if the request body is
+        missing or invalid for the <code>PUT</code> request.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided token is invalid.</td>
+    </tr>
+    <tr>
+      <td><code>404 Not Found</code></td>
+      <td>Returned if the pomodoro with the specified ID does not exist or if it does not belong to the user associated
+        with the token.</td>
+    </tr>
+  </table>
+  <p><strong>Description</strong>: This endpoint allows you to update or delete a specific pomodoro. To update a
+    pomodoro, send a <code>PUT</code> request with the user's settings token in the URL and specify the pomodoro ID to
+    update. Provide the new tag in the request body, which will replace the existing tag of the pomodoro. The tag values
+    are converted to uppercase, and spaces are replaced with underscores. To delete a pomodoro, send a
+    <code>DELETE</code> request with the user's settings token in the URL and specify the pomodoro ID to delete. If the
+    update or delete is successful, it returns a <code>201 Created</code> response; otherwise, it returns an appropriate
+    error response. If the provided token is invalid or the pomodoro does not exist or does not belong to the user, it
+    returns a <code>401 Unauthorized</code> or <code>404 Not Found</code> response, respectively.</p>
+
+
+  <h2 style="margin: 20px 0;">Update User Settings</h2>
+  <p><strong>Endpoint</strong>: <code>PUT /api/settings/{token}</code></p>
+  <p><strong>Parameters</strong>:</p>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td><code>string</code></td>
+      <td>User settings token. <strong>(Required)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Request Body (PUT)</strong>:</p>
+  <p>The request body must be a JSON object with the following field:</p>
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>white_theme</code></td>
+      <td><code>boolean</code></td>
+      <td>The new theme setting for the user. Set to <code>true</code> for a white theme or <code>false</code> for a
+        dark theme. <strong>(Required for PUT)</strong></td>
+    </tr>
+  </table>
+  <p><strong>Responses</strong>:</p>
+  <table>
+    <tr>
+      <th>Status Code</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>201 Created</code></td>
+      <td>Returned when the user settings are successfully updated.</td>
+    </tr>
+    <tr>
+      <td><code>400 Bad Request</code></td>
+      <td>Returned if the request method is not <code>PUT</code> or if the request body is missing or invalid for the
+        <code>PUT</code> request.</td>
+    </tr>
+    <tr>
+      <td><code>401 Unauthorized</code></td>
+      <td>Returned if the provided token is invalid.</td>
+    </tr>
+  </table>
+  <p style="margin-bottom: 30px;"><strong>Description</strong>: This endpoint allows you to update the user settings for the theme. To update the
+    user settings, send a <code>PUT</code> request with the user's settings token in the URL. Provide the new theme
+    setting in the request body as <code>true</code> for a white theme or <code>false</code> for a dark theme. If the
+    update is successful, it returns a <code>201 Created</code> response; otherwise, it returns an appropriate error
+    response. If the provided token is invalid, it returns a <code>401 Unauthorized</code> response.</p>
+
+
 </main>
 {% endblock %}

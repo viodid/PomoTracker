@@ -1002,6 +1002,34 @@ text-align: center;
   margin-bottom: 30px;
 }
 
+/* API Reference styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  color: #efe8e8;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--softest-color);
+  font-weight: bold;
+}
+
+code {
+  background-color: var(--softest-color);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
 /* Media queries */
 @media screen and (max-width: 1000px) {
   .navbar li {
