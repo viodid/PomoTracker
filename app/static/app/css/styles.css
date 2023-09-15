@@ -1007,7 +1007,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  color: #efe8e8;
+  color: var(--text-color);
 }
 
 table, th, td {
