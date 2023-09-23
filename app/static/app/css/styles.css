@@ -629,7 +629,7 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   transition: all .2s ease-in-out;
 }
 .planSwitch input:checked + label {
-  color: #fff;
+  color: var(--yellow-logo);
   text-shadow: rgba(0,0,0,.1) 0px -1px 2px;
 }
 .indicator {
@@ -1011,7 +1011,7 @@ table {
 }
 
 table, th, td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 th, td {

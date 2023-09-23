@@ -2,6 +2,17 @@
 ![Logo](https://pomotracker.s3.eu-central-1.amazonaws.com/pomotracker_logo_sticker.png)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+## Table of Contents
+1. [Distinctiveness and Complexity](#Distinctiveness-and-Complexity)
+2. [Contents of each file](#Contents-of-Each-File)
+2. [Run locally](#run-locally)
+3. [Update](#update)
+4. [Running](#Running)
+5. [Uninstall](#uninstall)
+6. [FAQ](#faq)
+7. [Acknowledgments](#acknowledgments)
+
 ## Distinctiveness and Complexity
 
 #### PomoTracker: A Pomodoro Technique Study Timer Tracker
@@ -34,6 +45,21 @@ Here's why PomoTracker satisfies the distinctiveness and complexity requirements
 
 - **Yet another pomodoro app?**
 Before PomoTracker came to be, I was an avid user of a website called "tomato.es". As the app I cherished was hosted on Heroku, our journey together encountered a bump in the road when Heroku decided to discontinue their free product plans, starting from November 28th, 2022 (Source: <a href="https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq">Heroku FAQ</a>). Suddenly, many of us found ourselves in a bit of a pickle, as we were used to the convenience and vibrant community that "tomato.es" provided. What I loved most about "tomato.es" were its nifty charts and a leaderboard that kept us motivated with daily, monthly, and yearly rankings. It was simple, but it worked like a charm. To my surprise, I couldn't find any other alternatives that offered the same cozy features I had grown to love. And so, PomoTracker was born, my way of giving back and creating a Pomodoro app that's even more awesome and feature-packed.
+
+
+## Features
+
+**Responsive Design:** 📱 PomoTracker boasts a fully responsive design, ensuring a seamless and enjoyable experience across all your devices, from desktops to mobile phones.
+
+**Customizable Themes:** 🌈 Personalize your PomoTracker to match your unique style. Choose from a variety of theme colors in the settings, allowing you to create an environment that suits your preferences.
+
+**Leaderboard Engagement:** 🥇 Get ready for some friendly competition! The integrated leaderboard is just a click away, right from the timer page. See how your productivity stacks up against others and stay motivated to achieve your goals.
+
+**User-Friendly Settings:** ⚙️ I've designed the user settings interface with simplicity in mind. You'll appreciate the seamless form interface and helpful error messages, making it easy to tailor PomoTracker to your needs.
+
+**Visual Productivity Insights:** 📈 Gain valuable insights into your productivity with visually engaging charts. Track your pomodoros per hour and per day, and visualize your productivity journey with a GitHub-like density chart right on the main page.
+
+**Optimized Performance:** 📊 PomoTracker is built for speed and efficiency. I've fine-tuned data handling to reduce load times, minimize API calls for faster responses, and ensure a smooth and responsive user experience.
 
 
 ## Contents of Each File
@@ -82,25 +108,69 @@ There are two ways to run the application:
     python manage.py runserver 0.0.0.0:1337
   ```
 > [!IMPORTANT]
-> Make sure to set the required environment variables, configure a PostgreSQL database, and set up a Redis server as specified in the documentation. (Only required using the virtual environment method.)
+> Ensure you've configured the required environment variables based on the content of the [.env file](https://github.com/viodid/PomoTracker/blob/main/PomoTracker/.dev.env) used in the Docker method. Additionally, set up a PostgreSQL database and configure a Redis server. **Please note that this step is only necessary when using the virtual environment method.**
 
 Access the application in your web browser at http://localhost:1337. Ensure that port 1337 is not used by any other program.
 
-# API Documentation
 
-This documentation provides detailed information about the PomoTracker API, which is used for managing Pomodoro sessions and user settings. Below are the available API endpoints, their descriptions, and expected input/output formats.
+## Demo
+
+Insert gif or link to demo
 
 
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+#### Client
+- HTML
+- CSS
+- JavaScript
 
-**Server:** Node, Express
+#### Server
+- Django(Python Web Framework)
+- PostgreSQL
+- Redis(For caching)
+- Gunicorn(WSGI HTTP Server)
+- Nginx(Web Server)
+
+#### Containerization and Deployment
+- Docker & Docker Compose
+- Azure DevOps(CI/CD)
+
+## API Reference
+
+If you're interested in integrating with PomoTracker or accessing its API, the [API Reference](https://pomotracker.app/api_reference) provides comprehensive documentation. This reference will guide you through the available endpoints, request methods, authentication requirements, and response formats.
 
 
-## Feedback
+#### Key Features:
 
-If you have any feedback, please reach out to me at webmaster@pomotracker.app
+- **User Data:** Access and manage user-specific data, including tags, pomodoro dates, and settings.
+- **Pomodoro Sessions:** Create, update, and delete Pomodoro sessions, allowing users to track their work and breaks.
+- **Statistics:** Retrieve comprehensive statistics, including aggregated Pomodoro data and leaderboard standings.
+- **Customization:** Personalize settings, such as themes and session preferences, for a tailored user experience.
+
+
+Feel free to reach out if you have any questions or need assistance while working with the API.
+
+
+## Roadmap
+
+Here's a sneak peek into the future features of PomoTracker:
+
+
+**Line Chart Comparisons:** 📊 Implement a line chart that compares the current month's statistics with previous months, offering valuable insights into your progress.
+**Focus Metrics:** 🎯 Keep track of your focused hours, days accessed, and streaks, helping you stay on top of your productivity game.
+**Timeline with Tags:** 📆 Create a timeline chart with tags for a comprehensive overview of your productivity journey, making it easier to spot trends.
+**Educational Content:** 📚 Provide resources explaining what Pomotracker is and the Pomodoro Technique, ensuring users have a clear understanding.
+**Sound Volume Control:** 🔊 Offer volume controls for audio notifications to customize your PomoTracker experience.
+**Data Export:** 📤 Enable data export in CSV format, allowing users to analyze their Pomodoro data in external tools.
+**Import from Other Apps:** 📥 Implement the ability to input Pomodoro sessions from CSV files exported from other productivity apps.
+**Enhanced 404 Page:** 🚫 Create a user-friendly and informative 404 error page to improve the user experience.
+**Session Storage:** 💾 Store Pomodoro sessions in sessions (no login required) for quick and convenient tracking.
+**GitHub Integration:** 🌐 Introduce GitHub login functionality for access.
+**Clicking Sound:** 🔊 Customize the clicking sound timer.
+
+I'm committed to making PomoTracker even more powerful and user-friendly. Stay tuned for these exciting updates and enhancements in the near future!
+
 
 
 ## Acknowledgements
@@ -119,51 +189,6 @@ See `contributing.md` for ways to get started.
 Please adhere to this project's `code of conduct`.
 
 
-## Demo
+## Feedback & Support
 
-Insert gif or link to demo
-
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
-
-
-## Features
-
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
-
-
-## Lessons Learned
-
-What did you learn while building this project? What challenges did you face and how did you overcome them?
-
-
-## Optimizations
-
-What optimizations did you make in your code? E.g. refactors, performance improvements, accessibility
-
-
-## Roadmap
-
-- Additional browser support
-
-- Add more integrations
-
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
-## Support
-
-For support, email fake@fake.com or join our Slack channel.
-
+If you have any feedback, please reach out to me at webmaster@pomotracker.app
