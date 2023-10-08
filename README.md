@@ -109,7 +109,7 @@ There are two ways to run the application:
 2. **Using a Virtual Environment (Pipenv or Virtualenv):**
 
   - Install pipenv if you haven't already. You can find installation instructions <a href="https://pipenv.pypa.io/en/latest/installation/#make-sure-you-have-python-and-pip">here</a>.
-  - In the root folder, run `pipenv shell` to install the project's dependencies:
+  - In the root folder, run `pipenv shell` and `pipenv install` to install the project's dependencies.
   - Start the Django development server:
   ```Bash
     python manage.py runserver 0.0.0.0:1337
