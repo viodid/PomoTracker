@@ -13,7 +13,7 @@
 7. [Roadmap](#roadmap)
 8. [Acknowledgements](#acknowledgements)
 9. [Contributing](#contributing)
-10. [Feedback & Support](#feedback-&-support)
+10. [Feedback & Support](#feedback--support)
 
 ## Distinctiveness and Complexity
 
@@ -26,14 +26,17 @@ With PomoTracker, users can create custom timers tailored to their specific need
 Here's why PomoTracker satisfies the distinctiveness and complexity requirements.
 
 
-- **Data Collection and Statistics:** PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused. This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
+- **Data Collection and Statistics:** PomoTracker collects statistics on user activity to provide insights into their productivity. It tracks the number of hours worked per day and analyzes when users are most focused.
+This data-driven approach sets PomoTracker apart by helping users make informed decisions about their work habits.
 <div align="center">
   <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/charts_santi.png" style="border-radius:10px;" alt="User profile's graphs">
   <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/contributor_graph.png" style="border-radius:10px;" alt="contributor graph">
 </div>
 <br>
 
-- **Community Engagement:** PomoTracker fosters a sense of community by implementing a user league and leaderboard system. Users can compete with each other based on their Pomodoro sessions. The leaderboard displays information such as total Pomodoros completed, average Pomodoros, and rewards for top performers. This gamification element adds a unique and engaging aspect to the application.
+- **Community Engagement:** PomoTracker fosters a sense of community by implementing a user league and leaderboard system. Users can compete with each other based on their Pomodoro sessions.
+  The leaderboard displays information such as total Pomodoros completed, average Pomodoros, and rewards for top performers.
+  This gamification element adds a unique and engaging aspect to the application.
 <div align="center">
   <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/leaderboard.png" style="border-radius:10px;" alt="leaderboard users">
 </div>
@@ -46,7 +49,9 @@ Here's why PomoTracker satisfies the distinctiveness and complexity requirements
 <br>
 
 - **Yet another pomodoro app?**
-Before PomoTracker came to be, I was an avid user of a website called "tomato.es". As the app I cherished was hosted on Heroku, our journey together encountered a bump in the road when Heroku decided to discontinue their free product plans, starting from November 28th, 2022 (Source: <a href="https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq">Heroku FAQ</a>). Suddenly, many of us found ourselves in a bit of a pickle, as we were used to the convenience and vibrant community that "tomato.es" provided. What I loved most about "tomato.es" were its nifty charts and a leaderboard that kept us motivated with daily, monthly, and yearly rankings. It was simple, but it worked like a charm. To my surprise, I couldn't find any other alternatives that offered the same cozy features I had grown to love. And so, PomoTracker was born, my way of giving back and creating a Pomodoro app that's even more awesome and feature-packed.
+Before PomoTracker came to be, I was an avid user of a website called "tomato.es". As the app I cherished was hosted on Heroku, our journey together encountered a bump in the road when Heroku decided to discontinue their free product plans, starting from November 28th, 2022 (Source: <a href="https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq">Heroku FAQ</a>). Suddenly, many of us found ourselves in a bit of a pickle, as we were used to the convenience and vibrant community that "tomato.es" provided.
+What I loved most about "tomato.es" were its nifty charts and a leaderboard that kept us motivated with daily, monthly, and yearly rankings. It was simple, but it worked like a charm.s
+ To my surprise, I couldn't find any other alternatives that offered the same cozy features I had grown to love. And so, PomoTracker was born, my way of giving back and creating a Pomodoro app that's even more awesome and feature-packed.
 
 
 ## Features
@@ -170,12 +175,11 @@ Here's a sneak peek into the future features of PomoTracker:
 Stay tuned for these exciting updates and enhancements in the near future!
 
 
+## Acknowledgments
 
-## Acknowledgements
+PomoTracker is, in fact, the culmination of my journey through the [CS50w](https://cs50.harvard.edu/web/2020/) course. I'd like to acknowledge the pivotal role that this course has played in providing the knowledge and tools necessary to create PomoTracker, the final project.
 
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
+I also owe a debt of gratitude to the original "tomato.es" web app, which served as the fundamental idea for the concept behind PomoTracker.
 
 
 ## Contributing
