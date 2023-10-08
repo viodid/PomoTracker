@@ -110,7 +110,8 @@ There are two ways to run the application:
     python manage.py runserver 0.0.0.0:1337
   ```
 > [!IMPORTANT]
-> Ensure you've configured the required environment variables based on the content of the [.env file](https://github.com/viodid/PomoTracker/blob/main/PomoTracker/.dev.env) used in the Docker method. Additionally, set up a PostgreSQL database and configure a Redis server. **Please note that this step is only necessary when using the virtual environment method.**
+> Ensure you've configured the required environment variables based on the content of the [.env file](https://github.com/viodid/PomoTracker/blob/main/PomoTracker/.dev.env) used in the Docker method. Additionally, set up a PostgreSQL database and configure a Redis server.
+**Please note that this step is only necessary when using the virtual environment method.**
 
 Access the application in your web browser at http://localhost:1337. Ensure that port 1337 is not used by any other program.
 
@@ -146,7 +147,7 @@ If you're interested in integrating with PomoTracker or accessing its API, the [
 - **Customization:** Personalize settings, such as themes and session preferences, for a tailored user experience.
 
 
-Feel free to reach out if you have any questions or need assistance while working with the API.
+Feel free to reach out at webmaster@pomotracker.app if you have any questions or need assistance while working with the API.
 
 
 ## Roadmap
@@ -181,9 +182,9 @@ Stay tuned for these exciting updates and enhancements in the near future!
 
 Contributions are always welcome!
 
-See `contributing.md` for ways to get started.
+See [`contributing.md`](https://github.com/viodid/PomoTracker/blob/main/CONTRIBUTING.md) for ways to get started.
 
-Please adhere to this project's `code of conduct`.
+Please adhere to this project's [`code of conduct`](https://github.com/viodid/PomoTracker/blob/main/CODE_OF_CONDUCT.md).
 
 
 ## Feedback & Support
