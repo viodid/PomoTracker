@@ -5,13 +5,15 @@
 
 ## Table of Contents
 1. [Distinctiveness and Complexity](#Distinctiveness-and-Complexity)
-2. [Contents of each file](#Contents-of-Each-File)
-2. [Run locally](#run-locally)
-3. [Update](#update)
-4. [Running](#Running)
-5. [Uninstall](#uninstall)
-6. [FAQ](#faq)
-7. [Acknowledgments](#acknowledgments)
+2. [Features](#features)
+3. [Contents of each file](#Contents-of-Each-File)
+4. [Run locally](#run-locally)
+5. [Tech stack](#tech-stack)
+6. [API Reference](#api-reference)
+7. [Roadmap](#roadmap)
+8. [Acknowledgements](#acknowledgements)
+9. [Contributing](#contributing)
+10. [Feedback & Support](#feedback-&-support)
 
 ## Distinctiveness and Complexity
 
@@ -49,17 +51,17 @@ Before PomoTracker came to be, I was an avid user of a website called "tomato.es
 
 ## Features
 
-**Responsive Design:** 📱 PomoTracker boasts a fully responsive design, ensuring a seamless and enjoyable experience across all your devices, from desktops to mobile phones.
+1. **Responsive Design:** 📱 PomoTracker boasts a fully responsive design, ensuring a seamless and enjoyable experience across all your devices, from desktops to mobile phones.
 
-**Customizable Themes:** 🌈 Personalize your PomoTracker to match your unique style. Choose from a variety of theme colors in the settings, allowing you to create an environment that suits your preferences.
+2. **Customizable Themes:** 🌈 Personalize your PomoTracker to match your unique style. Choose from a variety of theme colors in the settings, allowing you to create an environment that suits your preferences.
 
-**Leaderboard Engagement:** 🥇 Get ready for some friendly competition! The integrated leaderboard is just a click away, right from the timer page. See how your productivity stacks up against others and stay motivated to achieve your goals.
+3. **Leaderboard Engagement:** 🥇 Get ready for some friendly competition! The integrated leaderboard is just a click away, right from the timer page. See how your productivity stacks up against others and stay motivated to achieve your goals.
 
-**User-Friendly Settings:** ⚙️ I've designed the user settings interface with simplicity in mind. You'll appreciate the seamless form interface and helpful error messages, making it easy to tailor PomoTracker to your needs.
+4. **User-Friendly Settings:** ⚙️ I've designed the user settings interface with simplicity in mind. You'll appreciate the seamless form interface and helpful error messages, making it easy to tailor PomoTracker to your needs.
 
-**Visual Productivity Insights:** 📈 Gain valuable insights into your productivity with visually engaging charts. Track your pomodoros per hour and per day, and visualize your productivity journey with a GitHub-like density chart right on the main page.
+5. **Visual Productivity Insights:** 📈 Gain valuable insights into your productivity with visually engaging charts. Track your pomodoros per hour and per day, and visualize your productivity journey with a GitHub-like density chart right on the main page.
 
-**Optimized Performance:** 📊 PomoTracker is built for speed and efficiency. I've fine-tuned data handling to reduce load times, minimize API calls for faster responses, and ensure a smooth and responsive user experience.
+6. **Optimized Performance:** 📊 PomoTracker is built for speed and efficiency. I've fine-tuned data handling to reduce load times, minimize API calls for faster responses, and ensure a smooth and responsive user experience.
 
 
 ## Contents of Each File
@@ -113,28 +115,23 @@ There are two ways to run the application:
 Access the application in your web browser at http://localhost:1337. Ensure that port 1337 is not used by any other program.
 
 
-## Demo
-
-Insert gif or link to demo
-
-
 ## Tech Stack
 
-#### Client
+**Client**
 - HTML
 - CSS
 - JavaScript
 
-#### Server
-- Django(Python Web Framework)
+**Server**
+- Django (Python Web Framework)
 - PostgreSQL
-- Redis(For caching)
-- Gunicorn(WSGI HTTP Server)
-- Nginx(Web Server)
+- Redis (For caching)
+- Gunicorn (WSGI HTTP Server)
+- Nginx (Web Server)
 
-#### Containerization and Deployment
+**Containerization and Deployment**
 - Docker & Docker Compose
-- Azure DevOps(CI/CD)
+- Azure DevOps (CI/CD)
 
 ## API Reference
 
@@ -157,19 +154,19 @@ Feel free to reach out if you have any questions or need assistance while workin
 Here's a sneak peek into the future features of PomoTracker:
 
 
-**Line Chart Comparisons:** 📊 Implement a line chart that compares the current month's statistics with previous months, offering valuable insights into your progress.
-**Focus Metrics:** 🎯 Keep track of your focused hours, days accessed, and streaks, helping you stay on top of your productivity game.
-**Timeline with Tags:** 📆 Create a timeline chart with tags for a comprehensive overview of your productivity journey, making it easier to spot trends.
-**Educational Content:** 📚 Provide resources explaining what Pomotracker is and the Pomodoro Technique, ensuring users have a clear understanding.
-**Sound Volume Control:** 🔊 Offer volume controls for audio notifications to customize your PomoTracker experience.
-**Data Export:** 📤 Enable data export in CSV format, allowing users to analyze their Pomodoro data in external tools.
-**Import from Other Apps:** 📥 Implement the ability to input Pomodoro sessions from CSV files exported from other productivity apps.
-**Enhanced 404 Page:** 🚫 Create a user-friendly and informative 404 error page to improve the user experience.
-**Session Storage:** 💾 Store Pomodoro sessions in sessions (no login required) for quick and convenient tracking.
-**GitHub Integration:** 🌐 Introduce GitHub login functionality for access.
-**Clicking Sound:** 🔊 Customize the clicking sound timer.
+- **Line Chart Comparisons:** 📊 Implement a line chart that compares the current month's statistics with previous months, offering valuable insights into your progress.
+- **Focus Metrics:** 🎯 Keep track of your focused hours, days accessed, and streaks, helping you stay on top of your productivity game.
+- **Timeline with Tags:** 📆 Create a timeline chart with tags for a comprehensive overview of your productivity journey, making it easier to spot trends.
+- **Educational Content:** 📚 Provide resources explaining what Pomotracker is and the Pomodoro Technique, ensuring users have a clear understanding.
+- **Sound Volume Control:** 🔊 Offer volume controls for audio notifications to customize your PomoTracker experience.
+- **Data Export:** 📤 Enable data export in CSV format, allowing users to analyze their Pomodoro data in external tools.
+- **Import from Other Apps:** 📥 Implement the ability to input Pomodoro sessions from CSV files exported from other productivity apps.
+- **Enhanced 404 Page:** 🚫 Create a user-friendly and informative 404 error page to improve the user experience.
+- **Session Storage:** 💾 Store Pomodoro sessions in sessions (no login required) for quick and convenient tracking.
+- **GitHub Integration:** 🌐 Introduce GitHub login functionality for access.
+- **Clicking Sound:** 🔊 Customize the clicking sound timer.
 
-I'm committed to making PomoTracker even more powerful and user-friendly. Stay tuned for these exciting updates and enhancements in the near future!
+Stay tuned for these exciting updates and enhancements in the near future!
 
 
 
