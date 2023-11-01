@@ -200,3 +200,5 @@ Please adhere to this project's [`code of conduct`](https://github.com/viodid/Po
 ## Feedback & Support
 
 If you have any feedback, please reach out to me at webmaster@pomotracker.app
+
+***This project has taken 191 hours and 30 minutes to build so far, as tracked with PomoTracker.***
