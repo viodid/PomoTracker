@@ -9,7 +9,7 @@ services:
       - pomotracker-network
 
   postgres:
-    image: postgres:15-alpine
+    build: ./config/postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=devpostgres1234
@@ -39,7 +39,7 @@ services:
   nginx:
     build: ./config/nginx
     ports:
-      - 1337:80
+      - "1337:80"
     volumes:
       - static_volume:/home/app/pomotracker/staticfiles
     depends_on:

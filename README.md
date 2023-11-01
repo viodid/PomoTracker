@@ -103,7 +103,13 @@ There are two ways to run the application:
   - Install Docker Compose if you haven't already. You can find installation instructions <a href="https://docs.docker.com/compose/install/">here</a>.
   - In the project's root folder, run the following command to build and start the containers:
   ```bash
-    docker compose -f docker-compose.yml up --build
+    docker compose -f docker-compose.yml up --build -d
+  ```
+  ```bash
+    docker exec -it pomotracker-app-1 python manage.py migrate   
+  ```
+  ```bash
+    docker exec -it pomotracker-postgres-1 ./home/postgres/bypass_socialaccount_settings.sh
   ```
 
 2. **Using a Virtual Environment (Pipenv or Virtualenv):**
