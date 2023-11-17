@@ -177,6 +177,7 @@ Here's a sneak peek into the future features of PomoTracker:
 - **Session Storage:** 💾 Store Pomodoro sessions in sessions (no login required) for quick and convenient tracking.
 - **GitHub Integration:** 🌐 Introduce GitHub login functionality for access.
 - **Clicking Sound:** 🔊 Customize the clicking sound timer.
+- **Lofi background music:** 🎶 Play background music to help focus.
 
 Stay tuned for these exciting updates and enhancements in the near future!
 
