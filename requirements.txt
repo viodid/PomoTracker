@@ -14,7 +14,7 @@ idna==3.4; python_version >= '3.5'
 jmespath==1.0.1; python_version >= '3.7'
 oauthlib==3.2.2; python_version >= '3.6'
 packaging==23.1; python_version >= '3.7'
-pillow==10.0.0
+pillow==10.3.0; python_version >= '3.8'
 pipfile==0.0.2
 psycopg2-binary==2.9.7
 pycparser==2.21
