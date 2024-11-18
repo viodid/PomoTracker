@@ -21,7 +21,8 @@ if (isLeapYear(date.getFullYear())) {
 // Add squares
 const squares = document.querySelector('.squares'); const desctiptor = document.querySelector('.tag-squares');
 const selectedYear = document.querySelectorAll('.buttons-index-graph>span');
-createSquares();
+const currentYear = (new Date()).getFullYear();
+createSquares(currentYear);
 
 
 selectedYear.forEach((year) => {
@@ -31,7 +32,7 @@ selectedYear.forEach((year) => {
   });
 });
 
-function createSquares(year=2023) {
+function createSquares(year) {
 
   convertPomosToJSON(year).then((data) => {
     // check any childs and remove them
