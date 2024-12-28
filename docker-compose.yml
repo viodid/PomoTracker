@@ -9,7 +9,7 @@ services:
       - pomotracker-network
 
   postgres:
-    build: ./config/postgres
+    image: postgres:15-alpine
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=devpostgres1234

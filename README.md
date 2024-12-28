@@ -106,10 +106,10 @@ There are two ways to run the application:
     docker compose -f docker-compose.yml up --build -d
   ```
   ```bash
-    docker exec -it pomotracker-app-1 python manage.py migrate   
+    docker compose exec app python manage.py migrate
   ```
   ```bash
-    docker exec -it pomotracker-postgres-1 ./home/postgres/bypass_socialaccount_settings.sh
+    docker compose exec  -T postgres psql -U postgres -d pomotracker < config/postgres/bypass_socialaccount_settings.sql
   ```
 
 2. **Using a Virtual Environment (Pipenv or Virtualenv):**
