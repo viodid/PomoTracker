@@ -147,6 +147,9 @@ body.coral {
   border: 1px solid var(--text-color);
 }
 
+.squares li:not([data-date]) {
+  visibility: hidden;
+}
 .squares li[data-level="1"] {
   background-color: var(--level-1);
 }
