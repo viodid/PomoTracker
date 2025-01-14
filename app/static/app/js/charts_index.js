@@ -39,6 +39,12 @@ function createSquares(year) {
     while (squares.firstChild) {
       squares.removeChild(squares.firstChild);
     }
+    // add empty cells for each day before January 1st
+    const days_from_previous_year = (new Date(currentYear, 0, 1)).getDay();
+    for (let i = 0; i < days_from_previous_year; i++) {
+      squares.insertAdjacentHTML('beforeend', '<li data-level="0"></li>');
+    }
+
     for (let i = 0; i < keys.length; i++) {
       const month = keys[i];
       for (let day = 1; day <= month.days; day++) {
@@ -57,6 +63,7 @@ function createSquares(year) {
         square.addEventListener('mouseover', () => {
           const date = square.getAttribute('data-date');
           const count = square.getAttribute('data-count');
+          if (!date) { tag_squares.innerHTML = ''; return };
           if (count > 0) {
             tag_squares.innerHTML = `${count} pomodoros on ${date}, ${year}`;
           } else {
