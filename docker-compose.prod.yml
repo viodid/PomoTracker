@@ -1,4 +1,3 @@
-# https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
 version: '3.8'
 
 services:
@@ -8,6 +7,7 @@ services:
       - 6379
     networks:
       - pomotracker-network
+    restart: always
 
   app:
     image: viodid/pomotracker:latest
@@ -20,6 +20,7 @@ services:
       - 80
     networks:
       - pomotracker-network
+    restart: always
     depends_on:
       - redis
 
@@ -33,6 +34,7 @@ services:
       - app
     networks:
       - pomotracker-network
+    restart: always
 
 networks:
   pomotracker-network:
