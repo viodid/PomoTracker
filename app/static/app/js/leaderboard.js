@@ -1,6 +1,6 @@
 import { theme } from './user_settings.js';
 
-const ptImgGlobal = 'https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/default.png';
+const ptImgGlobal = 'https://pomotracker.s3.eu-central-1.amazonaws.com/default.png';
 
 // Fetch the leaderboard data
 const data = fetch('/api/leaderboard').
@@ -65,7 +65,7 @@ function displayItemDelay(user, delay, selectedPeriod, data) {
       leftContainer.classList.add('left');
 
       const profileImg = document.createElement('img');
-      profileImg.src = `https://crpjolyxva.cloudimg.io/pomotracker.s3.eu-central-1.amazonaws.com/${image}`;
+      profileImg.src = `https://pomotracker.s3.eu-central-1.amazonaws.com/${image}`;
       profileImg.alt = 'profile picture';
       profileImg.classList.add('user-profile-img');
       leftContainer.appendChild(profileImg);
