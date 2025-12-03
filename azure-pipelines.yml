@@ -10,7 +10,8 @@ variables:
   - name: DOCKER_COMPOSE_FILE
     value: docker-compose.prod.yml
 
-pool: mycomputeragent
+pool:
+  vmImage: ubuntu-latest
 
 
 stages:
