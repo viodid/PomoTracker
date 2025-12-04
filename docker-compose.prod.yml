@@ -25,11 +25,12 @@ services:
       - redis
 
   nginx:
-    image: viodid/pomotracker-nginx:latest
+    image: nginx:stable-alpine-slim
     ports:
       - 1337:80
     volumes:
       - static_volume:/home/app/pomotracker/staticfiles
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
     networks:
