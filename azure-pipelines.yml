@@ -39,7 +39,7 @@ stages:
             inputs:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               contents: '$(DOCKER_COMPOSE_FILE)'
-              targetFolder: '/home/azuredevops/pomotracker_build_files'
+              targetFolder: '~/pomotracker/pomotracker_build_files'
               readyTimeout: '20000'
               failOnEmptySource: true
 
@@ -49,7 +49,7 @@ stages:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               runOptions: 'commands'
               commands: |
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down &>/dev/null ; echo $?
-                bash /home/azuredevops/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
-                bash /home/azuredevops/rm_img_docker.sh viodid/pomotracker-nginx latest pomotracker.app
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d &>/dev/null ; echo $?
+                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml down &>/dev/null ; echo $?
+                bash ~/pomotracker/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
+                bash ~/pomotracker/rm_img_docker.sh viodid/pomotracker-nginx latest pomotracker.app
+                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml up -d &>/dev/null ; echo $?
