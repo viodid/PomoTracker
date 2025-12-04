@@ -3,10 +3,8 @@ trigger:
 
 variables:
   - group: "common"
-  - name: FIRST_IMAGE_NAME
+  - name: IMAGE_NAME
     value: pomotracker
-  - name: SECOND_IMAGE_NAME
-    value: pomotracker-nginx
   - name: DOCKER_COMPOSE_FILE
     value: docker-compose.prod.yml
 
@@ -24,20 +22,9 @@ stages:
             displayName: Build and push pomotracker docker image
             inputs:
               containerRegistry: '$(CR_SERVICE_CONNECTION)'
-              repository: '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)'
+              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: '**/Dockerfile'
-              tags: |
-                $(Build.BuildId)
-                latest
-
-          - task: Docker@2
-            displayName: Build and push pomotracker-nginx docker image
-            inputs:
-              containerRegistry: '$(CR_SERVICE_CONNECTION)'
-              repository: '$(DOCKER_REPO)/$(SECOND_IMAGE_NAME)'
-              command: 'buildAndPush'
-              Dockerfile: '**/nginx/Dockerfile'
               tags: |
                 $(Build.BuildId)
                 latest
