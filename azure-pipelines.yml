@@ -3,14 +3,13 @@ trigger:
 
 variables:
   - group: "common"
-  - name: FIRST_IMAGE_NAME
+  - name: IMAGE_NAME
     value: pomotracker
-  - name: SECOND_IMAGE_NAME
-    value: pomotracker-nginx
   - name: DOCKER_COMPOSE_FILE
     value: docker-compose.prod.yml
 
-pool: mycomputeragent
+pool:
+  vmImage: ubuntu-latest
 
 
 stages:
@@ -23,20 +22,9 @@ stages:
             displayName: Build and push pomotracker docker image
             inputs:
               containerRegistry: '$(CR_SERVICE_CONNECTION)'
-              repository: '$(DOCKER_REPO)/$(FIRST_IMAGE_NAME)'
+              repository: '$(DOCKER_REPO)/$(IMAGE_NAME)'
               command: 'buildAndPush'
               Dockerfile: '**/Dockerfile'
-              tags: |
-                $(Build.BuildId)
-                latest
-
-          - task: Docker@2
-            displayName: Build and push pomotracker-nginx docker image
-            inputs:
-              containerRegistry: '$(CR_SERVICE_CONNECTION)'
-              repository: '$(DOCKER_REPO)/$(SECOND_IMAGE_NAME)'
-              command: 'buildAndPush'
-              Dockerfile: '**/nginx/Dockerfile'
               tags: |
                 $(Build.BuildId)
                 latest
@@ -51,7 +39,7 @@ stages:
             inputs:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               contents: '$(DOCKER_COMPOSE_FILE)'
-              targetFolder: '/home/azuredevops/pomotracker_build_files'
+              targetFolder: '~/pomotracker/pomotracker_build_files'
               readyTimeout: '20000'
               failOnEmptySource: true
 
@@ -61,7 +49,7 @@ stages:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               runOptions: 'commands'
               commands: |
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml down &>/dev/null ; echo $?
-                bash /home/azuredevops/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
-                bash /home/azuredevops/rm_img_docker.sh viodid/pomotracker-nginx latest pomotracker.app
-                docker compose -f /home/azuredevops/pomotracker_build_files/docker-compose.prod.yml up -d &>/dev/null ; echo $?
+                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml down &>/dev/null ; echo $?
+                bash ~/pomotracker/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
+                bash ~/pomotracker/rm_img_docker.sh viodid/pomotracker-nginx latest pomotracker.app
+                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml up -d &>/dev/null ; echo $?
