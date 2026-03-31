@@ -98,14 +98,14 @@ function displayItemDelay(user, delay, selectedPeriod, data) {
         rewardsContainer.appendChild(bronzeSpan);
       }
 
-      const rankContainer = document.createElement('div');
-      rankContainer.classList.add('rank-container');
-      const rankSpan = document.createElement('span');
-      rankSpan.textContent = `#${rewards.rank}`;
-      rankSpan.title = 'PomoTracker Rank';
-      rankContainer.appendChild(rankSpan);
+      // const rankContainer = document.createElement('div');
+      // rankContainer.classList.add('rank-container');
+      // const rankSpan = document.createElement('span');
+      // rankSpan.textContent = `#${rewards.rank}`;
+      // rankSpan.title = 'PomoTracker Rank';
+      // rankContainer.appendChild(rankSpan);
 
-      leftContainer.appendChild(rankContainer);
+      // leftContainer.appendChild(rankContainer);
       leftContainer.appendChild(rewardsContainer);
       userLeaderboard.appendChild(leftContainer);
 
