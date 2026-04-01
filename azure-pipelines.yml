@@ -49,7 +49,8 @@ stages:
               sshEndpoint: '$(SSH_SERVICE_CONNECTION)'
               runOptions: 'commands'
               commands: |
-                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml down &>/dev/null ; echo $?
+                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml down
                 bash ~/pomotracker/rm_img_docker.sh viodid/pomotracker latest pomotracker.app
-                bash ~/pomotracker/rm_img_docker.sh viodid/pomotracker-nginx latest pomotracker.app
-                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml up -d &>/dev/null ; echo $?
+                docker volume prune -f
+                docker volume rm pomotracker_build_files_static_volume
+                docker compose -f ~/pomotracker/pomotracker_build_files/docker-compose.prod.yml up -d
