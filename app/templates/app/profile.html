@@ -43,6 +43,12 @@
             </div>
         </div>
         {% if display %}
+        <div class="period-filter">
+            <a href="?period=week" class="{% if current_period == 'week' %}active{% endif %}">Week</a>
+            <a href="?period=month" class="{% if current_period == 'month' %}active{% endif %}">Month</a>
+            <a href="?period=year" class="{% if current_period == 'year' %}active{% endif %}">Year</a>
+            <a href="?period=all" class="{% if current_period == 'all' %}active{% endif %}">All</a>
+        </div>
         <div class="profile-container">
             <div class="settings-profile">
                 <h2>{{ userProfile.username | title }} Settings</h2>
@@ -91,16 +97,22 @@
         </div>
         <span class="step-links">
             {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo;</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?period={{ current_period }}&page=1">&laquo;</a>
+            <a href="?period={{ current_period }}&page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
             <span class="current">| Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |</span>
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            <a href="?period={{ current_period }}&page={{ page_obj.next_page_number }}">next</a>
+            <a href="?period={{ current_period }}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
             {% endif %}
         </span>
         {% else %}
+        <div class="period-filter" id="chart-period-filter">
+            <span data-period="week">Week</span>
+            <span data-period="month">Month</span>
+            <span data-period="year">Year</span>
+            <span data-period="all" class="active">All</span>
+        </div>
         <div class="first-char-container">
             <div id="bar-chart-first" class="chart"></div>
             <div id="bar-chart-second" class="chart"></div>

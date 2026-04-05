@@ -21,6 +21,12 @@
 
 {% block body %}
     <main>
+        <div class="period-filter" id="chart-period-filter">
+            <span data-period="week">Week</span>
+            <span data-period="month">Month</span>
+            <span data-period="year">Year</span>
+            <span data-period="all" class="active">All</span>
+        </div>
         <div class="first-chart-container">
             <div id="pie-chart" class="chart half pie"></div>
             <!--<div id="timeline-chart" class="chart"></div>-->
