@@ -8,6 +8,18 @@ from datetime import datetime, timedelta
 from math import ceil
 
 
+def get_period_start(period):
+    """Return timezone-aware datetime for start of given period, or None for 'all'."""
+    now = timezone.now()
+    if period == 'week':
+        return (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+    elif period == 'month':
+        return now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    elif period == 'year':
+        return now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+    return None
+
+
 class Pomodoro(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
                             related_name='pomodoros')
@@ -159,10 +171,11 @@ class Rewards(models.Model):
 class Statistics:
 
     @staticmethod
-    def getAveragePomodoros(user):
+    def getAveragePomodoros(user, pomodoros=None):
         """Returns the total average pomodoros"""
         # Get all pomodoros
-        pomodoros = user.pomodoros.all()
+        if pomodoros is None:
+            pomodoros = user.pomodoros.all()
         # Make sure there are pomodoros
         if not pomodoros:
             return 0
@@ -180,10 +193,11 @@ class Statistics:
         return round(avg, ndigits=2)
 
     @staticmethod
-    def aggregatePomodorosByTag(user):
+    def aggregatePomodorosByTag(user, pomodoros=None):
         """Returns a dictionary of tags and the number of pomodoros with the tag"""
         # Get all pomodoros
-        pomodoros = user.pomodoros.all()
+        if pomodoros is None:
+            pomodoros = user.pomodoros.all()
         # Make sure there are pomodoros
         if not pomodoros:
             return {}
