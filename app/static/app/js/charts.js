@@ -8,8 +8,11 @@ let filteredPomos = null;
 
 async function renderCharts() {
   //google.charts.setOnLoadCallback(drawTimeline1);
-  google.charts.setOnLoadCallback(drawBarChart1);
-  google.charts.setOnLoadCallback(drawBarChart2);
+  drawBarChart1();
+  drawBarChart2();
+  if (document.getElementById('pie-chart')) {
+    drawPieChart1();
+  }
 }
 
 let path_username = window.location.pathname.split('/')[1];
@@ -260,18 +263,11 @@ function getDate(dateString) {
 }
 
 async function loadCacheData() {
-  fetch(`/api/${path_username}/allpomodoros`)
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    cacheDataPomos = data;
-    filteredPomos = data;
-    renderCharts();
-    if (document.getElementById('pie-chart')) {
-      drawPieChart1();
-    }
-  });
+  const response = await fetch(`/api/${path_username}/allpomodoros`);
+  const data = await response.json();
+  cacheDataPomos = data;
+  filteredPomos = data;
+  google.charts.setOnLoadCallback(renderCharts);
 }
 
 function aggregateToChart(aggregated, date = false) {
@@ -332,9 +328,6 @@ if (filterEl) {
       const period = btn.getAttribute('data-period');
       filteredPomos = filterByPeriod(cacheDataPomos, period);
       renderCharts();
-      if (document.getElementById('pie-chart')) {
-        drawPieChart1();
-      }
     });
   });
 }
