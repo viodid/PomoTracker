@@ -989,6 +989,35 @@ text-align: center;
 }
 
 
+.period-filter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.period-filter a,
+.period-filter span {
+  padding: 8px 25px;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.period-filter a:hover,
+.period-filter span:hover {
+  background-color: var(--secondary-color);
+}
+
+.period-filter a.active,
+.period-filter span.active {
+  background-color: var(--softest-color);
+  box-shadow: none;
+}
+
 .pagination {
   text-align: center;
   font-size: 1.1rem;

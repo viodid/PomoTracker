@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, SlicePomodoros, UserSettings, Rewards, Statistics
+from .models import User, SlicePomodoros, UserSettings, Rewards, Statistics, get_period_start
 from .forms import ProfileForm
 from . import helpers
 
@@ -33,7 +33,12 @@ def profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         if username == request.user.username:
-            tags = tuple(Statistics.aggregatePomodorosByTag(user).items())
+            period = request.GET.get('period', 'all')
+            period_start = get_period_start(period)
+            user_pomodoros = user.pomodoros.all()
+            if period_start:
+                user_pomodoros = user_pomodoros.filter(datetime__gte=period_start)
+            tags = tuple(Statistics.aggregatePomodorosByTag(user, pomodoros=user_pomodoros).items())
             paginator = Paginator(tags, 13)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
@@ -63,22 +68,30 @@ def profile(request, username):
                         'form': form,
                         'display': True,
                         'userProfile': user,
-                        'averagePomos': Statistics.getAveragePomodoros(user),
+                        'averagePomos': Statistics.getAveragePomodoros(user, pomodoros=user_pomodoros),
                         'page_obj': page_obj,
+                        'current_period': period,
                     })
             return render(request, 'app/profile.html', {
                 'form': form,
                 'display': True,
                 'userProfile': user,
-                'averagePomos': Statistics.getAveragePomodoros(user),
-                'page_obj': page_obj
+                'averagePomos': Statistics.getAveragePomodoros(user, pomodoros=user_pomodoros),
+                'page_obj': page_obj,
+                'current_period': period,
             })
 
     if User.objects.filter(username=username):
         userProfile = User.objects.get(username=username)
+        period = request.GET.get('period', 'all')
+        period_start = get_period_start(period)
+        user_pomodoros = userProfile.pomodoros.all()
+        if period_start:
+            user_pomodoros = user_pomodoros.filter(datetime__gte=period_start)
         return render(request, 'app/profile.html', {
             'userProfile': userProfile,
-            'averagePomos': Statistics.getAveragePomodoros(userProfile)
+            'averagePomos': Statistics.getAveragePomodoros(userProfile, pomodoros=user_pomodoros),
+            'current_period': period,
         })
     return HttpResponseNotFound(request)
 
@@ -87,13 +100,19 @@ def profile(request, username):
 def pomodorosList(request):
     """Display all pomodoros of the user"""
     user = User.objects.get(username=request.user.username)
+    period = request.GET.get('period', 'all')
     pomodoros = user.pomodoros.all().order_by('-datetime')
-    paginator = Paginator(pomodoros, 50)
 
+    period_start = get_period_start(period)
+    if period_start:
+        pomodoros = pomodoros.filter(datetime__gte=period_start)
+
+    paginator = Paginator(pomodoros, 50)
     pageNumber = request.GET.get('page')
     pageObj = paginator.get_page(pageNumber)
     return render(request, 'app/pomodoros.html', {
-        'page_obj': pageObj
+        'page_obj': pageObj,
+        'current_period': period,
     })
 
 

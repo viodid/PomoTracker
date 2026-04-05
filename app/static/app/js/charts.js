@@ -3,12 +3,16 @@ import { focusColor, username, theme } from './user_settings.js';
 google.charts.load('current', {'packages':['corechart']});
 
 let cacheDataPomos = null;
+let filteredPomos = null;
 
 
 async function renderCharts() {
   //google.charts.setOnLoadCallback(drawTimeline1);
-  google.charts.setOnLoadCallback(drawBarChart1);
-  google.charts.setOnLoadCallback(drawBarChart2);
+  drawBarChart1();
+  drawBarChart2();
+  if (document.getElementById('pie-chart')) {
+    drawPieChart1();
+  }
 }
 
 let path_username = window.location.pathname.split('/')[1];
@@ -165,55 +169,53 @@ function drawBarChart2() {
     chart.draw(data, options);
 }
 
-async function drawPieChart1() {
-  const pomos = await aggregatedPomosByTag()
-  .then((pomos) => {
-    const data = new google.visualization.DataTable();
-    data.addColumn('string', 'Tag');
-    data.addColumn('number', 'Count');
-    data.addRows(pomos);
+function drawPieChart1() {
+  const pomos = aggregatedPomosByTagLocal(filteredPomos);
+  const data = new google.visualization.DataTable();
+  data.addColumn('string', 'Tag');
+  data.addColumn('number', 'Count');
+  data.addRows(pomos);
 
-    const options = {
-        title: 'Pomodoros by Tag',
-        fontName: 'Roboto',
-        titleTextStyle: {
+  const options = {
+      title: 'Pomodoros by Tag',
+      fontName: 'Roboto',
+      titleTextStyle: {
+        color: fontColor(),
+        fontSize: 22,
+        bold: false,
+      },
+      legend: {
+        position: 'none',
+        textStyle: {
           color: fontColor(),
-          fontSize: 22,
-          bold: false,
         },
-        legend: {
-          position: 'none',
-          textStyle: {
-            color: fontColor(),
-          },
-        },
-        backgroundColor: {
-          fill:'transparent',
-        },
-        chartArea: {
-          width: "87%",
-          height: "87%",
-          left: 40,
-          right: 40,
-        },
-        is3D: true,
-        sliceVisibilityThreshold: 0.01,
-        pieSliceText: 'label',
-        tooltip: {
-          showColorCode: true,
-          ignoreBounds: true,
-        },
-      }
+      },
+      backgroundColor: {
+        fill:'transparent',
+      },
+      chartArea: {
+        width: "87%",
+        height: "87%",
+        left: 40,
+        right: 40,
+      },
+      is3D: true,
+      sliceVisibilityThreshold: 0.01,
+      pieSliceText: 'label',
+      tooltip: {
+        showColorCode: true,
+        ignoreBounds: true,
+      },
+    }
 
-    const chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
-    chart.draw(data, options);
-  });
+  const chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+  chart.draw(data, options);
 }
 
 function pomosPerHour() {
   let aggregated = {};
 
-  const pomos = cacheDataPomos;
+  const pomos = filteredPomos;
 
   // initialize the 24 hours
   for (let i = 0; i < 24; i++) {
@@ -240,7 +242,7 @@ function getHour(dateString) {
 
 function pomosPerDay() {
   let aggregated = {};
-  const pomos = cacheDataPomos;
+  const pomos = filteredPomos;
 
 
   for (let i = 0; i < pomos.length; i++) {
@@ -261,17 +263,11 @@ function getDate(dateString) {
 }
 
 async function loadCacheData() {
-  if (document.getElementById('pie-chart')) {
-    google.charts.setOnLoadCallback(drawPieChart1);
-  }
-  fetch(`/api/${path_username}/allpomodoros`)
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    cacheDataPomos = data;
-    renderCharts(data);
-  });
+  const response = await fetch(`/api/${path_username}/allpomodoros`);
+  const data = await response.json();
+  cacheDataPomos = data;
+  filteredPomos = data;
+  google.charts.setOnLoadCallback(renderCharts);
 }
 
 function aggregateToChart(aggregated, date = false) {
@@ -288,13 +284,13 @@ function aggregateToChart(aggregated, date = false) {
   return output;
 }
 
-async function aggregatedPomosByTag() {
-  let aggregated = {};
-  const response = await fetch(`/api/${path_username}/alltags`);
-  await response.json().then((data) => {
-      aggregated = data;
-    });
-  return aggregateToChart(aggregated);
+function aggregatedPomosByTagLocal(pomos) {
+  let tagCounts = {};
+  for (let i = 0; i < pomos.length; i++) {
+    const tag = pomos[i]['tag'];
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  }
+  return aggregateToChart(tagCounts);
 }
 
 function fontColor() {
@@ -303,6 +299,37 @@ function fontColor() {
   } else {
     return '#efefef';
   }
+}
+
+function filterByPeriod(pomos, period) {
+  if (period === 'all') return pomos;
+  const now = new Date();
+  let cutoff;
+  if (period === 'week') {
+    cutoff = new Date(now);
+    const day = now.getDay();
+    const diff = day === 0 ? 6 : day - 1;
+    cutoff.setDate(now.getDate() - diff);
+    cutoff.setHours(0, 0, 0, 0);
+  } else if (period === 'month') {
+    cutoff = new Date(now.getFullYear(), now.getMonth(), 1);
+  } else if (period === 'year') {
+    cutoff = new Date(now.getFullYear(), 0, 1);
+  }
+  return pomos.filter(p => new Date(p.created_at) >= cutoff);
+}
+
+const filterEl = document.getElementById('chart-period-filter');
+if (filterEl) {
+  filterEl.querySelectorAll('span').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterEl.querySelectorAll('span').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const period = btn.getAttribute('data-period');
+      filteredPomos = filterByPeriod(cacheDataPomos, period);
+      renderCharts();
+    });
+  });
 }
 
 loadCacheData();
