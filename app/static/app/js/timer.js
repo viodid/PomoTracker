@@ -10,12 +10,17 @@ const overlay = document.querySelector('#overlay');
 const minutes = document.querySelector('#minute');
 const seconds = document.querySelector('#second');
 
+// 1. ADD A GLOBAL VARIABLE TO KEEP TRACK OF THE TIMER
+let currentTimerId;
+
 function showTimer() {
   overlay.style.visibility = 'visible';
   overlay.style.opacity = 0.97;
 }
 
 function hideTimer() {
+  // 2. STOP THE TIMER WHEN HIDING THE WINDOW
+  clearTimeout(currentTimerId);
   overlay.style.visibility = 'hidden';
   resetStroke();
   resetTitle();
@@ -89,8 +94,11 @@ function changeTimer() {
 }
 
 function startFocusTimer(atStart, time) {
-  // Timer manual stop
-  if (minutes.innerHTML === '--' && minutes.innerHTML === '--') {
+  // 3. MAKE SURE TO CLEAR ANY PREVIOUS TIMERS
+  clearTimeout(currentTimerId);
+
+  // Timer manual stop (Fixed original typo: minutes && seconds)
+  if (minutes.innerHTML === '--' && seconds.innerHTML === '--') {
     changeLabels(false);
     hideTimer();
     return;
@@ -103,10 +111,15 @@ function startFocusTimer(atStart, time) {
     return;
   }
   [minutes.innerHTML, seconds.innerHTML] = formatTime(atStart, time);
-  setTimeout(startFocusTimer, 1000, atStart, time);
+  
+  // 4. SAVE THE NEW TIMER ID
+  currentTimerId = setTimeout(startFocusTimer, 1000, atStart, time);
 }
 
 function startBreakTimer(atStart, time) {
+  // 3. MAKE SURE TO CLEAR ANY PREVIOUS TIMERS
+  clearTimeout(currentTimerId);
+
   // Timer manual stop
   if (minutes.innerHTML === '--' && seconds.innerHTML === '--') {
     hideTimer();
@@ -119,7 +132,9 @@ function startBreakTimer(atStart, time) {
     return;
   }
   [minutes.innerHTML, seconds.innerHTML] = formatTime(atStart, time);
-  setTimeout(startBreakTimer, 1000, atStart, time);
+  
+  // 4. SAVE THE NEW TIMER ID
+  currentTimerId = setTimeout(startBreakTimer, 1000, atStart, time);
 }
 
 export {
