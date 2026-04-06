@@ -1,5 +1,9 @@
 trigger:
   - main
+pr:
+  branches:
+    exclude:
+    - '*'
 
 variables:
   - group: "common"
