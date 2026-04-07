@@ -21,6 +21,10 @@
 {% endblock %}
 
 {% block body %}
+<audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/ding-idea-40142.mp3" id="ding"></audio>
+<audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/whoosh-6316.mp3" id="whoosh"></audio>
+<audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/blaublau.mp3" id="minion"></audio>
+<audio src="https://pomotracker.s3.eu-central-1.amazonaws.com/folks.mp3" id="folks"></audio>
 <main>
     <div class="user-profile">
         <div class="header-profile">
@@ -54,8 +58,75 @@
                 <h2>{{ userProfile.username | title }} Settings</h2>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form }}
-                    <button type="submit">Save</button>
+
+                    <fieldset class="settings-section">
+                        <legend>Profile</legend>
+                        <div class="settings-field image-upload">
+                            <img src="https://pomotracker.s3.eu-central-1.amazonaws.com/{{ userProfile.settings.image }}"
+                                alt="Current avatar" class="settings-avatar-preview" id="avatar-preview">
+                            <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                            <span class="field-error">{{ form.image.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="settings-section">
+                        <legend>Timer</legend>
+                        <div class="settings-row">
+                            <div class="settings-field">
+                                <label for="{{ form.shortBreak.id_for_label }}">{{ form.shortBreak.label }} (min)</label>
+                                {{ form.shortBreak }}
+                                {% if form.shortBreak.errors %}
+                                <span class="field-error">{{ form.shortBreak.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="settings-field">
+                                <label for="{{ form.longBreak.id_for_label }}">{{ form.longBreak.label }} (min)</label>
+                                {{ form.longBreak }}
+                                {% if form.longBreak.errors %}
+                                <span class="field-error">{{ form.longBreak.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="settings-section">
+                        <legend>Appearance</legend>
+                        <div class="settings-field">
+                            <label for="{{ form.theme.id_for_label }}">{{ form.theme.label }}</label>
+                            {{ form.theme }}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="settings-section">
+                        <legend>Sound</legend>
+                        <div class="settings-field">
+                            <label for="{{ form.startSound.id_for_label }}">{{ form.startSound.label }}</label>
+                            <div class="sound-select-row">
+                                {{ form.startSound }}
+                                <button type="button" class="sound-preview-btn" data-target="startSound">&#9654;</button>
+                            </div>
+                        </div>
+                        <div class="settings-field">
+                            <label for="{{ form.stopSound.id_for_label }}">{{ form.stopSound.label }}</label>
+                            <div class="sound-select-row">
+                                {{ form.stopSound }}
+                                <button type="button" class="sound-preview-btn" data-target="stopSound">&#9654;</button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="settings-section">
+                        <legend>Region</legend>
+                        <div class="settings-field">
+                            <label for="{{ form.timezone.id_for_label }}">{{ form.timezone.label }}</label>
+                            {{ form.timezone }}
+                        </div>
+                    </fieldset>
+
+                    <button type="submit">Save Settings</button>
                 </form>
             </div>
             <div class="block-table pomodoros" id="tags-settings">
