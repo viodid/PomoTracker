@@ -834,7 +834,7 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   margin: 30px 0;
-  width: 47%;
+  width: 48%;
 }
 
 .settings-profile form {
@@ -985,10 +985,12 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 #tags-settings {
   margin: 30px 0;
+  width: 48%;
 }
 
 /* Accounts styles */
