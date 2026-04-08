@@ -1,4 +1,5 @@
 """Views for the app."""
+
 import secrets
 from django.core.paginator import Paginator
 from django.contrib.auth import logout
@@ -7,10 +8,16 @@ from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, SlicePomodoros, UserSettings, Rewards, Statistics, get_period_start
+from .models import (
+    User,
+    SlicePomodoros,
+    UserSettings,
+    Rewards,
+    Statistics,
+    get_period_start,
+)
 from .forms import ProfileForm
 from . import helpers
-
 
 
 def index(request):
@@ -22,10 +29,8 @@ def index(request):
         generateRewards(request)
         user = User.objects.get(username=request.user.username)
         pomodoros = SlicePomodoros(user.pomodoros, user)
-        return render(request, 'app/index.html', {
-            'pomodoros': pomodoros
-        })
-    return render(request, 'app/index.html')
+        return render(request, "app/index.html", {"pomodoros": pomodoros})
+    return render(request, "app/index.html")
 
 
 def profile(request, username):
@@ -33,66 +38,94 @@ def profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         if username == request.user.username:
-            period = request.GET.get('period', 'all')
+            period = request.GET.get("period", "all")
             period_start = get_period_start(period)
             user_pomodoros = user.pomodoros.all()
             if period_start:
                 user_pomodoros = user_pomodoros.filter(datetime__gte=period_start)
-            tags = tuple(Statistics.aggregatePomodorosByTag(user, pomodoros=user_pomodoros).items())
-            paginator = Paginator(tags, 13)
-            page_number = request.GET.get('page')
+            tags = tuple(
+                Statistics.aggregatePomodorosByTag(
+                    user, pomodoros=user_pomodoros
+                ).items()
+            )
+            paginator = Paginator(tags, 22)
+            page_number = request.GET.get("page")
             page_obj = paginator.get_page(page_number)
-            form = ProfileForm(initial={
-                'shortBreak': user.settings.shortBreak,
-                'longBreak': user.settings.longBreak,
-                'theme': user.settings.theme,
-                'startSound': user.settings.startSound,
-                'stopSound': user.settings.stopSound,
-                'timezone': user.settings.timezone,
-            })
-            if request.method == 'POST':
-                form = ProfileForm(request.POST, request.FILES, initial={
-                    'shortBreak': user.settings.shortBreak,
-                    'longBreak': user.settings.longBreak,
-                    'theme': user.settings.theme,
-                    'startSound': user.settings.startSound,
-                    'stopSound': user.settings.stopSound,
-                    'timezone': user.settings.timezone,
-                })
+            form = ProfileForm(
+                initial={
+                    "shortBreak": user.settings.shortBreak,
+                    "longBreak": user.settings.longBreak,
+                    "theme": user.settings.theme,
+                    "startSound": user.settings.startSound,
+                    "stopSound": user.settings.stopSound,
+                    "timezone": user.settings.timezone,
+                }
+            )
+            if request.method == "POST":
+                form = ProfileForm(
+                    request.POST,
+                    request.FILES,
+                    initial={
+                        "shortBreak": user.settings.shortBreak,
+                        "longBreak": user.settings.longBreak,
+                        "theme": user.settings.theme,
+                        "startSound": user.settings.startSound,
+                        "stopSound": user.settings.stopSound,
+                        "timezone": user.settings.timezone,
+                    },
+                )
                 if form.is_valid():
                     helpers.saveSettings(form.cleaned_data, user)
                     return HttpResponseRedirect(reverse("index"))
                 else:
-                    return render(request, 'app/profile.html', {
-                        'message': 'Invalid form',
-                        'form': form,
-                        'display': True,
-                        'userProfile': user,
-                        'averagePomos': Statistics.getAveragePomodoros(user, pomodoros=user_pomodoros),
-                        'page_obj': page_obj,
-                        'current_period': period,
-                    })
-            return render(request, 'app/profile.html', {
-                'form': form,
-                'display': True,
-                'userProfile': user,
-                'averagePomos': Statistics.getAveragePomodoros(user, pomodoros=user_pomodoros),
-                'page_obj': page_obj,
-                'current_period': period,
-            })
+                    return render(
+                        request,
+                        "app/profile.html",
+                        {
+                            "message": "Invalid form",
+                            "form": form,
+                            "display": True,
+                            "userProfile": user,
+                            "averagePomos": Statistics.getAveragePomodoros(
+                                user, pomodoros=user_pomodoros
+                            ),
+                            "page_obj": page_obj,
+                            "current_period": period,
+                        },
+                    )
+            return render(
+                request,
+                "app/profile.html",
+                {
+                    "form": form,
+                    "display": True,
+                    "userProfile": user,
+                    "averagePomos": Statistics.getAveragePomodoros(
+                        user, pomodoros=user_pomodoros
+                    ),
+                    "page_obj": page_obj,
+                    "current_period": period,
+                },
+            )
 
     if User.objects.filter(username=username):
         userProfile = User.objects.get(username=username)
-        period = request.GET.get('period', 'all')
+        period = request.GET.get("period", "all")
         period_start = get_period_start(period)
         user_pomodoros = userProfile.pomodoros.all()
         if period_start:
             user_pomodoros = user_pomodoros.filter(datetime__gte=period_start)
-        return render(request, 'app/profile.html', {
-            'userProfile': userProfile,
-            'averagePomos': Statistics.getAveragePomodoros(userProfile, pomodoros=user_pomodoros),
-            'current_period': period,
-        })
+        return render(
+            request,
+            "app/profile.html",
+            {
+                "userProfile": userProfile,
+                "averagePomos": Statistics.getAveragePomodoros(
+                    userProfile, pomodoros=user_pomodoros
+                ),
+                "current_period": period,
+            },
+        )
     return HttpResponseNotFound(request)
 
 
@@ -100,39 +133,43 @@ def profile(request, username):
 def pomodorosList(request):
     """Display all pomodoros of the user"""
     user = User.objects.get(username=request.user.username)
-    period = request.GET.get('period', 'all')
-    pomodoros = user.pomodoros.all().order_by('-datetime')
+    period = request.GET.get("period", "all")
+    pomodoros = user.pomodoros.all().order_by("-datetime")
 
     period_start = get_period_start(period)
     if period_start:
         pomodoros = pomodoros.filter(datetime__gte=period_start)
 
     paginator = Paginator(pomodoros, 50)
-    pageNumber = request.GET.get('page')
+    pageNumber = request.GET.get("page")
     pageObj = paginator.get_page(pageNumber)
-    return render(request, 'app/pomodoros.html', {
-        'page_obj': pageObj,
-        'current_period': period,
-    })
+    return render(
+        request,
+        "app/pomodoros.html",
+        {
+            "page_obj": pageObj,
+            "current_period": period,
+        },
+    )
 
 
 def leaderboard(request):
     """Display the leaderboard page"""
-    return render(request, 'app/leaderboard.html')
+    return render(request, "app/leaderboard.html")
 
 
 @login_required
 def charts(request):
     """Display the charts page"""
-    return render(request, 'app/charts.html')
+    return render(request, "app/charts.html")
 
 
 def privacy(request):
-    return render(request, 'app/privacy.html')
+    return render(request, "app/privacy.html")
 
 
 def terms(request):
-    return render(request, 'app/terms.html')
+    return render(request, "app/terms.html")
 
 
 def logout_view(request):
@@ -141,7 +178,7 @@ def logout_view(request):
 
 
 def apiReference(request):
-    return render(request, 'app/api.html')
+    return render(request, "app/api.html")
 
 
 def token(request):
@@ -150,12 +187,8 @@ def token(request):
         if user.settings.token is None:
             user.settings.token = secrets.token_urlsafe(16)
             user.settings.save()
-        return render(request, 'app/token.html', {
-            'message': user.settings.token
-        })
-    return render(request, 'app/token.html', {
-        'message': 'You need to be logged in.'
-    })
+        return render(request, "app/token.html", {"message": user.settings.token})
+    return render(request, "app/token.html", {"message": "You need to be logged in."})
 
 
 def generateToken(request):
@@ -170,18 +203,18 @@ def generateToken(request):
 def generateColors(request):
     user = User.objects.get(username=request.user.username)
     if not user.settings.breakColor:
-        user.settings.color = '#ADFF2F'
+        user.settings.color = "#ADFF2F"
     if not user.settings.focusColor:
-        user.settings.focusColor = '#F1C232'
+        user.settings.focusColor = "#F1C232"
     user.settings.save()
 
 
 def generateSoundsAndTime(request):
     user = User.objects.get(username=request.user.username)
     if not user.settings.startSound:
-        user.settings.startSound = '#ding'
+        user.settings.startSound = "#ding"
     if not user.settings.stopSound:
-        user.settings.stopSound = '#whoosh'
+        user.settings.stopSound = "#whoosh"
     if not user.settings.longBreak:
         user.settings.longBreak = 15
     user.settings.save()
@@ -211,3 +244,4 @@ def generateRewards(request):
             Rewards(user=user).save()
         return user.rewards
     return None
+

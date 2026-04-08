@@ -15,12 +15,19 @@ docker compose exec app python manage.py migrate
 # Access at http://localhost:1337
 ```
 
+**Important:** When restarting Docker services, always remove the static files volumes so that changes are loaded:
+```bash
+docker compose down -v && docker compose up --build -d
+```
+
 ### Django management
 ```bash
 python manage.py runserver 0.0.0.0:1337    # local dev server (needs local PG + Redis)
 python manage.py migrate                    # apply migrations
 python manage.py makemigrations             # generate migrations after model changes
 python manage.py giveRewards                # custom command: monthly leaderboard rewards
+python manage.py createMockData              # create 3 mock users with ~150-300 pomodoros each
+python manage.py createMockData --max-pomos 500  # adjust max pomodoros per user
 ```
 
 ### Environment
