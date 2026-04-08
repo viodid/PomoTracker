@@ -290,7 +290,7 @@ function aggregatedPomosByTagLocal(pomos) {
     const tag = pomos[i]['tag'];
     tagCounts[tag] = (tagCounts[tag] || 0) + 1;
   }
-  return aggregateToChart(tagCounts);
+  return aggregateToChart(tagCounts).sort((a, b) => b[1] - a[1]);
 }
 
 function fontColor() {
