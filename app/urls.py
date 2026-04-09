@@ -9,6 +9,7 @@ urlpatterns = [
     path('terms', views.terms, name='terms'),
     path('api_reference', views.apiReference, name='api'),
     path('token', views.token, name='token'),
+    path('export', views.export_csv, name='export_csv'),
     path('leaderboard', views.leaderboard, name='leaderboard'),
     path('<str:username>/', views.profile, name='profile'),
     path('pomodoros', views.pomodorosList, name='pomodoros'),

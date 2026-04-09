@@ -675,10 +675,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   border-radius: var(--border-radius);
 }
 
-.step-links-leaderboard {
-  padding-left: 19%;
-  margin-bottom: 20px;
-}
 
 .explanation {
   padding: 30px;
@@ -771,10 +767,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   font-size: 15px;
 }
 
-.step-links-leaderboard {
-  padding-left: 0;
-  text-align: center;
-}
 
 /* Profile */
 .user-profile {
@@ -816,9 +808,7 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   border: 2.5px solid var(--border-color);
 }
 
-.user-profile .step-links {
-  text-align: end;
-  display: block;
+.user-profile .pagination {
   padding: 0 18%;
 }
 
@@ -968,6 +958,26 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 
 .settings-profile > form > button[type="submit"]:active {
   transform: scale(0.98);
+}
+
+.export-csv-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  background: var(--softest-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.export-csv-btn:hover {
+  background-color: var(--yellow-logo);
+  color: var(--primary-color);
 }
 
 .field-error {
@@ -1125,16 +1135,52 @@ text-align: center;
 }
 
 .pagination {
-  text-align: center;
-  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 24px 0;
+  flex-wrap: wrap;
 }
 
-.pagination.top {
-  margin-top: 30px;
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--primary-color);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.pagination.bottom {
-  margin-bottom: 30px;
+.page-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.page-btn.active {
+  background-color: var(--yellow-logo);
+  color: var(--primary-color);
+  font-weight: 700;
+  border-color: var(--yellow-logo);
+  cursor: default;
+}
+
+.page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 36px;
+  color: var(--text-color);
+  font-size: 1rem;
 }
 
 /* API Reference styles */
@@ -1310,6 +1356,10 @@ code {
 
   .user-profile .step-links {
     text-align: center;
+  }
+  
+  #tags-settings {
+      width: 100%;
   }
 
   footer {

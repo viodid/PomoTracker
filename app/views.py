@@ -1,12 +1,14 @@
 """Views for the app."""
 
+import csv
 import secrets
 from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 
 from .models import (
     User,
@@ -189,6 +191,34 @@ def token(request):
             user.settings.save()
         return render(request, "app/token.html", {"message": user.settings.token})
     return render(request, "app/token.html", {"message": "You need to be logged in."})
+
+
+@login_required
+def export_csv(request):
+    """Export all user pomodoros as a CSV file."""
+    user = User.objects.get(username=request.user.username)
+    timezone.activate(user.settings.timezone)
+    period = request.GET.get("period", "all")
+    pomodoros = user.pomodoros.all().order_by("datetime")
+    period_start = get_period_start(period)
+    if period_start:
+        pomodoros = pomodoros.filter(datetime__gte=period_start)
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="pomotracker_export.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(["id", "date", "time", "tag"])
+    for pomo in pomodoros:
+        local_dt = timezone.localtime(pomo.datetime)
+        writer.writerow([
+            pomo.id,
+            local_dt.strftime("%Y-%m-%d"),
+            local_dt.strftime("%H:%M:%S"),
+            pomo.tag.tag,
+        ])
+
+    return response
 
 
 def generateToken(request):
