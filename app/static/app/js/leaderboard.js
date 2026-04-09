@@ -25,6 +25,7 @@ radioInputs.forEach(radioInput => {
 
 
 function displayLeaderboard(selectedPeriod, data) {
+  // TODO: wait for all previous data to be shown before deletion
   deleteLeaderboard();
   data.then((data) => {
     data = orderData(data, selectedPeriod);
