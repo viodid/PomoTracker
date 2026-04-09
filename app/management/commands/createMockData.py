@@ -33,12 +33,11 @@ class Command(BaseCommand):
         for mock in MOCK_USERS:
             username = mock["username"]
             if User.objects.filter(username=username).exists():
-                self.stdout.write(f"User '{username}' already exists, skipping.")
-                continue
-
-            user = User.objects.create_user(username=username, password="testpass123!")
-            UserSettings.objects.create(user=user)
-            Rewards.objects.create(user=user)
+                user = User.objects.get(username=username)
+            else:
+                user = User.objects.create_user(username=username, password="testpass123!")
+                UserSettings.objects.create(user=user)
+                Rewards.objects.create(user=user)
 
             tags = []
             for tag_name in mock["tags"]:
@@ -60,3 +59,4 @@ class Command(BaseCommand):
             self.stdout.write(f"Created '{username}' with {num_pomos} pomodoros.")
 
         self.stdout.write(self.style.SUCCESS("Done!"))
+
