@@ -808,9 +808,6 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
   border: 2.5px solid var(--border-color);
 }
 
-.user-profile .pagination {
-  padding: 0 18%;
-}
 
 
 .header-profile .title {
@@ -1001,6 +998,12 @@ animation: prog 121s linear forwards, glow 1s 120s ease-in-out forwards;
 #tags-settings {
   margin: 30px 0;
   width: 48%;
+}
+
+.user-profile > .pagination {
+  width: 48%;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 /* Accounts styles */
@@ -1360,6 +1363,10 @@ code {
   
   #tags-settings {
       width: 100%;
+  }
+
+  .user-profile > .pagination {
+    width: 100%;
   }
 
   footer {

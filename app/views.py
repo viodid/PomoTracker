@@ -50,7 +50,7 @@ def profile(request, username):
                     user, pomodoros=user_pomodoros
                 ).items()
             )
-            paginator = Paginator(tags, 22)
+            paginator = Paginator(tags, 25)
             page_number = request.GET.get("page")
             page_obj = paginator.get_page(page_number)
             form = ProfileForm(
@@ -211,12 +211,14 @@ def export_csv(request):
     writer.writerow(["id", "date", "time", "tag"])
     for pomo in pomodoros:
         local_dt = timezone.localtime(pomo.datetime)
-        writer.writerow([
-            pomo.id,
-            local_dt.strftime("%Y-%m-%d"),
-            local_dt.strftime("%H:%M:%S"),
-            pomo.tag.tag,
-        ])
+        writer.writerow(
+            [
+                pomo.id,
+                local_dt.strftime("%Y-%m-%d"),
+                local_dt.strftime("%H:%M:%S"),
+                pomo.tag.tag,
+            ]
+        )
 
     return response
 
