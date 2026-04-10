@@ -120,6 +120,21 @@
                         </div>
                     </fieldset>
 
+                    <fieldset class="settings-section">
+                        <legend>Export Data</legend>
+                        <div class="settings-field">
+                            <div class="sound-select-row">
+                                <select id="export-period" class="settings-input">
+                                    <option value="all" selected>All</option>
+                                    <option value="year">Year</option>
+                                    <option value="month">Month</option>
+                                    <option value="week">Week</option>
+                                </select>
+                                <a href="{% url 'export_csv' %}" class="export-csv-btn" id="export-csv-link">Export CSV</a>
+                            </div>
+                        </div>
+                    </fieldset>
+
                     <button type="submit">Save Settings</button>
                 </form>
             </div>
@@ -160,17 +175,7 @@
                 </div>
             </div>
         </div>
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo;</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-            <span class="current">| Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |</span>
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
-            {% endif %}
-        </span>
+        {% include "app/includes/pagination.html" %}
         {% else %}
         <div class="period-filter" id="chart-period-filter">
             <span data-period="week">Week</span>

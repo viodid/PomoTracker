@@ -67,6 +67,16 @@ if (themeSelect) {
   });
 }
 
+// Export period selection
+const exportPeriod = document.getElementById('export-period');
+const exportLink = document.getElementById('export-csv-link');
+if (exportPeriod && exportLink) {
+  const base = exportLink.href;
+  exportPeriod.addEventListener('change', () => {
+    exportLink.href = exportPeriod.value === 'all' ? base : base + '?period=' + exportPeriod.value;
+  });
+}
+
 // Timezone search filter
 const tzSelect = document.getElementById('timezone-select');
 if (tzSelect) {

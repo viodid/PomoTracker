@@ -26,6 +26,12 @@ services:
     command: gunicorn PomoTracker.wsgi:application --bind 0.0.0.0:80 --timeout 600 --workers 3
     env_file:
       - ./PomoTracker/.dev.env
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /home/app/pomotracker/app
+          initial_sync: true
     volumes:
       - static_volume:/home/app/pomotracker/staticfiles
     expose:
