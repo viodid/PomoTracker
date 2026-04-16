@@ -209,11 +209,11 @@ def export_csv(request):
 
     writer = csv.writer(response)
     writer.writerow(["id", "date", "time", "tag"])
-    for pomo in pomodoros:
+    for idx, pomo in enumerate(pomodoros):
         local_dt = timezone.localtime(pomo.datetime)
         writer.writerow(
             [
-                pomo.id,
+                idx,
                 local_dt.strftime("%Y-%m-%d"),
                 local_dt.strftime("%H:%M:%S"),
                 pomo.tag.tag,

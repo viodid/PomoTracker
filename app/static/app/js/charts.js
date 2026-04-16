@@ -200,7 +200,7 @@ function drawPieChart1() {
         right: 40,
       },
       is3D: true,
-      sliceVisibilityThreshold: 0.01,
+      sliceVisibilityThreshold: 0.001,
       pieSliceText: 'label',
       tooltip: {
         showColorCode: true,
